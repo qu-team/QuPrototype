@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 
 public class Shutter : MonoBehaviour {
-    
-    public Sprite bladeImage;
+
     [RangeAttribute(0f, 1f)]
     public float opening = 1f;
+    public uint bladesNumber = 6;
 
-    GameObject[] blades = new GameObject[6];
+    GameObject[] blades;
     float lastOpening = 1f;
 
     void Awake() {
-        var portion = Mathf.PI / 3;
+        blades = new GameObject[bladesNumber];
+        var portion = Mathf.PI * 2 / bladesNumber;
         for (int i = 0; i < blades.Length; i++) {
-            var angle = i * 60f + 30f;
+            var angle = (i + 0.5f) * (360f / bladesNumber);
             var position = new Vector2(Mathf.Cos(i * portion), Mathf.Sin(i * portion));
             blades[i] = new GameObject("Blade" + i);
             blades[i].transform.parent = transform;
@@ -20,10 +21,10 @@ public class Shutter : MonoBehaviour {
             blades[i].transform.localRotation = Quaternion.Euler(0f, 0f, angle);
             var sprite = new GameObject("Sprite");
             sprite.transform.parent = blades[i].transform;
-            sprite.transform.localPosition = new Vector2(-0.5f, -0.5f);
             sprite.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-            var spriteRenderer = sprite.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = bladeImage;
+            var triangle = sprite.AddComponent<Triangle>();
+            triangle.topAngle = portion;
+            sprite.transform.localPosition = new Vector2(0f, -triangle.Width / 2);
         }
     }
 
@@ -31,8 +32,8 @@ public class Shutter : MonoBehaviour {
         if (opening == lastOpening) { return; }
         opening = Mathf.Clamp01(opening);
         for (int i = 0; i < blades.Length; i++) {
-            var angle = i * 60f + 30f;
-            var rotation = (opening - 1) * 60f;
+            var angle = i * (360f / bladesNumber);
+            var rotation = (opening - 0.5f) * (360f / bladesNumber);
             blades[i].transform.localRotation = Quaternion.Euler(0f, 0f, angle + rotation);
         }
         lastOpening = opening;
