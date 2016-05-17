@@ -1,0 +1,19 @@
+Temp/*
+Library/*
+Build/*
+*.csproj
+*.sln
+*.suo
+
+#ignoring pidb, they are just code completion caching data according to:
+# http://stackoverflow.com/questions/1022111/what-are-monodevelops-pidb-files
+*.pidb
+*.userprefs
+NativePlugin/RenderingPlugin/VisualStudio2008/build/Debug/
+NativePlugin/RenderingPlugin/VisualStudio2008/RenderingPlugin.vcproj.Jendrik-PC.Jendrik.user
+NativePlugin/RenderingPlugin/VisualStudio2008/RenderingPlugin.ncb
+NativePlugin/RenderingPlugin/VisualStudio2008/build/Release/
+Tools/AnimationScriptGenerator/bin/Debug/
+Tools/AnimationScriptGenerator/obj/Debug/
+/obj/Debug
+/*.log
