@@ -2,40 +2,72 @@
 
 public class Shutter : MonoBehaviour {
 
+    public const uint MIN_BLADES_NUMBER = 3;
+
     [RangeAttribute(0f, 1f)]
     public float opening = 1f;
     public uint bladesNumber = 6;
+    public float relativeSize = 1f;
 
     GameObject[] blades;
     float lastOpening = 1f;
+    uint lastBladesNumber = 6;
+    float lastRelativeSize = 1f;
 
     void Awake() {
+        BuildBlades();
+    }
+
+    void BuildBlades() {
+        DestroyPreviousBlades();
         blades = new GameObject[bladesNumber];
-        var portion = Mathf.PI * 2 / bladesNumber;
-        for (int i = 0; i < blades.Length; i++) {
-            var angle = (i + 0.5f) * (360f / bladesNumber);
-            var position = new Vector2(Mathf.Cos(i * portion), Mathf.Sin(i * portion));
-            blades[i] = new GameObject("Blade" + i);
-            blades[i].transform.parent = transform;
-            blades[i].transform.localPosition = position;
-            blades[i].transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-            var sprite = new GameObject("Sprite");
-            sprite.transform.parent = blades[i].transform;
-            sprite.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-            var triangle = sprite.AddComponent<Triangle>();
-            triangle.topAngle = portion;
-            sprite.transform.localPosition = new Vector2(0f, -triangle.Width / 2);
+        var triangle = new Triangle() { topAngle = Mathf.PI * 2 / bladesNumber, relativeSize = relativeSize };
+        for (uint i = 0; i < bladesNumber; i++) {
+            var blade = new GameObject("Blade" + i);
+            blade.transform.parent = transform;
+            blade.transform.localPosition = new Vector2(Mathf.Cos(i * triangle.topAngle), Mathf.Sin(i * triangle.topAngle)) * relativeSize;
+            AddBladeShape(blade, triangle);
+            blades[i] = blade;
+        }
+        UpdateBladesRotation();
+    }
+
+    void DestroyPreviousBlades() {
+        if (blades != null) {
+            foreach (var blade in blades) { GameObject.Destroy(blade); }
+            blades = null;
         }
     }
 
-    void Update() {
-        if (opening == lastOpening) { return; }
-        opening = Mathf.Clamp01(opening);
-        for (int i = 0; i < blades.Length; i++) {
+    void AddBladeShape(GameObject blade, Triangle triangle) {
+        var shape = new GameObject("Shape");
+        shape.transform.parent = blade.transform;
+        shape.transform.localPosition = new Vector2(0f, -triangle.HalfWidth);
+        shape.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        shape.AddComponent<MeshFilter>().mesh = triangle.Mesh;
+        shape.AddComponent<MeshRenderer>();
+    }
+
+    void UpdateBladesRotation() {
+        for (uint i = 0; i < bladesNumber; i++) {
             var angle = i * (360f / bladesNumber);
             var rotation = (opening - 0.5f) * (360f / bladesNumber);
             blades[i].transform.localRotation = Quaternion.Euler(0f, 0f, angle + rotation);
         }
-        lastOpening = opening;
+    }
+
+    void Update() {
+        if (opening != lastOpening) {
+            opening = Mathf.Clamp01(opening);
+            UpdateBladesRotation();
+            lastOpening = opening;
+        }
+        if (bladesNumber != lastBladesNumber || relativeSize != lastRelativeSize) {
+            if (bladesNumber < MIN_BLADES_NUMBER) { bladesNumber = MIN_BLADES_NUMBER; }
+            if (relativeSize < 0f) { relativeSize = 0f; }
+            BuildBlades();
+            lastBladesNumber = bladesNumber;
+            lastRelativeSize = relativeSize;
+        }
     }
 }
