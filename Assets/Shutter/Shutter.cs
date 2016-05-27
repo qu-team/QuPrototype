@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Shutter : MonoBehaviour {
 
@@ -8,11 +9,18 @@ public class Shutter : MonoBehaviour {
     public float opening = 1f;
     public uint bladesNumber = 6;
     public float relativeSize = 1f;
+    public Material material;
 
     GameObject[] blades;
+    IList<Color> bladeColors = new List<Color>() { Color.black };
     float lastOpening = 1f;
     uint lastBladesNumber = 6;
     float lastRelativeSize = 1f;
+
+    public void SetBladeColors(params Color[] colors) {
+        bladeColors = new List<Color>(colors);
+        BuildBlades();
+    }
 
     void Awake() {
         BuildBlades();
@@ -26,7 +34,7 @@ public class Shutter : MonoBehaviour {
             var blade = new GameObject("Blade" + i);
             blade.transform.parent = transform;
             blade.transform.localPosition = new Vector2(Mathf.Cos(i * triangle.topAngle), Mathf.Sin(i * triangle.topAngle)) * relativeSize;
-            AddBladeShape(blade, triangle);
+            AddBladeShape(blade, triangle, ColorForBlade(i));
             blades[i] = blade;
         }
         UpdateBladesRotation();
@@ -39,13 +47,25 @@ public class Shutter : MonoBehaviour {
         }
     }
 
-    void AddBladeShape(GameObject blade, Triangle triangle) {
+    Color ColorForBlade(uint index) {
+        if (bladeColors.Count == 0) { return Color.black; }
+        if (bladeColors.Count <= index) { return bladeColors[bladeColors.Count - 1]; }
+        return bladeColors[(int)index];
+    }
+
+    void AddBladeShape(GameObject blade, Triangle triangle, Color color) {
         var shape = new GameObject("Shape");
         shape.transform.parent = blade.transform;
         shape.transform.localPosition = new Vector2(0f, -triangle.HalfWidth);
         shape.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
         shape.AddComponent<MeshFilter>().mesh = triangle.Mesh;
-        shape.AddComponent<MeshRenderer>();
+        shape.AddComponent<MeshRenderer>().material = Material(color);
+    }
+
+    Material Material(Color color) {
+        var materialCopy = new Material(material);
+        materialCopy.color = color;
+        return materialCopy;
     }
 
     void UpdateBladesRotation() {
