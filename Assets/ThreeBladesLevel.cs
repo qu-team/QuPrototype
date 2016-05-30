@@ -17,6 +17,9 @@ public class ThreeBladesLevel : MonoBehaviour {
         shutter.bladesNumber = 3;
         shutter.relativeSize = SIZE;
         shutter.opening = MAX_OPENING;
+    }
+
+    void Start() {
         SetupQuAndBladesColors();
     }
 
