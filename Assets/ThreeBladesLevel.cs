@@ -8,6 +8,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     public Qu qu;
     public float closingSpeed;
     public Text scoreboard;
+    public Feedback feedback;
 
     const float SIZE = 6f;
     const float MAX_OPENING = 0.25f;
@@ -69,10 +70,12 @@ public class ThreeBladesLevel : MonoBehaviour {
         score += scoreAdder.Value;
         scoreAdder.Succeeded();
         scoreboard.text = score.ToString();
+        feedback.Ok();
     }
 
     void Failed() {
         scoreAdder.Failed();
+        feedback.Wrong();
     }
 
     void SetupQuAndBladesColors() {
