@@ -62,8 +62,10 @@ public class Qu : MonoBehaviour {
                 var r = Random.value * 5f;
                 var a = Random.value * Mathf.PI * 2f;
                 eyes.transform.localPosition = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r;
+                yield return new WaitForSeconds(0.5f);
+            } else {
+                yield return null;
             }
-            yield return null;
         }
     }
 }
