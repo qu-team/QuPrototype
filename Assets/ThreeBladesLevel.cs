@@ -79,10 +79,16 @@ public class ThreeBladesLevel : MonoBehaviour {
     }
 
     void SetupQuAndBladesColors() {
-        var colors = new Color[] { RandomColor, RandomColor, RandomColor };
-        var index = Random.Range(0, 2);
+        var colors = RandomColors();
+        var index = Random.Range(0, (int)shutter.bladesNumber);
         shutter.SetBladeColors(colors);
         qu.Color = colors[index];
+    }
+
+    Color[] RandomColors() {
+        var colors = new Color[shutter.bladesNumber];
+        for (int i = 0; i < colors.Length; i++) { colors[i] = RandomColor; }
+        return colors;
     }
 
     void RandomizeColorSpace() {
