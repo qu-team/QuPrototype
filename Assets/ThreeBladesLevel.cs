@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class ThreeBladesLevel : MonoBehaviour {
@@ -45,8 +46,7 @@ public class ThreeBladesLevel : MonoBehaviour {
         if (timer.OutOfTime) {
             score = 0;
             scoreboard.text = score.ToString();
-            timer.Restart(60f);
-            Reinitialize();
+            SceneManager.LoadScene("Menu");
         } else if (shutter.opening == 0f) {
             Reinitialize();
         } else if (shutter.opening <= MIN_OPENING) {
@@ -67,6 +67,7 @@ public class ThreeBladesLevel : MonoBehaviour {
 
     void Succeeded() {
         score += scoreAdder.Value;
+        if (score > GameData.MaxScore) { GameData.MaxScore = score; }
         scoreAdder.Succeeded();
         scoreboard.text = score.ToString();
         feedback.Ok();
