@@ -11,6 +11,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     const float MAX_OPENING = 0.25f;
     const float MIN_OPENING = 0.04f;
 
+    ColorGenerator colors = new RGBColorGenerator();
     bool finalClosing = false;
 
     void Awake() {
@@ -28,6 +29,8 @@ public class ThreeBladesLevel : MonoBehaviour {
         if (shutter.opening == 0f) {
             shutter.opening = MAX_OPENING;
             qu.Restore();
+            IncrementDifficulty();
+            RandomizeColorSpace();
             SetupQuAndBladesColors();
         } else if (shutter.opening <= MIN_OPENING) {
             finalClosing = true;
@@ -44,7 +47,19 @@ public class ThreeBladesLevel : MonoBehaviour {
         qu.SetColor(colors[index]);
     }
 
-    Color RandomColor { get { return new Color(Random.value, Random.value, Random.value); } }
+    void RandomizeColorSpace() {
+        var radius = colors.MaxRadius - colors.Radius;
+        var x = Random.Range(-1f, 1f);
+        var y = Random.Range(-1f, 1f);
+        var z = Random.Range(-1f, 1f);
+        colors.Position = new Vector3(x, y, z) * radius + colors.Center;
+    }
+
+    void IncrementDifficulty() {
+        colors.Radius *= 0.9f;
+    }
+
+    Color RandomColor { get { return colors.Generate(); } }
 
     IEnumerator FinalClosingAnimation() {
         qu.StretchEyes();
