@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ThreeBladesLevel : MonoBehaviour {
@@ -6,12 +7,15 @@ public class ThreeBladesLevel : MonoBehaviour {
     public Shutter shutter;
     public Qu qu;
     public float closingSpeed;
+    public Text scoreboard;
 
     const float SIZE = 6f;
     const float MAX_OPENING = 0.25f;
     const float MIN_OPENING = 0.04f;
 
     ColorGenerator colors = new RGBColorGenerator();
+    Score scoreAdder = new Score() { basePoints = 10, difficultyMultiplier = 2f, comboMultiplier = 3f };
+    uint score = 0;
     bool finalClosing = false;
 
     void Awake() {
@@ -27,9 +31,10 @@ public class ThreeBladesLevel : MonoBehaviour {
     void Update() {
         if (finalClosing) { return; }
         if (shutter.opening == 0f) {
+            StubGameplay();
             shutter.opening = MAX_OPENING;
             qu.Restore();
-            IncrementDifficulty();
+            SetDifficulty();
             RandomizeColorSpace();
             SetupQuAndBladesColors();
         } else if (shutter.opening <= MIN_OPENING) {
@@ -37,6 +42,16 @@ public class ThreeBladesLevel : MonoBehaviour {
             StartCoroutine(FinalClosingAnimation());
         } else {
             shutter.opening -= closingSpeed * Time.deltaTime;
+        }
+    }
+
+    void StubGameplay() {
+        if (Random.value <= 0.75f) {
+            score += scoreAdder.Value;
+            scoreAdder.Succeeded();
+            scoreboard.text = score.ToString();
+        } else {
+            scoreAdder.Failed();
         }
     }
 
@@ -55,8 +70,8 @@ public class ThreeBladesLevel : MonoBehaviour {
         colors.Position = new Vector3(x, y, z) * radius + colors.Center;
     }
 
-    void IncrementDifficulty() {
-        colors.Radius *= 0.9f;
+    void SetDifficulty() {
+        colors.Radius = colors.MaxRadius / scoreAdder.Difficulty;
     }
 
     Color RandomColor { get { return colors.Generate(); } }
