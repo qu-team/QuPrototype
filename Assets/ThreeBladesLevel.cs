@@ -51,7 +51,6 @@ public class ThreeBladesLevel : MonoBehaviour {
             Reinitialize();
         } else if (shutter.opening <= MIN_OPENING) {
             finalClosing = true;
-            Failed();
             StartCoroutine(FinalClosingAnimation());
         } else {
             shutter.opening -= closingSpeed * Time.deltaTime;
@@ -110,7 +109,10 @@ public class ThreeBladesLevel : MonoBehaviour {
             qu.StretchEyes();
             yield return new WaitForSeconds(0.5f);
         }
-        if (finalClosing) { qu.Die(); }
+        if (finalClosing) {
+            qu.Die();
+            Failed();
+        }
         while (finalClosing && shutter.opening >= 0.0001f) {
             shutter.opening /= 1.1f;
             yield return null;
