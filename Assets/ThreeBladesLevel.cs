@@ -47,6 +47,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     Color RandomColor { get { return new Color(Random.value, Random.value, Random.value); } }
 
     IEnumerator FinalClosingAnimation() {
+        qu.StretchEyes();
         yield return new WaitForSeconds(0.5f);
         qu.Die();
         while (shutter.opening >= 0.0001f) {
