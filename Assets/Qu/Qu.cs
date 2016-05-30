@@ -8,6 +8,7 @@ public class Qu : MonoBehaviour {
 
     SpriteRenderer sprite;
     Vector3 originalScale;
+    bool dead = false;
 
     void Awake() {
         sprite = GetComponent<SpriteRenderer>();
@@ -25,12 +26,16 @@ public class Qu : MonoBehaviour {
     }
 
     public void Die() {
+        dead = true;
         StartCoroutine(DeathAnimation());
     }
+
+    public bool Dead { get { return dead; } }
 
     public void Restore() {
         OpenEyes();
         transform.localScale = originalScale;
+        dead = false;
     }
 
     public void StretchEyes() {

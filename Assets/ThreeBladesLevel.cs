@@ -15,6 +15,7 @@ public class ThreeBladesLevel : MonoBehaviour {
 
     ColorGenerator colors = new RGBColorGenerator();
     Score scoreAdder = new Score() { basePoints = 10, difficultyMultiplier = 2f, comboMultiplier = 3f };
+    Timer timer;
     uint score = 0;
     bool finalClosing = false;
 
@@ -23,21 +24,29 @@ public class ThreeBladesLevel : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.opening = MAX_OPENING;
         shutter.OnColorSelected = MatchQuColor;
+        timer = GetComponent<Timer>();
     }
 
     void Start() {
         SetupQuAndBladesColors();
+        timer.Restart(60f);
     }
 
     void MatchQuColor(Color color) {
-        if (finalClosing) { return; }
+        if (qu.Dead) { return; }
         if (color == qu.Color) { Succeeded(); } else { Failed(); }
+        finalClosing = false;
         Reinitialize();
     }
 
     void Update() {
         if (finalClosing) { return; }
-        if (shutter.opening == 0f) {
+        if (timer.OutOfTime) {
+            score = 0;
+            scoreboard.text = score.ToString();
+            timer.Restart(60f);
+            Reinitialize();
+        } else if (shutter.opening == 0f) {
             Reinitialize();
         } else if (shutter.opening <= MIN_OPENING) {
             finalClosing = true;
@@ -88,15 +97,19 @@ public class ThreeBladesLevel : MonoBehaviour {
     Color RandomColor { get { return colors.Generate(); } }
 
     IEnumerator FinalClosingAnimation() {
-        qu.StretchEyes();
-        yield return new WaitForSeconds(0.5f);
-        qu.Die();
-        while (shutter.opening >= 0.0001f) {
+        if (finalClosing) {
+            qu.StretchEyes();
+            yield return new WaitForSeconds(0.5f);
+        }
+        if (finalClosing) { qu.Die(); }
+        while (finalClosing && shutter.opening >= 0.0001f) {
             shutter.opening /= 1.1f;
             yield return null;
         }
-        shutter.opening = 0f;
-        finalClosing = false;
-        yield return new WaitForSeconds(0.5f);
+        if (finalClosing) {
+            shutter.opening = 0f;
+            finalClosing = false;
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }
