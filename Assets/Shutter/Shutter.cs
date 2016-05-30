@@ -22,6 +22,8 @@ public class Shutter : MonoBehaviour {
         BuildBlades();
     }
 
+    public System.Action<Color> OnColorSelected { get; set; }
+
     void Awake() {
         BuildBlades();
     }
@@ -60,6 +62,8 @@ public class Shutter : MonoBehaviour {
         shape.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
         shape.AddComponent<MeshFilter>().mesh = triangle.Mesh;
         shape.AddComponent<MeshRenderer>().material = Material(color);
+        shape.AddComponent<MeshCollider>();
+        shape.AddComponent<ClickListener>().Initialize(OnColorSelected, color);
     }
 
     Material Material(Color color) {
@@ -88,6 +92,21 @@ public class Shutter : MonoBehaviour {
             BuildBlades();
             lastBladesNumber = bladesNumber;
             lastRelativeSize = relativeSize;
+        }
+    }
+
+    class ClickListener : MonoBehaviour {
+
+        System.Action<Color> colorSelected;
+        Color color;
+
+        public void Initialize(System.Action<Color> colorSelected, Color color) {
+            this.colorSelected = colorSelected;
+            this.color = color;
+        }
+
+        void OnMouseDown() {
+            if (colorSelected != null) { colorSelected(color); }
         }
     }
 }

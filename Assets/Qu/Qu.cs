@@ -19,8 +19,9 @@ public class Qu : MonoBehaviour {
         StartCoroutine(MoveEyes());
     }
 
-    public void SetColor(Color color) {
-        sprite.color = color;
+    public Color Color {
+        get { return sprite.color; }
+        set { sprite.color = value; }
     }
 
     public void Die() {

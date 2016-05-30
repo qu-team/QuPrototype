@@ -22,44 +22,55 @@ public class ThreeBladesLevel : MonoBehaviour {
         shutter.bladesNumber = 3;
         shutter.relativeSize = SIZE;
         shutter.opening = MAX_OPENING;
+        shutter.OnColorSelected = MatchQuColor;
     }
 
     void Start() {
         SetupQuAndBladesColors();
     }
 
+    void MatchQuColor(Color color) {
+        if (finalClosing) { return; }
+        if (color == qu.Color) { Succeeded(); } else { Failed(); }
+        Reinitialize();
+    }
+
     void Update() {
         if (finalClosing) { return; }
         if (shutter.opening == 0f) {
-            StubGameplay();
-            shutter.opening = MAX_OPENING;
-            qu.Restore();
-            SetDifficulty();
-            RandomizeColorSpace();
-            SetupQuAndBladesColors();
+            Reinitialize();
         } else if (shutter.opening <= MIN_OPENING) {
             finalClosing = true;
+            Failed();
             StartCoroutine(FinalClosingAnimation());
         } else {
             shutter.opening -= closingSpeed * Time.deltaTime;
         }
     }
 
-    void StubGameplay() {
-        if (Random.value <= 0.75f) {
-            score += scoreAdder.Value;
-            scoreAdder.Succeeded();
-            scoreboard.text = score.ToString();
-        } else {
-            scoreAdder.Failed();
-        }
+    void Reinitialize() {
+        shutter.opening = MAX_OPENING;
+        qu.Restore();
+        SetDifficulty();
+        RandomizeColorSpace();
+        SetupQuAndBladesColors();
+    }
+
+    void Succeeded() {
+        score += scoreAdder.Value;
+        scoreAdder.Succeeded();
+        scoreboard.text = score.ToString();
+    }
+
+    void Failed() {
+        scoreAdder.Failed();
     }
 
     void SetupQuAndBladesColors() {
         var colors = new Color[] { RandomColor, RandomColor, RandomColor };
         var index = Random.Range(0, 2);
         shutter.SetBladeColors(colors);
-        qu.SetColor(colors[index]);
+        qu.Color = colors[index];
     }
 
     void RandomizeColorSpace() {
