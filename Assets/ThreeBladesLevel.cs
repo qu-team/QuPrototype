@@ -14,7 +14,6 @@ public class ThreeBladesLevel : MonoBehaviour {
     public float difficultyExponent = 0.6f;
 
     const float SIZE = 6f;
-    const float MAX_OPENING = 0.25f;
     const float MIN_OPENING = 0.04f;
 
     ColorGenerator colors = new RGBColorGenerator();
@@ -24,9 +23,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     bool finalClosing = false;
 
     void Awake() {
-        shutter.bladesNumber = 3;
         shutter.relativeSize = SIZE;
-        shutter.opening = MAX_OPENING;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
     }
