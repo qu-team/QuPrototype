@@ -22,6 +22,12 @@ public class Shutter : MonoBehaviour {
         BuildBlades();
     }
 
+    public void ResetOpening() {
+	// Adjust opening for the number of blades.
+	// Note: 3f is the size of the internal ring
+	opening = bladesNumber / (2 * Mathf.PI) * Mathf.Asin(3f/relativeSize);
+    }
+
     public System.Action<Color> OnColorSelected { get; set; }
 
     void Awake() {
@@ -39,9 +45,7 @@ public class Shutter : MonoBehaviour {
             AddBladeShape(blade, triangle, ColorForBlade(i));
             blades[i] = blade;
         }
-	// Adjust opening for the number of blades.
-	// Note: 3f is the size of the internal ring
-	opening = bladesNumber / (2 * Mathf.PI) * Mathf.Asin(3f/relativeSize);
+	ResetOpening();
         UpdateBladesRotation();
     }
 
