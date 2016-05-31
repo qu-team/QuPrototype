@@ -18,7 +18,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     const float MIN_OPENING = 0.04f;
 
     ColorGenerator colors = new RGBColorGenerator();
-    Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 50f, comboMultiplier = 100f };
+    Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
     Timer timer;
     uint score = 0;
     bool finalClosing = false;
