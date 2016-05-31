@@ -4,8 +4,10 @@ public class RGBColorGenerator : ColorGenerator {
 
     Vector3 position = new Vector3(0.5f, 0.5f, 0.5f);
     float radius = 0.5f;
+    float minRadius = 0.3f;
 
     public float MaxRadius { get { return 0.5f; } }
+    public float InitialMinRadius { get { return 0.3f; } }
 
     public Vector3 Center { get { return new Vector3(0.5f, 0.5f, 0.5f); } }
 
@@ -16,13 +18,27 @@ public class RGBColorGenerator : ColorGenerator {
 
     public float Radius {
         get { return radius; }
-        set { radius = Mathf.Clamp01(value); }
+        set { 
+            radius = Mathf.Clamp01(value); 
+            minRadius = Mathf.Min(minRadius, radius);
+        }
+    }
+
+    public float MinRadius {
+        get { return minRadius; }
+        set { 
+            minRadius = Mathf.Clamp01(value);
+            radius = Mathf.Max(radius, minRadius);
+        }
     }
 
     public Color Generate() {
-        var r = Random.Range(-1f, 1f) * radius + position.x;
-        var g = Random.Range(-1f, 1f) * radius + position.y;
-        var b = Random.Range(-1f, 1f) * radius + position.z;
+        var r = Random.Range(minRadius, 1f) * Mathf.Sign(Random.value - 0.5f)
+                    * radius + position.x;
+        var g = Random.Range(minRadius, 1f) * Mathf.Sign(Random.value - 0.5f)
+                    * radius + position.y;
+        var b = Random.Range(minRadius, 1f) * Mathf.Sign(Random.value - 0.5f)
+                    * radius + position.z;
         return new Color(r, g, b);
     }
 }

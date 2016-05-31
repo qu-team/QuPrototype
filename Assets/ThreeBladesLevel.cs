@@ -10,6 +10,8 @@ public class ThreeBladesLevel : MonoBehaviour {
     public float closingSpeed;
     public Text scoreboard;
     public Feedback feedback;
+    [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
+    public float difficultyExponent = 0.6f;
 
     const float SIZE = 6f;
     const float MAX_OPENING = 0.25f;
@@ -100,7 +102,8 @@ public class ThreeBladesLevel : MonoBehaviour {
     }
 
     void SetDifficulty() {
-        colors.Radius = colors.MaxRadius / scoreAdder.Difficulty;
+        colors.Radius = colors.MaxRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+	colors.MinRadius = colors.InitialMinRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
     }
 
     Color RandomColor { get { return colors.Generate(); } }

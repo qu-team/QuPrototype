@@ -17,3 +17,6 @@ Tools/AnimationScriptGenerator/bin/Debug/
 Tools/AnimationScriptGenerator/obj/Debug/
 /obj/Debug
 /*.log
+
+tags
+tags.meta
