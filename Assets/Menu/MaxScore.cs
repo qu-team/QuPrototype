@@ -7,7 +7,7 @@ public class MaxScore : MonoBehaviour {
 
     void Update() {
         if (lastScore == GameData.MaxScore) { return; }
-        GetComponent<Text>().text = string.Format("SCORE: {0}", GameData.MaxScore);
+        GetComponent<Text>().text = string.Format("RECORD: {0}", GameData.MaxScore);
         lastScore = GameData.MaxScore;
     }
 }
