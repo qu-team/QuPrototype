@@ -100,7 +100,7 @@ public class ThreeBladesLevel : MonoBehaviour {
 
     void SetDifficulty() {
         colors.Radius = colors.MaxRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
-	colors.MinRadius = colors.InitialMinRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        colors.MinRadius = colors.InitialMinRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
     }
 
     Color RandomColor { get { return colors.Generate(); } }

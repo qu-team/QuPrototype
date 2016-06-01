@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour {
     public Qu qu;
     public Button button;
     public Text title;
+    public AudioClip buttonSound;
 
     void Start() {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
@@ -22,6 +23,7 @@ public class Menu : MonoBehaviour {
 
     public void StartGame() {
         button.interactable = false;
+        AudioSource.PlayClipAtPoint(buttonSound, button.transform.position);
         SceneManager.LoadSceneAsync("Level");
     }
 }
