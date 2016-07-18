@@ -26,6 +26,14 @@ public class ThreeBladesLevel : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
+        closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
+        shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
+        shutter.transform.FindChild("Background").GetComponent<SpriteRenderer>().color = new Color {
+            r = PlayerPrefs.GetFloat(Preferences.BACKGROUND_RED, 0.1f),
+            g = PlayerPrefs.GetFloat(Preferences.BACKGROUND_GREEN, 0.1f),
+            b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
+            a = 1f
+        };
     }
 
     void Start() {
