@@ -22,7 +22,19 @@ public class Qu : MonoBehaviour {
 
     public Color Color {
         get { return sprite.color; }
-        set { sprite.color = value; }
+        set {
+            sprite.color = value;
+            SetEyesColor(white: value.r < 0.5f && value.g < 0.5f && value.b < 0.5f);
+        }
+    }
+
+    void SetEyesColor(bool white) {
+        foreach (var eye in eyes.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) {
+            eye.color = white ? Color.white : Color.black;
+        }
+        foreach (var eye in stretchedEyes.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) {
+            eye.color = white ? Color.white : Color.black;
+        }
     }
 
     public void Die() {
