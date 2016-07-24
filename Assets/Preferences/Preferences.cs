@@ -33,7 +33,7 @@ public class Preferences : MonoBehaviour {
         colorGreen.value = PlayerPrefs.GetFloat(BACKGROUND_GREEN, 0.1f);
         colorBlue.value = PlayerPrefs.GetFloat(BACKGROUND_BLUE, 0.1f);
         bladesSlider.value = PlayerPrefs.GetInt(BLADES, 3);
-        finalApertureSlider.value = PlayerPrefs.GetFloat(FINAL_APERTURE, 0f);
+        finalApertureSlider.value = PlayerPrefs.GetFloat(FINAL_APERTURE, 0.04f);
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
@@ -49,7 +49,7 @@ public class Preferences : MonoBehaviour {
 
     void UpdateBladesSpeed() {
         bladesSpeed = bladesSpeedSlider.value;
-        bladesSpeedLabel.text = string.Format("Blades speed: {0}%", (int) (bladesSpeed * 100));
+        bladesSpeedLabel.text = string.Format("Blades speed: {0}%", (int)(bladesSpeed * 100));
     }
 
     bool ColorChanged() {
@@ -84,5 +84,18 @@ public class Preferences : MonoBehaviour {
         PlayerPrefs.SetFloat(FINAL_APERTURE, finalAperture);
         PlayerPrefs.Save();
         SceneManager.LoadScene("Menu");
+    }
+
+    public void Reset() {
+        bladesSpeedSlider.value = 1f;
+        colorRed.value = 0.1f;
+        colorGreen.value = 0.1f;
+        colorBlue.value = 0.1f;
+        bladesSlider.value = 3;
+        finalApertureSlider.value = 0.04f;
+        UpdateBladesSpeed();
+        UpdateColor();
+        UpdateBlades();
+        UpdateFinalAperture();
     }
 }
