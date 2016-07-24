@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour {
             timerBoard.text = "0.0";
         } else if (remainingTime < 10f) {
             if (timerBoard.color != Color.red) { timerBoard.color = Color.red; }
-            timerBoard.text = string.Format("{0}:n1", remainingTime);
+            timerBoard.text = remainingTime.ToString("0.0");
         } else {
             if (timerBoard.color != Color.white) { timerBoard.color = Color.white; }
             timerBoard.text = ((int)remainingTime).ToString();

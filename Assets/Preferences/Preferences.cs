@@ -49,7 +49,7 @@ public class Preferences : MonoBehaviour {
 
     void UpdateBladesSpeed() {
         bladesSpeed = bladesSpeedSlider.value;
-        bladesSpeedLabel.text = string.Format("Blades speed: {0:#.#}", bladesSpeed);
+        bladesSpeedLabel.text = string.Format("Blades speed: {0}%", (int) (bladesSpeed * 100));
     }
 
     bool ColorChanged() {
