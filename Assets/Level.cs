@@ -14,6 +14,7 @@ public class Level : MonoBehaviour {
     public float difficultyExponent = 0.6f;
     public float finalAperture;
     public float resistance;
+    public int duration;
 
     const float SIZE = 6f;
 
@@ -37,11 +38,12 @@ public class Level : MonoBehaviour {
         };
         finalAperture = PlayerPrefs.GetFloat(Preferences.FINAL_APERTURE, 0.04f);
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, 1f);
+        duration = PlayerPrefs.GetInt(Preferences.DURATION, 60);
     }
 
     void Start() {
         SetupQuAndBladesColors();
-        timer.Restart(60f);
+        timer.Restart(duration);
     }
 
     void MatchQuColor(Color color) {

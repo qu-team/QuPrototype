@@ -11,6 +11,7 @@ public class Preferences : MonoBehaviour {
     public static readonly string BLADES = "Blades";
     public static readonly string FINAL_APERTURE = "FinalAperture";
     public static readonly string RESISTANCE = "Resistance";
+    public static readonly string DURATION = "Duration";
     public static readonly string SCORE = "Score";
 
     public Slider bladesSpeedSlider;
@@ -25,12 +26,15 @@ public class Preferences : MonoBehaviour {
     public Slider finalApertureSlider;
     public Text resistanceLabel;
     public Slider resistanceSlider;
+    public Text durationLabel;
+    public Slider durationSlider;
 
     float bladesSpeed;
     Color color;
     int blades;
     float finalAperture;
     float resistance;
+    int duration;
 
     void Awake() {
         bladesSpeedSlider.value = PlayerPrefs.GetFloat(BLADES_SPEED, 1f);
@@ -40,11 +44,13 @@ public class Preferences : MonoBehaviour {
         bladesSlider.value = PlayerPrefs.GetInt(BLADES, 3);
         finalApertureSlider.value = PlayerPrefs.GetFloat(FINAL_APERTURE, 0.04f);
         resistanceSlider.value = PlayerPrefs.GetFloat(RESISTANCE, 1f);
+        durationSlider.value = PlayerPrefs.GetInt(DURATION, 60);
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
         UpdateFinalAperture();
         UpdateResistance();
+        UpdateDuration();
     }
 
     void Update() {
@@ -53,6 +59,7 @@ public class Preferences : MonoBehaviour {
         if (blades != bladesSlider.value) { UpdateBlades(); }
         if (finalAperture != finalApertureSlider.value) { UpdateFinalAperture(); }
         if (resistance != resistanceSlider.value) { UpdateResistance(); }
+        if (duration != durationSlider.value) { UpdateDuration(); }
     }
 
     void UpdateBladesSpeed() {
@@ -84,6 +91,11 @@ public class Preferences : MonoBehaviour {
         resistanceLabel.text = string.Format("Resistance: {0}s", resistance.ToString("0.0"));
     }
 
+    void UpdateDuration() {
+        duration = (int)durationSlider.value;
+        durationLabel.text = string.Format("Duration: {0}s", duration);
+    }
+
     public void Cancel() {
         SceneManager.LoadScene("Menu");
     }
@@ -96,6 +108,7 @@ public class Preferences : MonoBehaviour {
         PlayerPrefs.SetInt(BLADES, blades);
         PlayerPrefs.SetFloat(FINAL_APERTURE, finalAperture);
         PlayerPrefs.SetFloat(RESISTANCE, resistance);
+        PlayerPrefs.SetInt(DURATION, duration);
         PlayerPrefs.Save();
         SceneManager.LoadScene("Menu");
     }
@@ -108,11 +121,13 @@ public class Preferences : MonoBehaviour {
         bladesSlider.value = 3;
         finalApertureSlider.value = 0.04f;
         resistanceSlider.value = 1f;
+        durationSlider.value = 60;
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
         UpdateFinalAperture();
         UpdateResistance();
+        UpdateDuration();
     }
 
     public void ResetMaxScore() {
