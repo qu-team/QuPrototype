@@ -12,7 +12,6 @@ public class Level : MonoBehaviour {
     public Feedback feedback;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 0.6f;
-    public float initialAperture;
     public float finalAperture;
     public float resistance;
 
