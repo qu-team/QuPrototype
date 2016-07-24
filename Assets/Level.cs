@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class ThreeBladesLevel : MonoBehaviour {
+public class Level : MonoBehaviour {
 
     public Shutter shutter;
     public Qu qu;
