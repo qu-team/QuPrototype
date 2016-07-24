@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour {
     public Qu qu;
     public Button play;
     public Text title;
+    public Text maxScore;
     public AudioClip buttonSound;
 
     void Start() {
@@ -19,6 +20,7 @@ public class Menu : MonoBehaviour {
         var meanGrayColor = (color.r + color.g + color.b) / 3f;
         play.GetComponentInChildren<Text>().color = (meanGrayColor < 0.5f) ? Color.white : Color.black;
         title.color = color;
+        maxScore.color = color;
     }
 
     public void StartGame() {
