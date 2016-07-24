@@ -14,6 +14,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     public float difficultyExponent = 0.6f;
     public float initialAperture;
     public float finalAperture;
+    public float resistance;
 
     const float SIZE = 6f;
 
@@ -36,6 +37,7 @@ public class ThreeBladesLevel : MonoBehaviour {
             a = 1f
         };
         finalAperture = PlayerPrefs.GetFloat(Preferences.FINAL_APERTURE, 0.04f);
+        resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, 1f);
     }
 
     void Start() {
@@ -118,7 +120,7 @@ public class ThreeBladesLevel : MonoBehaviour {
     IEnumerator FinalClosingAnimation() {
         if (finalClosing) {
             qu.StretchEyes();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(resistance);
         }
         if (finalClosing) {
             qu.Die();
