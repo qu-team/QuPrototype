@@ -54,8 +54,7 @@ public class Level : MonoBehaviour {
     void Update() {
         if (finalClosing) { return; }
         if (timer.OutOfTime) {
-            score = 0;
-            scoreboard.text = score.ToString();
+            SetMaxScore();
             SceneManager.LoadScene("Menu");
         } else if (shutter.opening == 0f) {
             Reinitialize();
@@ -64,6 +63,14 @@ public class Level : MonoBehaviour {
             StartCoroutine(FinalClosingAnimation());
         } else {
             shutter.opening -= closingSpeed * Time.deltaTime;
+        }
+    }
+
+    void SetMaxScore() {
+        var maxScore = PlayerPrefs.GetInt(Preferences.SCORE, 0);
+        if (score > maxScore) {
+            PlayerPrefs.SetInt(Preferences.SCORE, (int)score);
+            PlayerPrefs.Save();
         }
     }
 
@@ -77,7 +84,6 @@ public class Level : MonoBehaviour {
 
     void Succeeded() {
         score += scoreAdder.Value;
-        if (score > GameData.MaxScore) { GameData.MaxScore = score; }
         scoreAdder.Succeeded();
         scoreboard.text = score.ToString();
         feedback.Ok();

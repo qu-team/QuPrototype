@@ -12,6 +12,8 @@ public class Menu : MonoBehaviour {
 
     void Start() {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
+        var score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
+        if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
     }
 
     void ColorizeMenuElements(Color color) {

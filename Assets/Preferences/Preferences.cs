@@ -11,6 +11,7 @@ public class Preferences : MonoBehaviour {
     public static readonly string BLADES = "Blades";
     public static readonly string FINAL_APERTURE = "FinalAperture";
     public static readonly string RESISTANCE = "Resistance";
+    public static readonly string SCORE = "Score";
 
     public Slider bladesSpeedSlider;
     public Text bladesSpeedLabel;
@@ -112,5 +113,10 @@ public class Preferences : MonoBehaviour {
         UpdateBlades();
         UpdateFinalAperture();
         UpdateResistance();
+    }
+
+    public void ResetMaxScore() {
+        PlayerPrefs.SetInt(SCORE, 0);
+        PlayerPrefs.Save();
     }
 }
