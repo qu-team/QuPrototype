@@ -12,9 +12,10 @@ public class ThreeBladesLevel : MonoBehaviour {
     public Feedback feedback;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 0.6f;
+    public float initialAperture;
+    public float finalAperture;
 
     const float SIZE = 6f;
-    const float MIN_OPENING = 0.04f;
 
     ColorGenerator colors = new RGBColorGenerator();
     Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
@@ -34,6 +35,7 @@ public class ThreeBladesLevel : MonoBehaviour {
             b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
             a = 1f
         };
+        finalAperture = PlayerPrefs.GetFloat(Preferences.FINAL_APERTURE, 0.04f);
     }
 
     void Start() {
@@ -56,7 +58,7 @@ public class ThreeBladesLevel : MonoBehaviour {
             SceneManager.LoadScene("Menu");
         } else if (shutter.opening == 0f) {
             Reinitialize();
-        } else if (shutter.opening <= MIN_OPENING) {
+        } else if (shutter.opening <= finalAperture) {
             finalClosing = true;
             StartCoroutine(FinalClosingAnimation());
         } else {
