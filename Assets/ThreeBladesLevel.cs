@@ -132,4 +132,8 @@ public class ThreeBladesLevel : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    public void Quit() {
+        SceneManager.LoadScene("Menu");
+    }
 }
