@@ -87,11 +87,13 @@ public class Level : MonoBehaviour {
         scoreAdder.Succeeded();
         scoreboard.text = score.ToString();
         feedback.Ok();
+        qu.BeHappy();
     }
 
     void Failed() {
         scoreAdder.Failed();
         feedback.Wrong();
+        qu.BeScared();
     }
 
     void SetupQuAndBladesColors() {
@@ -134,6 +136,7 @@ public class Level : MonoBehaviour {
         if (finalClosing) {
             yield return new WaitForSeconds(0.5f);
             Reinitialize();
+            qu.OpenEyes();
             finalClosing = false;
         }
     }

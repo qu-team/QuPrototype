@@ -5,15 +5,19 @@ public class Qu : MonoBehaviour {
 
     public GameObject eyes;
     public GameObject stretchedEyes;
+    public GameObject happyEyes;
+    public GameObject scaredEyes;
 
     SpriteRenderer sprite;
     Vector3 originalScale;
     bool dead = false;
+    int expressionCount = 0;
 
     void Awake() {
         sprite = GetComponent<SpriteRenderer>();
         originalScale = transform.localScale;
-        stretchedEyes.SetActive(false);
+        DisableEyes();
+        eyes.SetActive(true);
     }
 
     void Start() {
@@ -29,11 +33,10 @@ public class Qu : MonoBehaviour {
     }
 
     void SetEyesColor(bool white) {
-        foreach (var eye in eyes.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) {
-            eye.color = white ? Color.white : Color.black;
-        }
-        foreach (var eye in stretchedEyes.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) {
-            eye.color = white ? Color.white : Color.black;
+        foreach (var eyesKind in new GameObject[] { eyes, stretchedEyes, happyEyes }) {
+            foreach (var eye in eyesKind.GetComponentsInChildren<SpriteRenderer>(includeInactive: true)) {
+                eye.color = white ? Color.white : Color.black;
+            }
         }
     }
 
@@ -45,19 +48,33 @@ public class Qu : MonoBehaviour {
     public bool Dead { get { return dead; } }
 
     public void Restore() {
-        OpenEyes();
         transform.localScale = originalScale;
         dead = false;
     }
 
     public void StretchEyes() {
-        eyes.SetActive(false);
+        DisableEyes();
         stretchedEyes.SetActive(true);
     }
 
     public void OpenEyes() {
-        stretchedEyes.SetActive(false);
+        DisableEyes();
         eyes.SetActive(true);
+    }
+
+    public void BeHappy() {
+        StartCoroutine(ChangeEyes(happyEyes, 1f));
+    }
+
+    public void BeScared() {
+        StartCoroutine(ChangeEyes(scaredEyes, 1f));
+    }
+
+    void DisableEyes() {
+        eyes.SetActive(false);
+        stretchedEyes.SetActive(false);
+        happyEyes.SetActive(false);
+        scaredEyes.SetActive(false);
     }
 
     IEnumerator DeathAnimation() {
@@ -79,5 +96,16 @@ public class Qu : MonoBehaviour {
                 yield return null;
             }
         }
+    }
+
+    IEnumerator ChangeEyes(GameObject eyesKind, float duration) {
+        var expressionId = ++expressionCount;
+        DisableEyes();
+        eyesKind.SetActive(true);
+        while (duration > 0f) {
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+        if (expressionId == expressionCount) { OpenEyes(); }
     }
 }
