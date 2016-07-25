@@ -58,8 +58,6 @@ public class Level : MonoBehaviour {
         if (timer.OutOfTime) {
             SetMaxScore();
             SceneManager.LoadScene("Menu");
-        } else if (shutter.opening == 0f) {
-            Reinitialize();
         } else if (shutter.opening <= finalAperture) {
             finalClosing = true;
             StartCoroutine(FinalClosingAnimation());
@@ -139,8 +137,9 @@ public class Level : MonoBehaviour {
         }
         if (finalClosing) {
             shutter.opening = 0f;
-            finalClosing = false;
             yield return new WaitForSeconds(0.5f);
+            Reinitialize();
+            finalClosing = false;
         }
     }
 
