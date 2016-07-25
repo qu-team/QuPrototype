@@ -22,6 +22,7 @@ public class Level : MonoBehaviour {
     Timer timer;
     uint score = 0;
     bool finalClosing = false;
+    bool playing;
 
     void Awake() {
         shutter.relativeSize = SIZE;
@@ -43,10 +44,12 @@ public class Level : MonoBehaviour {
     void Start() {
         SetupQuAndBladesColors();
         timer.Set(duration);
+        playing = true;
     }
 
     void MatchQuColor(Color color) {
         if (qu.Dead) { return; }
+        if (!playing) { return; }
         if (color == qu.Color) { Succeeded(); } else { Failed(); }
         finalClosing = false;
         Reinitialize();
@@ -54,9 +57,11 @@ public class Level : MonoBehaviour {
 
     void Update() {
         if (finalClosing) { return; }
+        if (!playing) { return; }
         if (timer.OutOfTime) {
+            playing = false;
             SetMaxScore();
-            SceneManager.LoadScene("Menu");
+            StartCoroutine(OutOfTimeAnimation());
         } else if (shutter.opening <= 0f) {
             shutter.opening = 0f;
             finalClosing = true;
@@ -142,6 +147,16 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
+        SceneManager.LoadScene("Menu");
+    }
+
+    IEnumerator OutOfTimeAnimation() {
+        var time = 2f;
+        while (time > 0) {
+            Camera.main.orthographicSize *= 1.1f;
+            time -= Time.deltaTime;
+            yield return null;
+        }
         SceneManager.LoadScene("Menu");
     }
 }
