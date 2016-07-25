@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
 
-    public float remainingTime = 60f;
-    public Text timerBoard;
+    public RectTransform timerBar;
+
+    float totalTime;
+    float remainingTime;
 
     public bool OutOfTime { get { return remainingTime <= 0f; } }
 
@@ -12,7 +13,8 @@ public class Timer : MonoBehaviour {
         UpdateTimerBoard();
     }
 
-    public void Restart(float time) {
+    public void Set(float time) {
+        totalTime = time;
         remainingTime = time;
         UpdateTimerBoard();
     }
@@ -25,15 +27,11 @@ public class Timer : MonoBehaviour {
     }
 
     void UpdateTimerBoard() {
-        if (timerBoard == null) { return; }
+        if (timerBar == null) { return; }
         if (remainingTime == 0f) {
-            timerBoard.text = "0.0";
-        } else if (remainingTime < 10f) {
-            if (timerBoard.color != Color.red) { timerBoard.color = Color.red; }
-            timerBoard.text = remainingTime.ToString("0.0");
+            timerBar.anchorMax = new Vector2(1f, timerBar.anchorMax.y);
         } else {
-            if (timerBoard.color != Color.white) { timerBoard.color = Color.white; }
-            timerBoard.text = ((int)remainingTime).ToString();
+            timerBar.anchorMax = new Vector2(1f - remainingTime / totalTime, timerBar.anchorMax.y);
         }
     }
 }

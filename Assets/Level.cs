@@ -43,7 +43,7 @@ public class Level : MonoBehaviour {
 
     void Start() {
         SetupQuAndBladesColors();
-        timer.Restart(duration);
+        timer.Set(duration);
     }
 
     void MatchQuColor(Color color) {
