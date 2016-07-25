@@ -9,7 +9,7 @@ public class Preferences : MonoBehaviour {
     public static readonly string BACKGROUND_GREEN = "BackgroundGreen";
     public static readonly string BACKGROUND_BLUE = "BackgroundBlue";
     public static readonly string BLADES = "Blades";
-    public static readonly string FINAL_APERTURE = "FinalAperture";
+    public static readonly string INNER_RADIUS = "InnerRadius";
     public static readonly string RESISTANCE = "Resistance";
     public static readonly string DURATION = "Duration";
     public static readonly string SCORE = "Score";
@@ -22,8 +22,8 @@ public class Preferences : MonoBehaviour {
     public Slider colorBlue;
     public Text bladesLabel;
     public Slider bladesSlider;
-    public Text finalApertureLabel;
-    public Slider finalApertureSlider;
+    public Text innerRadiusLabel;
+    public Slider innerRadiusSlider;
     public Text resistanceLabel;
     public Slider resistanceSlider;
     public Text durationLabel;
@@ -32,7 +32,7 @@ public class Preferences : MonoBehaviour {
     float bladesSpeed;
     Color color;
     int blades;
-    float finalAperture;
+    float innerRadius;
     float resistance;
     int duration;
 
@@ -42,13 +42,13 @@ public class Preferences : MonoBehaviour {
         colorGreen.value = PlayerPrefs.GetFloat(BACKGROUND_GREEN, 0.1f);
         colorBlue.value = PlayerPrefs.GetFloat(BACKGROUND_BLUE, 0.1f);
         bladesSlider.value = PlayerPrefs.GetInt(BLADES, 3);
-        finalApertureSlider.value = PlayerPrefs.GetFloat(FINAL_APERTURE, 0.04f);
+        innerRadiusSlider.value = PlayerPrefs.GetFloat(INNER_RADIUS, 0.049f);
         resistanceSlider.value = PlayerPrefs.GetFloat(RESISTANCE, 1f);
         durationSlider.value = PlayerPrefs.GetInt(DURATION, 60);
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
-        UpdateFinalAperture();
+        UpdateInnerRadius();
         UpdateResistance();
         UpdateDuration();
     }
@@ -57,7 +57,7 @@ public class Preferences : MonoBehaviour {
         if (bladesSpeed != bladesSpeedSlider.value) { UpdateBladesSpeed(); }
         if (ColorChanged()) { UpdateColor(); }
         if (blades != bladesSlider.value) { UpdateBlades(); }
-        if (finalAperture != finalApertureSlider.value) { UpdateFinalAperture(); }
+        if (innerRadius != innerRadiusSlider.value) { UpdateInnerRadius(); }
         if (resistance != resistanceSlider.value) { UpdateResistance(); }
         if (duration != durationSlider.value) { UpdateDuration(); }
     }
@@ -81,9 +81,9 @@ public class Preferences : MonoBehaviour {
         bladesLabel.text = "Blades: " + blades;
     }
 
-    void UpdateFinalAperture() {
-        finalAperture = finalApertureSlider.value;
-        finalApertureLabel.text = string.Format("Final aperture: {0}%", (int)(finalAperture * 100));
+    void UpdateInnerRadius() {
+        innerRadius = innerRadiusSlider.value;
+        innerRadiusLabel.text = string.Format("Inner radius: {0}", innerRadius.ToString("0.00"));
     }
 
     void UpdateResistance() {
@@ -106,7 +106,7 @@ public class Preferences : MonoBehaviour {
         PlayerPrefs.SetFloat(BACKGROUND_GREEN, color.g);
         PlayerPrefs.SetFloat(BACKGROUND_BLUE, color.b);
         PlayerPrefs.SetInt(BLADES, blades);
-        PlayerPrefs.SetFloat(FINAL_APERTURE, finalAperture);
+        PlayerPrefs.SetFloat(INNER_RADIUS, innerRadius);
         PlayerPrefs.SetFloat(RESISTANCE, resistance);
         PlayerPrefs.SetInt(DURATION, duration);
         PlayerPrefs.Save();
@@ -119,13 +119,13 @@ public class Preferences : MonoBehaviour {
         colorGreen.value = 0.1f;
         colorBlue.value = 0.1f;
         bladesSlider.value = 3;
-        finalApertureSlider.value = 0.04f;
+        innerRadiusSlider.value = 0.049f;
         resistanceSlider.value = 1f;
         durationSlider.value = 60;
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
-        UpdateFinalAperture();
+        UpdateInnerRadius();
         UpdateResistance();
         UpdateDuration();
     }

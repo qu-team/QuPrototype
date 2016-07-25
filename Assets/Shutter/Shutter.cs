@@ -10,12 +10,15 @@ public class Shutter : MonoBehaviour {
     public uint bladesNumber = 6;
     public float relativeSize = 1f;
     public Material material;
+    public Sprite circle;
+    public float internalCircleRadius;
 
     GameObject[] blades;
     IList<Color> bladeColors = new List<Color>() { Color.black };
     float lastOpening = 1f;
     uint lastBladesNumber = 6;
     float lastRelativeSize = 1f;
+    Color backgroundColor;
 
     public void SetBladeColors(params Color[] colors) {
         bladeColors = new List<Color>(colors);
@@ -43,10 +46,21 @@ public class Shutter : MonoBehaviour {
             blade.transform.parent = transform;
             blade.transform.localPosition = new Vector2(Mathf.Cos(i * triangle.topAngle), Mathf.Sin(i * triangle.topAngle)) * relativeSize;
             AddBladeShape(blade, triangle, ColorForBlade(i));
+            SetCircle(blade, triangle);
             blades[i] = blade;
         }
         ResetOpening();
         UpdateBladesRotation();
+    }
+
+    void SetCircle(GameObject blade, Triangle triangle) {
+        var child = new GameObject();
+        child.transform.parent = blade.transform;
+        var renderer = child.AddComponent<SpriteRenderer>();
+        renderer.sprite = circle;
+        renderer.color = backgroundColor;
+        child.transform.localPosition = new Vector3(-triangle.Height, -triangle.HalfWidth, -1f);
+        child.transform.localScale = new Vector3(internalCircleRadius, internalCircleRadius, 1f);
     }
 
     void DestroyPreviousBlades() {
@@ -99,6 +113,15 @@ public class Shutter : MonoBehaviour {
             BuildBlades();
             lastBladesNumber = bladesNumber;
             lastRelativeSize = relativeSize;
+        }
+    }
+
+    public Color BackgroundColor {
+        get { return backgroundColor; }
+
+        set {
+            backgroundColor = value;
+            transform.FindChild("Background").GetComponent<SpriteRenderer>().color = value;
         }
     }
 

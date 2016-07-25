@@ -12,7 +12,6 @@ public class Level : MonoBehaviour {
     public Feedback feedback;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 0.6f;
-    public float finalAperture;
     public float resistance;
     public int duration;
 
@@ -30,13 +29,13 @@ public class Level : MonoBehaviour {
         timer = GetComponent<Timer>();
         closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
         shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
-        shutter.transform.FindChild("Background").GetComponent<SpriteRenderer>().color = new Color {
+        shutter.BackgroundColor = new Color {
             r = PlayerPrefs.GetFloat(Preferences.BACKGROUND_RED, 0.1f),
             g = PlayerPrefs.GetFloat(Preferences.BACKGROUND_GREEN, 0.1f),
             b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
             a = 1f
         };
-        finalAperture = PlayerPrefs.GetFloat(Preferences.FINAL_APERTURE, 0.04f);
+        shutter.internalCircleRadius = PlayerPrefs.GetFloat(Preferences.INNER_RADIUS, 0.05f);
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, 1f);
         duration = PlayerPrefs.GetInt(Preferences.DURATION, 60);
     }
@@ -58,7 +57,8 @@ public class Level : MonoBehaviour {
         if (timer.OutOfTime) {
             SetMaxScore();
             SceneManager.LoadScene("Menu");
-        } else if (shutter.opening <= finalAperture) {
+        } else if (shutter.opening <= 0f) {
+            shutter.opening = 0f;
             finalClosing = true;
             StartCoroutine(FinalClosingAnimation());
         } else {
@@ -131,12 +131,7 @@ public class Level : MonoBehaviour {
             qu.Die();
             Failed();
         }
-        while (finalClosing && shutter.opening >= 0.0001f) {
-            shutter.opening /= 1.1f;
-            yield return null;
-        }
         if (finalClosing) {
-            shutter.opening = 0f;
             yield return new WaitForSeconds(0.5f);
             Reinitialize();
             finalClosing = false;
