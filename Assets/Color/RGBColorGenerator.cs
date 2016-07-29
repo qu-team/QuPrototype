@@ -25,18 +25,12 @@ public class RGBColorGenerator : MonoBehaviour {
         var reds = RandomPoints(n, center.x - r, center.x + r);
         var greens = RandomPoints(n, center.y - r, center.y + r);
         var blues = RandomPoints(n, center.z - r, center.z + r);
-        return MixColorComponents(n, reds, greens, blues);
-    }
-
-    public Color[] MixColorComponents(int n, float[] reds, float[] greens, float[] blues) {
+        Shuffle(reds);
+        Shuffle(greens);
+        Shuffle(blues);
         var colors = new Color[n];
-        var remaining = n;
         for (int i = 0; i < n; i++) {
-            var r = ExtractFrom(remaining, reds);
-            var g = ExtractFrom(remaining, greens);
-            var b = ExtractFrom(remaining, blues);
-            colors[i] = new Color(r, g, b);
-            remaining--;
+            colors[i] = new Color(reds[i], greens[i], blues[i]);
         }
         return colors;
     }
@@ -94,16 +88,13 @@ public class RGBColorGenerator : MonoBehaviour {
         return values;
     }
 
-    /// <summary>Chooses a value at random poristion, then deletes it by shifting the following values</summary>
-    float ExtractFrom(int remaining, float[] values) {
-        var i = Random.Range(0, remaining);
-        var value = values[i];
-        ShiftLeftFrom(i, values);
-        return value;
-    }
-
-    void ShiftLeftFrom(int position, float[] array) {
-        var lastPosition = array.Length - 1;
-        for (int i = position; i < lastPosition; i++) { array[i] = array[i + 1]; }
+    /// <summary>Fisher-Yates shuffle</summary>
+    void Shuffle(float[] values) {
+        for (int i = values.Length - 1; i >= 0; i--) {
+            var j = Random.Range(0, i + 1);
+            var value = values[i];
+            values[i] = values[j];
+            values[j] = value;
+        }
     }
 }
