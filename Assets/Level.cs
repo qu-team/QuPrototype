@@ -17,7 +17,7 @@ public class Level : MonoBehaviour {
 
     const float SIZE = 6f;
 
-    ColorGenerator colors = new RGBColorGenerator();
+    RGBColorGenerator colors = new RGBColorGenerator();
     Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
     Timer timer;
     uint score = 0;
@@ -83,7 +83,7 @@ public class Level : MonoBehaviour {
         shutter.ResetOpening();
         qu.Restore();
         SetDifficulty();
-        RandomizeColorSpace();
+        colors.RandomizeCenter();
         SetupQuAndBladesColors();
     }
 
@@ -109,25 +109,14 @@ public class Level : MonoBehaviour {
     }
 
     Color[] RandomColors() {
-        var colors = new Color[shutter.bladesNumber];
-        for (int i = 0; i < colors.Length; i++) { colors[i] = RandomColor; }
-        return colors;
-    }
-
-    void RandomizeColorSpace() {
-        var radius = colors.MaxRadius - colors.Radius;
-        var x = Random.Range(-1f, 1f);
-        var y = Random.Range(-1f, 1f);
-        var z = Random.Range(-1f, 1f);
-        colors.Position = new Vector3(x, y, z) * radius + colors.Center;
+        return colors.Generate((int)shutter.bladesNumber);
     }
 
     void SetDifficulty() {
-        colors.Radius = colors.MaxRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
-        colors.MinRadius = colors.InitialMinRadius / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        var difficulty = Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        colors.radius = RGBColorGenerator.MAX_RADIUS / difficulty;
+        colors.padding = RGBColorGenerator.MAX_PADDING / difficulty;
     }
-
-    Color RandomColor { get { return colors.Generate(); } }
 
     IEnumerator FinalClosingAnimation() {
         if (finalClosing) {
