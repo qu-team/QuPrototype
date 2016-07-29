@@ -4,6 +4,7 @@ public struct Score {
 
     public uint basePoints;
     public float difficultyMultiplier;
+    public float difficultyExponent;
 
     int currentDifficulty;
     float snapshot;
@@ -15,7 +16,10 @@ public struct Score {
 
     public int Value {
         get {
-            return (int)((basePoints + difficultyMultiplier * currentDifficulty * currentDifficulty) / (Time.fixedTime - snapshot));
+            var difficultyScore = difficultyMultiplier * Mathf.Pow(currentDifficulty, difficultyExponent);
+            var delay = Time.fixedTime - snapshot;
+            var score = (basePoints + difficultyScore) / (1f + delay);
+            return (int)score;
         }
     }
 

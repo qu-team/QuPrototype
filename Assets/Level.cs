@@ -17,7 +17,7 @@ public class Level : MonoBehaviour {
 
     const float SIZE = 6f;
 
-    Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
+    Score scoreAdder = new Score() { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
     Timer timer;
     RGBColorGenerator colors;
     int score = 0;
