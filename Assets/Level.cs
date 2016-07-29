@@ -14,6 +14,8 @@ public class Level : MonoBehaviour {
     public float difficultyExponent = 1f;
     public float resistance;
     public int duration;
+    public AudioClip rightAnswerSound;
+    public AudioClip wrongAnswerSound;
 
     const float SIZE = 6f;
 
@@ -94,12 +96,14 @@ public class Level : MonoBehaviour {
         scoreboard.text = score.ToString();
         feedback.Ok();
         qu.BeHappy();
+        GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
     }
 
     void Failed() {
         scoreAdder.Failed();
         feedback.Wrong();
         qu.BeScared();
+        GetComponent<AudioSource>().PlayOneShot(wrongAnswerSound);
     }
 
     void SetupQuAndBladesColors() {
