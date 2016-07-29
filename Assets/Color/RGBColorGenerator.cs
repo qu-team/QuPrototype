@@ -1,26 +1,30 @@
 ﻿using UnityEngine;
 
-public class RGBColorGenerator {
-
-    public static readonly float MAX_RADIUS = 0.5f;
-    public static readonly float MAX_PADDING = 0.3f;
+public class RGBColorGenerator : MonoBehaviour {
 
     public Vector3 center = new Vector3(0.5f, 0.5f, 0.5f);
-    public float radius = MAX_RADIUS;
-    public float padding = MAX_PADDING;
+    public float radius = 0.5f;
+    public float padding = 0.2f;
+    public float scale = 1f;
+
+    public float Radius { get { return radius * scale; } }
+
+    public float Padding { get { return padding * scale; } }
 
     public void RandomizeCenter() {
-        var range = 1f - radius * 2;
+        var r = Radius;
+        var range = 1f - r * 2;
         center = new Vector3(
-            Random.Range(0f, range) + radius,
-            Random.Range(0f, range) + radius,
-            Random.Range(0f, range) + radius);
+            Random.Range(0f, range) + r,
+            Random.Range(0f, range) + r,
+            Random.Range(0f, range) + r);
     }
 
     public Color[] Generate(int n) {
-        var reds = RandomPoints(n, center.x - radius, center.x + radius);
-        var greens = RandomPoints(n, center.y - radius, center.y + radius);
-        var blues = RandomPoints(n, center.z - radius, center.z + radius);
+        var r = Radius;
+        var reds = RandomPoints(n, center.x - r, center.x + r);
+        var greens = RandomPoints(n, center.y - r, center.y + r);
+        var blues = RandomPoints(n, center.z - r, center.z + r);
         return MixColorComponents(n, reds, greens, blues);
     }
 
@@ -57,7 +61,7 @@ public class RGBColorGenerator {
     float[] RandomPoints(int n, float from, float to) {
         var springs = RandomValues(n + 1);
         var offsets = new float[n];
-        var length = to - from - (n - 1) * padding;
+        var length = to - from - (n - 1) * Padding;
         for (int i = 0; i < n; i++) {
             offsets[i] = Norm01(SpringSequence(springs, i + 1) / springs[i]) * length;
             length -= offsets[i];
@@ -86,7 +90,7 @@ public class RGBColorGenerator {
 
     float[] Pad(float[] values, float initialPadding) {
         values[0] += initialPadding;
-        for (int i = 1; i < values.Length; i++) { values[i] += values[i - 1] + padding; }
+        for (int i = 1; i < values.Length; i++) { values[i] += values[i - 1] + Padding; }
         return values;
     }
 

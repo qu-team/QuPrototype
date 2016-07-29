@@ -17,9 +17,9 @@ public class Level : MonoBehaviour {
 
     const float SIZE = 6f;
 
-    RGBColorGenerator colors = new RGBColorGenerator();
     Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
     Timer timer;
+    RGBColorGenerator colors;
     uint score = 0;
     bool finalClosing = false;
     bool playing;
@@ -28,6 +28,7 @@ public class Level : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
+        colors = GetComponent<RGBColorGenerator>();
         closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
         shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
         shutter.BackgroundColor = new Color {
@@ -113,9 +114,7 @@ public class Level : MonoBehaviour {
     }
 
     void SetDifficulty() {
-        var difficulty = Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
-        colors.radius = RGBColorGenerator.MAX_RADIUS / difficulty;
-        colors.padding = RGBColorGenerator.MAX_PADDING / difficulty;
+        colors.scale = 1f / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
     }
 
     IEnumerator FinalClosingAnimation() {
