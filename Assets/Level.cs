@@ -110,7 +110,24 @@ public class Level : MonoBehaviour {
     }
 
     Color[] RandomColors() {
-        return colors.Generate((int)shutter.bladesNumber);
+        Color[] randomColors;
+        do {
+            colors.RandomizeCenter();
+            randomColors = colors.Generate((int)shutter.bladesNumber);
+        } while (AnyColorIsSimilarToBackground(randomColors));
+        return randomColors;
+    }
+
+    bool AnyColorIsSimilarToBackground(Color[] colors) {
+        const float threshold = 5f / 256f;
+        var background = shutter.BackgroundColor;
+        foreach (var color in colors) {
+            if (Mathf.Abs(background.r - color.r) >= threshold) { continue; }
+            if (Mathf.Abs(background.g - color.g) >= threshold) { continue; }
+            if (Mathf.Abs(background.b - color.b) >= threshold) { continue; }
+            return true;
+        }
+        return false;
     }
 
     void SetDifficulty() {
