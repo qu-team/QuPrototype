@@ -11,7 +11,7 @@ public class Level : MonoBehaviour {
     public Text scoreboard;
     public Feedback feedback;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
-    public float difficultyExponent = 0.6f;
+    public float difficultyExponent = 1f;
     public float resistance;
     public int duration;
 
@@ -20,7 +20,7 @@ public class Level : MonoBehaviour {
     Score scoreAdder = new Score() { basePoints = 100, difficultyMultiplier = 200f };
     Timer timer;
     RGBColorGenerator colors;
-    uint score = 0;
+    int score = 0;
     bool finalClosing = false;
     bool playing;
 
@@ -38,8 +38,9 @@ public class Level : MonoBehaviour {
             a = 1f
         };
         shutter.internalCircleRadius = PlayerPrefs.GetFloat(Preferences.INNER_RADIUS, 0.05f);
-        resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, 1f);
-        duration = PlayerPrefs.GetInt(Preferences.DURATION, 60);
+        resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
+        duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
+        difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
     }
 
     void Start() {
@@ -84,7 +85,6 @@ public class Level : MonoBehaviour {
         shutter.ResetOpening();
         qu.Restore();
         SetDifficulty();
-        colors.RandomizeCenter();
         SetupQuAndBladesColors();
     }
 

@@ -12,6 +12,7 @@ public class Preferences : MonoBehaviour {
     public static readonly string INNER_RADIUS = "InnerRadius";
     public static readonly string RESISTANCE = "Resistance";
     public static readonly string DURATION = "Duration";
+    public static readonly string DIFFICULTY = "Difficulty";
     public static readonly string SCORE = "Score";
 
     public Slider bladesSpeedSlider;
@@ -28,6 +29,8 @@ public class Preferences : MonoBehaviour {
     public Slider resistanceSlider;
     public Text durationLabel;
     public Slider durationSlider;
+    public Text difficultyLabel;
+    public Slider difficultySlider;
 
     float bladesSpeed;
     Color color;
@@ -35,6 +38,7 @@ public class Preferences : MonoBehaviour {
     float innerRadius;
     float resistance;
     int duration;
+    float difficulty;
 
     void Awake() {
         bladesSpeedSlider.value = PlayerPrefs.GetFloat(BLADES_SPEED, 1f);
@@ -45,12 +49,14 @@ public class Preferences : MonoBehaviour {
         innerRadiusSlider.value = PlayerPrefs.GetFloat(INNER_RADIUS, 0.049f);
         resistanceSlider.value = PlayerPrefs.GetFloat(RESISTANCE, 1f);
         durationSlider.value = PlayerPrefs.GetInt(DURATION, 60);
+        difficultySlider.value = PlayerPrefs.GetFloat(DIFFICULTY, 1f);
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
         UpdateInnerRadius();
         UpdateResistance();
         UpdateDuration();
+        UpdateDifficulty();
     }
 
     void Update() {
@@ -60,6 +66,7 @@ public class Preferences : MonoBehaviour {
         if (innerRadius != innerRadiusSlider.value) { UpdateInnerRadius(); }
         if (resistance != resistanceSlider.value) { UpdateResistance(); }
         if (duration != durationSlider.value) { UpdateDuration(); }
+        if (difficulty != difficultySlider.value) { UpdateDifficulty(); }
     }
 
     void UpdateBladesSpeed() {
@@ -96,6 +103,11 @@ public class Preferences : MonoBehaviour {
         durationLabel.text = string.Format("Duration: {0}s", duration);
     }
 
+    void UpdateDifficulty() {
+        difficulty = difficultySlider.value;
+        difficultyLabel.text = string.Format("Difficulty: 1 / n^{0}", difficulty.ToString("0.0"));
+    }
+
     public void Cancel() {
         SceneManager.LoadScene("Menu");
     }
@@ -109,6 +121,7 @@ public class Preferences : MonoBehaviour {
         PlayerPrefs.SetFloat(INNER_RADIUS, innerRadius);
         PlayerPrefs.SetFloat(RESISTANCE, resistance);
         PlayerPrefs.SetInt(DURATION, duration);
+        PlayerPrefs.SetFloat(DIFFICULTY, difficulty);
         PlayerPrefs.Save();
         SceneManager.LoadScene("Menu");
     }
@@ -122,12 +135,14 @@ public class Preferences : MonoBehaviour {
         innerRadiusSlider.value = 0.049f;
         resistanceSlider.value = 1f;
         durationSlider.value = 60;
+        difficultySlider.value = 1f;
         UpdateBladesSpeed();
         UpdateColor();
         UpdateBlades();
         UpdateInnerRadius();
         UpdateResistance();
         UpdateDuration();
+        UpdateDifficulty();
     }
 
     public void ResetMaxScore() {
