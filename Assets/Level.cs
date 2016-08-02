@@ -10,6 +10,7 @@ public class Level : MonoBehaviour {
     public float closingSpeed;
     public Text scoreboard;
     public Feedback feedback;
+    public Battery battery;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 1f;
     public float resistance;
@@ -93,6 +94,7 @@ public class Level : MonoBehaviour {
     void Succeeded() {
         score += scoreAdder.Value;
         scoreAdder.Succeeded();
+        battery.Set(scoreAdder);
         scoreboard.text = score.ToString();
         feedback.Ok();
         qu.BeHappy();
@@ -101,6 +103,7 @@ public class Level : MonoBehaviour {
 
     void Failed() {
         scoreAdder.Failed();
+        battery.Set(scoreAdder);
         feedback.Wrong();
         qu.BeScared();
         GetComponent<AudioSource>().PlayOneShot(wrongAnswerSound);
