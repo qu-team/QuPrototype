@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour {
     float remainingTime;
 
     public bool OutOfTime { get { return remainingTime <= 0f; } }
+    public float TimeSinceStart { get { return totalTime - remainingTime; } }
 
     void Start() {
         UpdateTimerBoard();

@@ -5,6 +5,8 @@ using System.Collections;
 
 public class Level : MonoBehaviour {
 
+    const float SIZE = 6f;
+
     public Shutter shutter;
     public Qu qu;
     public float closingSpeed;
@@ -17,15 +19,19 @@ public class Level : MonoBehaviour {
     public int duration;
     public AudioClip rightAnswerSound;
     public AudioClip wrongAnswerSound;
+    public float PartialStartTime { get { return partialStartTime; } }
 
-    const float SIZE = 6f;
+    internal Timer timer;
 
-    Score scoreAdder = new Score() { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
-    Timer timer;
+    Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
     RGBColorGenerator colors;
     int score = 0;
     bool finalClosing = false;
     bool playing;
+
+    // Time when level was reinitialized last
+    private float partialStartTime;
+    private Harvester harvester;
 
     void Awake() {
         shutter.relativeSize = SIZE;
@@ -44,12 +50,14 @@ public class Level : MonoBehaviour {
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
         duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
         difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
+        harvester = new Harvester();
     }
 
     void Start() {
         SetupQuAndBladesColors();
         timer.Set(duration);
         playing = true;
+        partialStartTime = Time.time;
     }
 
     void MatchQuColor(Color color) {
@@ -89,6 +97,7 @@ public class Level : MonoBehaviour {
         qu.Restore();
         SetDifficulty();
         SetupQuAndBladesColors();
+        partialStartTime = Time.time;
     }
 
     void Succeeded() {
@@ -99,6 +108,7 @@ public class Level : MonoBehaviour {
         feedback.Ok();
         qu.BeHappy();
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
+        harvester.SaveSingleSessionData(this, succeeded: true);
     }
 
     void Failed() {
@@ -107,6 +117,7 @@ public class Level : MonoBehaviour {
         feedback.Wrong();
         qu.BeScared();
         GetComponent<AudioSource>().PlayOneShot(wrongAnswerSound);
+        harvester.SaveSingleSessionData(this, succeeded: false);
     }
 
     void SetupQuAndBladesColors() {
@@ -159,6 +170,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
+        harvester.SendStoredData();
         SceneManager.LoadScene("Menu");
     }
 
@@ -169,6 +181,7 @@ public class Level : MonoBehaviour {
             time -= Time.deltaTime;
             yield return null;
         }
+        harvester.SendStoredData();
         SceneManager.LoadScene("Menu");
     }
 }
