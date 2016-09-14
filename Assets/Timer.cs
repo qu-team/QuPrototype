@@ -29,9 +29,9 @@ public class Timer : MonoBehaviour {
     void UpdateTimerBoard() {
         if (timerBar == null) { return; }
         if (remainingTime == 0f) {
-            timerBar.anchorMax = new Vector2(1f, timerBar.anchorMax.y);
+            timerBar.anchorMax = new Vector2(0f, timerBar.anchorMax.y);
         } else {
-            timerBar.anchorMax = new Vector2(1f - remainingTime / totalTime, timerBar.anchorMax.y);
+            timerBar.anchorMax = new Vector2(remainingTime / totalTime, timerBar.anchorMax.y);
         }
     }
 }
