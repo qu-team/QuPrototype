@@ -2,22 +2,26 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
+// Harvester is the object acting as an interface to the harvester thread.
+// All its methods are synchronous and execute on the main thread, but it
+// communicates with the harvester thread via a queue.
 public class Harvester {
 
     private List<DataBundle> storedData;
+    private HarvesterDaemon daemon;
 
-    public Harvester() {
+    public Harvester(HarvesterDaemon daemon) {
         storedData = new List<DataBundle>();
+        this.daemon = daemon;
     }
 
     // Saves the data from a single tap-to-tap session and stores it into memory.
-	public void SaveSingleSessionData(Level level, bool succeeded) {
-		storedData.Add(CreateDataBundle(level, succeeded));
+    public void SaveSingleSessionData(Level level, bool succeeded) {
+        storedData.Add(CreateDataBundle(level, succeeded));
     }
 
     public void SendStoredData() {
-        // TODO: check network and do asynchronously
-        SaveLocally(storedData);
+        daemon.dataPipe.Enqueue(new List<DataBundle>(storedData));
         storedData.Clear();
     }
 
@@ -39,27 +43,13 @@ public class Harvester {
                 g = level.shutter.BackgroundColor.g,
                 b = level.shutter.BackgroundColor.b
             },
-            borderRadius = level.shutter.internalCircleRadius
+            borderRadius = level.shutter.internalCircleRadius,
+            numberOfBlades = level.shutter.bladesNumber
         };
-	}
-
-    private void SaveLocally(IEnumerable<DataBundle> dataList) {
-        string fname = GenerateFileName();
-        Debug.Log("in file " + fname);
-        foreach (DataBundle data in dataList) {
-            string jsonData = JsonUtility.ToJson(data);
-            Debug.Log(jsonData);
-        }
     }
 
     // Converts the shutter's `opening` [0-1] to the distance (in Unity's units) from blades to `radius`
     private float CalculateDistance(float opening, float borderRadius) {
         return opening; // TODO 
-    }
-
-    private string GenerateFileName() {
-        var now = DateTime.Now;
-        return string.Format("{0}-{1}-{2}T{3}:{4}:{5}_{6}", 
-            now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond);
     }
 }

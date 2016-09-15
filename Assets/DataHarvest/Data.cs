@@ -1,5 +1,5 @@
 [System.Serializable]
-struct DataBundle {
+public struct DataBundle {
 	public bool answerCorrect;
 	public float responseTime;
 	public float timeSinceStart;
@@ -8,10 +8,11 @@ struct DataBundle {
 	public DataColor color;
 	public DataColor backgroundColor;
 	public float borderRadius;
+    public uint numberOfBlades;
 }
 
 [System.Serializable]
-struct DataColor {
+public struct DataColor {
 	public float r;
 	public float g;
 	public float b;
