@@ -19,14 +19,17 @@ public class HarvestThreadLauncher : MonoBehaviour {
     }
 
     void OnApplicationQuit() {
-        if (!threadWasStopped) {
+        if (!threadWasStopped && HarvesterDaemon.Instance.IsRunning) {
             threadWasStopped = true;
-            Debug.Log("Stopping harvester");
+            LogHelper.Info(this, "stopping harvester.");
             HarvesterDaemon.Instance.Stop();
             // Wait until the thread actually exits
-            lock (HarvesterDaemon.Instance.stopHandle)
-                if (!Monitor.Wait(HarvesterDaemon.Instance.stopHandle, 3000))
+            lock (HarvesterDaemon.Instance.stopHandle) {
+                if (!Monitor.Wait(HarvesterDaemon.Instance.stopHandle, 3000)) {
+                    LogHelper.Warn(this, "stopping thread timed out.");
                     harvestThread.Abort();
+                }
+            }
         }
     }
 }

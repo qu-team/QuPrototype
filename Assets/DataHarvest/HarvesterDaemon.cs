@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 // The HarvesterDaemon runs its Run method in a separate thread
 // to perform blocking operations like file/network IO.
-public class HarvesterDaemon {
+public sealed class HarvesterDaemon {
     
     private static HarvesterDaemon instance;
 
@@ -18,21 +18,32 @@ public class HarvesterDaemon {
         }
     }
 
+    public bool IsRunning { get { return running; } }
+
     public Queue<IEnumerable<DataBundle>> dataPipe;
     public object stopHandle;
 
     bool shouldStop = false;
+    bool running = false;
+    HarvesterClient client;
+    LocalDataHandler localData;
 
     private HarvesterDaemon() {
         dataPipe = new Queue<IEnumerable<DataBundle>>();
         stopHandle = new object();
+        localData = new LocalDataHandler();
     }
 
     // Method called when thread starts
     public void Run() {
+        if (!StartClient()) {
+            LogHelper.Error(this, "failed to start.");
+            return;
+        }
         // TODO check for local files and try sending them over network
     
-        Debug.Log("Harvester thread started");
+        LogHelper.Info(this, "thread started.");
+        running = true;
 
         while (!shouldStop) {
             if (dataPipe.Count == 0) {
@@ -44,14 +55,23 @@ public class HarvesterDaemon {
                 // Serialize data into JSON
                 string json = SerializeData(dataPipe.Dequeue());
                 if (json == null) continue;
+
                 Debug.Log(json);
+                // Send data to the server
+                if (client.SendData(json)) {
+                    LogHelper.Info(this, "data sent successfully");
+                } else {
+                    LogHelper.Info(this, "network is not available: saving data locally");
+                    localData.SaveLocally(json);
+                }
 
             } catch (InvalidOperationException ex) {
                 // just skip this
-                Debug.Log(ex.StackTrace);
+                LogHelper.Error(this, ex.StackTrace);
             }
         }
 
+        LogHelper.Info(this, "notifying other threads about our stop...");
         lock (stopHandle)
             Monitor.PulseAll(stopHandle);
     }
@@ -76,9 +96,13 @@ public class HarvesterDaemon {
         return jsonBuilder.ToString();
     }
 
-    private string GenerateFileName() {
-        var now = DateTime.Now;
-        return string.Format("{0}-{1}-{2}T{3}:{4}:{5}_{6}", 
-            now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond);
+    private bool StartClient() {
+        try {
+            client = new HarvesterClient();
+        } catch (Exception ex) {
+            LogHelper.Error(this, ex.StackTrace);
+            return false;
+        }
+        return true;
     }
 }
