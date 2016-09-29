@@ -23,7 +23,8 @@ public sealed class HarvesterClient {
                 return false;
             } 
         }
-        return true;
+        return false;
+        //return true;
     }
 
        // TCP, maybe in future

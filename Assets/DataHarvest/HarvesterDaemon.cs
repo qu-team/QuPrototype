@@ -13,7 +13,7 @@ public sealed class HarvesterDaemon {
     public static HarvesterDaemon Instance {
         get {
             if (instance == null)
-                instance = new HarvesterDaemon();
+                instance = new HarvesterDaemon(Application.persistentDataPath);
             return instance;
         }
     }
@@ -28,10 +28,10 @@ public sealed class HarvesterDaemon {
     HarvesterClient client;
     LocalDataHandler localData;
 
-    private HarvesterDaemon() {
+    private HarvesterDaemon(string persistentDataPath) {
         dataPipe = new Queue<IEnumerable<DataBundle>>();
         stopHandle = new object();
-        localData = new LocalDataHandler();
+        localData = new LocalDataHandler(persistentDataPath);
     }
 
     // Method called when thread starts
