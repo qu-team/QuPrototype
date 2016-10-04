@@ -170,7 +170,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
-        harvester.SendStoredData();
+        harvester.SendStoredData(this);
         SceneManager.LoadScene("Menu");
     }
 
@@ -181,7 +181,7 @@ public class Level : MonoBehaviour {
             time -= Time.deltaTime;
             yield return null;
         }
-        harvester.SendStoredData();
+        harvester.SendStoredData(this);
         SceneManager.LoadScene("Menu");
     }
 }

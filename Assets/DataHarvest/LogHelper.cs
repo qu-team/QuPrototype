@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Provides convenience methods for logging
 public static class LogHelper {
     public static void Log(string prelude, object caller, string str) {
         Debug.Log("[ " + prelude + " ] " + caller.GetType().Name + ": " + str);

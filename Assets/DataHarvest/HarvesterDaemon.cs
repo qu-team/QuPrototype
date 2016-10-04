@@ -4,8 +4,10 @@ using System.Text;
 using System.Threading;
 using System.Collections.Generic;
 
-// The HarvesterDaemon runs its Run method in a separate thread
-// to perform blocking operations like file/network IO.
+// The HarvesterDaemon is a singleton that runs its Run method in a separate thread
+// to perform blocking operations like file IO.
+// Basically, it periodically polls its data pipe and saves all its element
+// to separate local files via LocalDataHandler.
 public sealed class HarvesterDaemon {
     
     private static HarvesterDaemon instance;
@@ -20,28 +22,22 @@ public sealed class HarvesterDaemon {
 
     public bool IsRunning { get { return running; } }
 
-    public Queue<IEnumerable<DataBundle>> dataPipe;
+    // Contains the text to save locally
+    public Queue<string> dataPipe;
     public object stopHandle;
 
     bool shouldStop = false;
     bool running = false;
-    HarvesterClient client;
     LocalDataHandler localData;
 
     private HarvesterDaemon(string persistentDataPath) {
-        dataPipe = new Queue<IEnumerable<DataBundle>>();
+        dataPipe = new Queue<string>();
         stopHandle = new object();
         localData = new LocalDataHandler(persistentDataPath);
     }
 
     // Method called when thread starts
     public void Run() {
-        if (!StartClient()) {
-            LogHelper.Error(this, "failed to start.");
-            return;
-        }
-        // TODO check for local files and try sending them over network
-    
         LogHelper.Info(this, "thread started.");
         running = true;
 
@@ -52,18 +48,9 @@ public sealed class HarvesterDaemon {
             }
 
             try {
-                // Serialize data into JSON
-                string json = SerializeData(dataPipe.Dequeue());
-                if (json == null) continue;
-
-                Debug.Log(json);
-                // Send data to the server
-                if (client.SendData(json)) {
-                    LogHelper.Info(this, "data sent successfully");
-                } else {
-                    LogHelper.Info(this, "network is not available: saving data locally");
-                    localData.SaveLocally(json);
-                }
+                string json = dataPipe.Dequeue();
+                LogHelper.Info(this, "saving data locally");
+                localData.SaveCompressed(json);
 
             } catch (InvalidOperationException ex) {
                 // just skip this
@@ -78,31 +65,5 @@ public sealed class HarvesterDaemon {
 
     public void Stop() {
         shouldStop = true;
-    }
-
-    private string SerializeData(IEnumerable<DataBundle> dataList) {
-        StringBuilder jsonBuilder = new StringBuilder("[");
-        foreach (DataBundle data in dataList) {
-            jsonBuilder.Append(UnityEngine.JsonUtility.ToJson(data));
-            jsonBuilder.Append(",");
-        }
-
-        if (jsonBuilder.Length == 1) return null; // should never happen
-
-        // remove trailing comma
-        jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-        jsonBuilder.Append("]");
-
-        return jsonBuilder.ToString();
-    }
-
-    private bool StartClient() {
-        try {
-            client = new HarvesterClient();
-        } catch (Exception ex) {
-            LogHelper.Error(this, ex.StackTrace);
-            return false;
-        }
-        return true;
     }
 }
