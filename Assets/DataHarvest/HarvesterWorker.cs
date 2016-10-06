@@ -17,9 +17,11 @@ internal sealed class HarvesterWorker {
     static readonly string REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
 
     LocalDataHandler localData;
+    readonly string path;
 
     public HarvesterWorker() {
-	    localData = new LocalDataHandler(Application.persistentDataPath);
+        path = Application.persistentDataPath;
+	    localData = new LocalDataHandler(path);
     }
     
     // Tries to send `data` to the server (synchronously). Returns success or failure status.
@@ -42,6 +44,14 @@ internal sealed class HarvesterWorker {
             LogHelper.Warn(this, "error: " + request.error);
             LogHelper.Info(this, "saving data locally");
             localData.SaveCompressed(Data.Serialize(data));
+        }
+    }
+
+    public IEnumerator SendLocal() {
+        LogHelper.Info(this, "checking for local data...");
+
+        foreach (string fname in Directory.GetFiles(path, "*.gz")) {
+             
         }
     }
 }

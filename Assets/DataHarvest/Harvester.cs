@@ -8,9 +8,14 @@ public sealed class Harvester {
     private List<DataBundle> storedData;
     private HarvesterWorker worker;
 
-    public Harvester(HarvesterDaemon daemon) {
+    public Harvester() {
         storedData = new List<DataBundle>();
         worker = new HarvesterWorker();
+    }
+
+    // If we have local files, try sending them over the network and remove the sent ones.
+    public void SendLocalData(MonoBehaviour mb) {
+        mb.StartCoroutine(worker.SendLocal());
     }
 
     // Saves the data from a single tap-to-tap session and stores it into memory.
@@ -18,8 +23,8 @@ public sealed class Harvester {
         storedData.Add(Data.Create(level, succeeded));
     }
 
+    // Try sending data over the network, save locally if unable to send.
     public void SendStoredData(MonoBehaviour mb) {
-        // Try sending data over the network, save locally if unable to send.
         mb.StartCoroutine(worker.SendData(new List<DataBundle>(storedData)));
         storedData.Clear();
     }
