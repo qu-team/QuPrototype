@@ -21,6 +21,8 @@ public static class LogHelper {
     }
 
     public static void Debug(object caller, string str) {
+#if DEBUG
         Log("DEBUG", caller, str);
+#endif
     }
 }

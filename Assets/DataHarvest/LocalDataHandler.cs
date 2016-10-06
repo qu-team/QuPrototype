@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System;
 
-public sealed class LocalDataHandler {
+internal sealed class LocalDataHandler {
     string persistentDataPath;
 
     public LocalDataHandler(string path) {

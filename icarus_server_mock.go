@@ -16,12 +16,24 @@ type dataColor struct {
 }
 
 type userData struct {
+	Devicedata deviceData
+	Gamedata   []gameData
+}
+
+type deviceData struct {
+	ScreenDPI    float64
+	ScreenHeight int
+	ScreenWidth  int
+}
+
+type gameData struct {
 	AnswerCorrect         bool
 	ResponseTime          float64
 	TimeSinceStart        float64
 	BladeQuDistance       float64
 	BladeQuBorderDistance float64
-	Color                 dataColor
+	CorrectColor          dataColor
+	WrongColors           []dataColor
 	BackgroundColor       dataColor
 	BorderRadius          float64
 	NumberOfBlades        uint
@@ -37,7 +49,7 @@ type icarusData struct {
 		Appversion int32
 	}
 	Debug     bool
-	Userdata  []userData
+	Userdata  userData
 	Timestamp struct {
 		Utc  string
 		User string
@@ -47,8 +59,10 @@ type icarusData struct {
 func postHandler(rw http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
 	var data icarusData
+	ok := "OK"
 	if err := decoder.Decode(&data); err != nil {
 		log.Println("Format is not correct!")
+		ok = "KO"
 	} else {
 		log.Println("Format is OK")
 	}
@@ -57,7 +71,7 @@ func postHandler(rw http.ResponseWriter, req *http.Request) {
 	} else {
 		fmt.Println(string(b))
 	}
-	fmt.Printf("--------------EOF (%d bytes)\n\n", req.ContentLength)
+	fmt.Printf("--------------EOF (%s, %d bytes)\n\n", ok, req.ContentLength)
 }
 
 func main() {

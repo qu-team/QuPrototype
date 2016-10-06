@@ -13,6 +13,8 @@ public class Shutter : MonoBehaviour {
     public Sprite circle;
     public float internalCircleRadius;
 
+    public IList<Color> BladeColors { get { return bladeColors; } }
+
     GameObject[] blades;
     IList<Color> bladeColors = new List<Color>() { Color.black };
     float lastOpening = 1f;
