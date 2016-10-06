@@ -25,12 +25,13 @@ public sealed class Harvester {
     public void SendStoredData(MonoBehaviour mb) {
         // Serialize data
         string json = Data.Serialize(storedData);
-        storedData.Clear();
 
         // Tell the daemon to save data locally
         daemon.dataPipe.Enqueue(json);
 
         // Try sending data over the network
-        mb.StartCoroutine(client.SendData(json));
+        mb.StartCoroutine(client.SendData(new List<DataBundle>(storedData)));
+
+        storedData.Clear();
     }
 }
