@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public sealed class HarvesterClient {
     
-    const string SERVER_ADDRESS = "http://127.0.0.1";
+    const string SERVER_ADDRESS = "http://159.149.142.22";
     const int SERVER_PORT = 8000;
     const string REQUEST_PATH = "/";
     const float CONN_TIMEOUT = 5f;
@@ -18,21 +18,23 @@ public sealed class HarvesterClient {
     // Tries to send `data` to the server (synchronously). Returns success or failure status.
     public IEnumerator SendData(List<DataBundle> data) {
         LogHelper.Info(this, "sending data to " + REQUEST_URL + "...");
+        LogHelper.Debug(this, "data has " + data.Count + " elements");
         
         string alldata = Protocol.WrapUserData(data);
+        LogHelper.Debug(this, "Sending payload:\n" + alldata);
         byte[] payload = Encoding.UTF8.GetBytes(alldata);
         var request = new UnityWebRequest(REQUEST_URL);
-	request.method = "POST";
+        request.method = "POST";
         UploadHandler uploader = new UploadHandlerRaw(payload);
         uploader.contentType = "application/json";
         request.uploadHandler = uploader;
         
         yield return request.Send();
 
-	if (!request.isError) {
-		LogHelper.Ok(this, "data sent successfully");
-	} else {
-		LogHelper.Warn(this, "error: " + request.error);
-	}
+        if (!request.isError) {
+            LogHelper.Ok(this, "data sent successfully");
+        } else {
+            LogHelper.Warn(this, "error: " + request.error);
+        }
     }
 }

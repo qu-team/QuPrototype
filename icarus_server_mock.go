@@ -57,7 +57,7 @@ func postHandler(rw http.ResponseWriter, req *http.Request) {
 	} else {
 		fmt.Println(string(b))
 	}
-	fmt.Println("--------------EOF\n")
+	fmt.Printf("--------------EOF (%d bytes)\n\n", req.ContentLength)
 }
 
 func main() {

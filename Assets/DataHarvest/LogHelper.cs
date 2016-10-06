@@ -1,9 +1,7 @@
-using UnityEngine;
-
 // Provides convenience methods for logging
 public static class LogHelper {
     public static void Log(string prelude, object caller, string str) {
-        Debug.Log("[ " + prelude + " ] " + caller.GetType().Name + ": " + str);
+        UnityEngine.Debug.Log("[ " + prelude + " ] " + caller.GetType().Name + ": " + str);
     }
 
     public static void Info(object caller, string str) {
@@ -20,5 +18,9 @@ public static class LogHelper {
 
     public static void Ok(object caller, string str) {
         Log("OK", caller, str);
+    }
+
+    public static void Debug(object caller, string str) {
+        Log("DEBUG", caller, str);
     }
 }
