@@ -21,11 +21,13 @@ internal sealed class HarvesterWorker {
 
     public HarvesterWorker() {
         path = Application.persistentDataPath;
-	    localData = new LocalDataHandler(path);
+        localData = new LocalDataHandler(path);
     }
     
-    // Tries to send `data` to the server (synchronously). Returns success or failure status.
-    public IEnumerator SendData(List<DataBundle> data) {
+    // Tries to send `data` to the server (synchronously). 
+    // If `fileToRemove` is given, it'll be deleted after a successful send operation.
+    // Returns success or failure status.
+    public IEnumerator SendData(List<DataBundle> data, string fileToRemove = null) {
         LogHelper.Info(this, "sending data to " + REQUEST_URL + "...");
         
         string alldata = Protocol.WrapUserData(data);
@@ -40,18 +42,41 @@ internal sealed class HarvesterWorker {
 
         if (!request.isError) {
             LogHelper.Ok(this, "data sent successfully");
+            if (fileToRemove != null)
+                File.Delete(fileToRemove);
         } else {
             LogHelper.Warn(this, "error: " + request.error);
             LogHelper.Info(this, "saving data locally");
             localData.SaveCompressed(Data.Serialize(data));
         }
+
+        yield return null;
     }
 
+    // Checks local data directory and tries to send all data found inside.
     public IEnumerator SendLocal() {
         LogHelper.Info(this, "checking for local data...");
 
         foreach (string fname in Directory.GetFiles(path, "*.gz")) {
-             
+            LogHelper.Debug(this, "loading file " + fname);
+            string datastr = localData.LoadCompressed(fname);
+            if (datastr == null)
+                continue;
+
+            LogHelper.Debug(this, "data string = " + datastr);
+            var data = Data.Deserialize(datastr);
+            LogHelper.Debug(this, "loaded data: " + data);
+            if (data == null) {
+                LogHelper.Info(this, "data in file " + fname + " has an incompatible version: deleting.");
+                File.Delete(fname);
+            } else if (data.Count == 0) {
+                LogHelper.Warn(this, "local file " + fname + " was empty");
+                File.Delete(fname);
+            } else {
+                yield return SendData(data, fname);
+            }
         }
+
+        yield return null;
     }
 }

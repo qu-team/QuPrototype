@@ -50,7 +50,7 @@ public class Level : MonoBehaviour {
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
         duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
         difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
-        harvester = new Harvester();
+        harvester = Harvester.Instance;
     }
 
     void Start() {

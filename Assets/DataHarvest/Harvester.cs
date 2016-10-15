@@ -5,10 +5,20 @@ using System.Collections.Generic;
 // Harvester is the main entrypoint of the data harvesting module.
 public sealed class Harvester {
 
+    private static Harvester instance;
+
+    public static Harvester Instance {
+        get {
+            if (instance == null)
+                instance = new Harvester();
+            return instance;
+        }
+    }
+
     private List<DataBundle> storedData;
     private HarvesterWorker worker;
 
-    public Harvester() {
+    private Harvester() {
         storedData = new List<DataBundle>();
         worker = new HarvesterWorker();
     }
