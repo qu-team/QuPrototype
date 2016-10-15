@@ -21,3 +21,6 @@ Tools/AnimationScriptGenerator/obj/Debug/
 tags
 tags.meta
 *.swp
+
+appconfig.json
+appconfig.json.meta
