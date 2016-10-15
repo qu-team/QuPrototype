@@ -6,7 +6,7 @@ using System;
 
 internal sealed class LocalDataHandler {
     // Don't try to uncompress files larger than this (uncompressed size). 
-    const int MAX_BUF_SIZE = 1024 * 1024 * 50; // 50 KB
+    const int MAX_BUF_SIZE = 1024 * 50; // 50 KB
 
     string persistentDataPath;
 
@@ -35,7 +35,7 @@ internal sealed class LocalDataHandler {
             File.Delete(fname);
             return null;
         } else if (ucsize > MAX_BUF_SIZE) {
-            LogHelper.Warn(this, "file " + fname + " is greater than " + MAX_BUF_SIZE + ": deleting.");
+            LogHelper.Warn(this, "file " + fname + " is greater than " + MAX_BUF_SIZE + " bytes: deleting.");
             File.Delete(fname);
             return null;
         }
