@@ -57,7 +57,7 @@ internal sealed class HarvesterWorker {
     public IEnumerator SendLocal() {
         LogHelper.Info(this, "checking for local data...");
 
-        foreach (string fname in Directory.GetFiles(path, "*.gz")) {
+        foreach (string fname in Directory.GetFiles(path, "qudata_*.gz")) {
             LogHelper.Debug(this, "loading file " + fname);
             string datastr = localData.LoadCompressed(fname);
             if (datastr == null)
@@ -67,7 +67,8 @@ internal sealed class HarvesterWorker {
             var data = Data.Deserialize(datastr);
             LogHelper.Debug(this, "loaded data: " + data);
             if (data == null) {
-                LogHelper.Info(this, "data in file " + fname + " has an incompatible version: deleting.");
+                LogHelper.Info(this, "data in file " + fname + " is unparseable or has an " +
+                               "incompatible version: deleting.");
                 File.Delete(fname);
             } else if (data.Count == 0) {
                 LogHelper.Warn(this, "local file " + fname + " was empty");

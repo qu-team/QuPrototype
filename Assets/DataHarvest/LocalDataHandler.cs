@@ -29,8 +29,12 @@ internal sealed class LocalDataHandler {
 
     public string LoadCompressed(string fname) {
         // Check uncompressed size
-        uint ucsize = UncompressedSize(fname);
-        if (ucsize > MAX_BUF_SIZE) {
+        int ucsize = UncompressedSize(fname);
+        if (ucsize < 0) {
+            LogHelper.Warn(this, "file " + fname + " is too small to be a gzip file: deleting.");
+            File.Delete(fname);
+            return null;
+        } else if (ucsize > MAX_BUF_SIZE) {
             LogHelper.Warn(this, "file " + fname + " is greater than " + MAX_BUF_SIZE + ": deleting.");
             File.Delete(fname);
             return null;
@@ -50,16 +54,17 @@ internal sealed class LocalDataHandler {
 
     string GenerateFileName() {
         var now = DateTime.Now;
-        return string.Format("{0}-{1}-{2}T{3}:{4}:{5}_{6}", 
+        return string.Format("qudata_{0}-{1}-{2}T{3}:{4}:{5}_{6}", 
             now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond);
     }
 
-    uint UncompressedSize(string fname) {
+    int UncompressedSize(string fname) {
         using (var fs = File.OpenRead(fname)) {
+            if (fs.Length < 5) return -1;
             fs.Position = fs.Length - 4;
             var b = new byte[4];
             fs.Read(b, 0, 4);
-            uint length = BitConverter.ToUInt32(b, 0);
+            int length = BitConverter.ToInt32(b, 0);
             return length;
         }
     }

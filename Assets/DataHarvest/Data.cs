@@ -74,10 +74,15 @@ public static class Data {
     }
 
     public static List<DataBundle> Deserialize(string data) {
-        var bundles = UnityEngine.JsonUtility.FromJson<JsonArrayWrapper<DataBundle>>(data);
-        if (bundles.version != VERSION)
+        try {
+            var bundles = UnityEngine.JsonUtility.FromJson<JsonArrayWrapper<DataBundle>>(data);
+            if (bundles.version != VERSION)
+                return null;
+            return new List<DataBundle>(bundles.items);
+        } catch (System.ArgumentException) {
+            LogHelper.Warn(typeof(Data), "failed to parse JSON: " + data);
             return null;
-        return new List<DataBundle>(bundles.items);
+        }
     }
 
     // Converts the shutter's `opening` [0-1] to the distance (in Unity's units) from blades to `radius`
