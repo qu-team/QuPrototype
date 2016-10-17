@@ -30,26 +30,26 @@ public struct IcTimestamp {
 
 [System.Serializable]
 public struct IcQuUserdata {
-	public Devicedata devicedata;
-	public List<DataBundle> gamedata;
+    public Devicedata devicedata;
+    public List<DataBundle> gamedata;
 }
 
 [System.Serializable]
 public struct Devicedata {
-	public float screenDPI;
-	public int screenHeight;
-	public int screenWidth;
+    public float screenDPI;
+    public int screenHeight;
+    public int screenWidth;
 }
 
 /* The data structure is:
  * {
- *	"appdata": IcAppdata
- *	"debug": bool
- * 	"userdata": {
- *		"devicedata": Devicedata
- *		"gamedata": List<DataBundle>
- *	}
- *	"timestamp": IcTimestamp
+ *    "appdata": IcAppdata
+ *    "debug": bool
+ *     "userdata": {
+ *        "devicedata": Devicedata
+ *        "gamedata": List<DataBundle>
+ *    }
+ *    "timestamp": IcTimestamp
  * }
  */
 public static class Protocol {
