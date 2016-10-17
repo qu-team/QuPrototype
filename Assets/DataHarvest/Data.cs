@@ -92,7 +92,9 @@ public static class Data {
 
     [System.Serializable]
     private class JsonArrayWrapper<T> {
+#pragma warning disable 0649
         public uint version;
         public T[] items;
+#pragma warning restore
     }
 }

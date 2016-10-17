@@ -8,11 +8,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 internal sealed class HarvesterWorker {
-    
+
     readonly string SERVER_ADDRESS = "http://127.0.0.1";
     readonly int SERVER_PORT = 8000;
     readonly string REQUEST_PATH = "/";
-    readonly float CONN_TIMEOUT = 5f;
     readonly string REQUEST_URL;
 
     LocalDataHandler localData;
@@ -23,26 +22,27 @@ internal sealed class HarvesterWorker {
         try {
             LogHelper.Debug(this, "loading " + Application.dataPath + Path.DirectorySeparatorChar + "appconfig.json");
             var conf = AppConfig.FromFile(Application.dataPath + Path.DirectorySeparatorChar + "appconfig.json");
-            LogHelper.Info(this, "loaded configuration file: " + conf.ToString());
-            SERVER_ADDRESS = conf.dataserver.address;
-            SERVER_PORT = conf.dataserver.port;
-            REQUEST_PATH = conf.dataserver.path;
+            if (!conf.debug) {
+                SERVER_ADDRESS = conf.dataserver.address;
+                SERVER_PORT = conf.dataserver.port;
+                REQUEST_PATH = conf.dataserver.path;
+            }
         } catch (Exception ex) {
             LogHelper.Warn(this, ex.StackTrace);
-            SERVER_ADDRESS = "http://127.0.0.1";
-            SERVER_PORT = 80;
-            REQUEST_PATH = "/";
         }
         REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
+        LogHelper.Info(this, "request url: " + REQUEST_URL);
         localData = new LocalDataHandler(path);
     }
-    
-    // Tries to send `data` to the server (synchronously). 
-    // If `fileToRemove` is given, it'll be deleted after a successful send operation.
+
+    // Tries to send `data` to the server.
+    // If `sourceFile` is given, the data is assumed to come from that file, therefore
+    // that file will be deleted after a successful send operation, and no local file will be
+    // written if said operation fails.
     // Returns success or failure status.
-    public IEnumerator SendData(List<DataBundle> data, string fileToRemove = null) {
+    public IEnumerator SendData(List<DataBundle> data, string sourceFile = null) {
         LogHelper.Info(this, "sending data to " + REQUEST_URL + "...");
-        
+
         string alldata = Protocol.WrapUserData(data);
         byte[] payload = Encoding.UTF8.GetBytes(alldata);
         var request = new UnityWebRequest(REQUEST_URL);
@@ -50,17 +50,19 @@ internal sealed class HarvesterWorker {
         UploadHandler uploader = new UploadHandlerRaw(payload);
         uploader.contentType = "application/json";
         request.uploadHandler = uploader;
-        
+
         yield return request.Send();
 
         if (!request.isError) {
             LogHelper.Ok(this, "data sent successfully");
-            if (fileToRemove != null)
-                File.Delete(fileToRemove);
+            if (sourceFile != null)
+                File.Delete(sourceFile);
         } else {
             LogHelper.Warn(this, "error: " + request.error);
             LogHelper.Info(this, "saving data locally");
-            localData.SaveCompressed(Data.Serialize(data));
+            // Only save locally if this data doesn't already come from a local file
+            if (sourceFile == null)
+                localData.SaveCompressed(Data.Serialize(data));
         }
 
         yield return null;

@@ -10,50 +10,50 @@ import (
 )
 
 type dataColor struct {
-	R float64
-	G float64
-	B float64
+	R float64 `json:"r"`
+	G float64 `json:"g"`
+	B float64 `json:"b"`
 }
 
 type userData struct {
-	Devicedata deviceData
-	Gamedata   []gameData
+	Devicedata deviceData `json:"devicedata"`
+	Gamedata   []gameData `json:"gamedata"`
 }
 
 type deviceData struct {
-	ScreenDPI    float64
-	ScreenHeight int
-	ScreenWidth  int
+	ScreenDPI    float64 `json:"screenDPI"`
+	ScreenHeight int     `json:"screenHeight"`
+	ScreenWidth  int     `json:"screenWidth"`
 }
 
 type gameData struct {
-	AnswerCorrect         bool
-	ResponseTime          float64
-	TimeSinceStart        float64
-	BladeQuDistance       float64
-	BladeQuBorderDistance float64
-	CorrectColor          dataColor
-	WrongColors           []dataColor
-	BackgroundColor       dataColor
-	BorderRadius          float64
-	NumberOfBlades        uint
+	AnswerCorrect         bool        `json:"answerCorrect"`
+	ResponseTime          float64     `json:"responseTime"`
+	TimeSinceStart        float64     `json:"timeSinceStart"`
+	BladeQuDistance       float64     `json:"bladeQuDistance"`
+	BladeQuBorderDistance float64     `json:"bladeQuBorderDistance"`
+	CorrectColor          dataColor   `json:"correctColor"`
+	WrongColors           []dataColor `json:"wrongColors"`
+	BackgroundColor       dataColor   `json:"backgroundColor"`
+	BorderRadius          float64     `json:"borderRadius"`
+	NumberOfBlades        uint        `json:"numberOfBlades"`
 }
 
 type icarusData struct {
 	Appdata struct {
-		Uuid       string
-		Voiceover  bool
-		Device     string
-		Lang       string
-		Appname    string
-		Appversion int32
-	}
-	Debug     bool
-	Userdata  userData
+		Uuid       string `json:"uuid"`
+		Voiceover  bool   `json:"voiceover"`
+		Device     string `json:"device"`
+		Lang       string `json:"lang"`
+		Appname    string `json:"appname"`
+		Appversion int32  `json:"appversion"`
+	} `json:"appdata"`
+	Debug     bool     `json:"debug"`
+	Userdata  userData `json:"userdata"`
 	Timestamp struct {
-		Utc  string
-		User string
-	}
+		Utc  string `json:"utc"`
+		User string `json:"user"`
+	} `json:"timestamp"`
 }
 
 func postHandler(rw http.ResponseWriter, req *http.Request) {

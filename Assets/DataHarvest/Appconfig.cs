@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Diagnostics.CodeAnalysis;
 
 [System.Serializable]
 internal class AppConfig {
@@ -10,7 +11,10 @@ internal class AppConfig {
 
     private AppConfig() {}
 
+#pragma warning disable 0649
     public DataServer dataserver;
+    public bool debug;
+#pragma warning restore
 
     override public string ToString() {
         return JsonUtility.ToJson(this);
