@@ -8,13 +8,14 @@ public class Menu : MonoBehaviour {
     public Button play;
     public Text title;
     public Text maxScore;
+    public Text loading;
     public AudioClip buttonSound;
 
     void Start() {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
         var score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
         if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
-        Harvester.Instance.SendLocalData(this); 
+        Harvester.Instance.SendLocalData(this);
     }
 
     void ColorizeMenuElements(Color color) {
@@ -28,6 +29,7 @@ public class Menu : MonoBehaviour {
 
     public void StartGame() {
         play.interactable = false;
+        loading.text = "Loading...";
         AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
         SceneManager.LoadSceneAsync("Level");
     }
