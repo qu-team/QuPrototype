@@ -37,4 +37,8 @@ public class Menu : MonoBehaviour {
     public void OpenPreferences() {
         SceneManager.LoadScene("Preferences");
     }
+
+    public void QuitGame() {
+        Application.Quit();
+    }
 }
