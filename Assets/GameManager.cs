@@ -52,6 +52,17 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+#region CardCollection
+
+	public bool IsCardUnlocked(int number){
+		//FIXME
+		if(number <= Card.Collection.Length)
+		return true;
+		else return false;
+	}
+
+#endregion
+
 	enum GameState{
 		MAIN_MENU,
 		CARD_COLLECTION,
