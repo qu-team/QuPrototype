@@ -9,9 +9,9 @@ class CardBehaviour : MonoBehaviour{
 	public Text Description;
 	public RawImage CardImage;
 	public Text Number;
+	public Texture LockedTexture;
 
-
-	public GameManager gm;
+	public GameManager GameManager;
 
 	private Card _displayedCard;
 	public Card DisplayedCard{
@@ -22,19 +22,16 @@ class CardBehaviour : MonoBehaviour{
 			_displayedCard = value;
 			Title.text = _displayedCard.Name;
 			Number.text = ""+_displayedCard.CardNumber;
-			if(gm.IsCardUnlocked( _displayedCard.CardNumber )){
+			if(GameManager.IsCardUnlocked( _displayedCard.CardNumber )){
 				Description.text = _displayedCard.Description;
-				//FIXME, need obj pool
-				Debug.Log("Cards"+System.IO.Path.DirectorySeparatorChar+_displayedCard.CardNumber);
-				CardImage.texture = Resources.Load("Cards"+System.IO.Path.DirectorySeparatorChar+
-						_displayedCard.CardNumber) as Texture;
+				CardImage.texture = _displayedCard.CardImage;
 			}else{
-				
+				CardImage.texture = LockedTexture;
+				Description.text = _displayedCard.UnlockCondition;	
 				}
 		}
 	}
 
 	void Start(){
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 }

@@ -56,9 +56,12 @@ public class GameManager : MonoBehaviour {
 
 	public bool IsCardUnlocked(int number){
 		//FIXME
-		if(number <= Card.Collection.Length)
-		return true;
-		else return false;
+		return (number <= Card.Collection.Length) && number%2==0;
+	}
+
+	public void CardColletionLoaded(CardCollectionManager manager){
+		//FIXME
+		manager.ShowCard(1);
 	}
 
 #endregion
