@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Gestures;
 using System.Collections;
 
 public class CardCollectionManager : MonoBehaviour {
 	//Editor stuff
 	public GesturesDispatcher Dispatcher;
+	public Text CardsUnlocked;
 	
 	GameManager gameManager;
 	public GameObject CardDisplayer;
@@ -19,6 +21,7 @@ public class CardCollectionManager : MonoBehaviour {
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		CardDisplayer.GetComponent<CardBehaviour>().GameManager = gameManager;
 		animator = GetComponent<Animator>();
+		CardsUnlocked.text = "Unlocked Cards "+gameManager.UnlockedCards()+"/"+(Card.Collection.Length-1);
 		gameManager.CardColletionLoaded(this);
 	}
 

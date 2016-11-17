@@ -64,6 +64,10 @@ public class GameManager : MonoBehaviour {
 		manager.ShowCard(1);
 	}
 
+	public int UnlockedCards(){
+		//TODO
+		return 1;
+	}
 #endregion
 
 	enum GameState{
