@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	private GameState currentState;
 
 	//Animation screen vars
-	private int currAnimation=2;
+	public int currAnimation=0;
 	private AnimationController currAnimController;
 
 
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 		//currentState = GameState.MAIN_MENU;
 		//FIXME DEBUG
-		currentState = GameState.GAME_CUT;
+		currentState = GameState.COLLECTION_CUT;
 		PlayerPrefs.SetInt ("LEVEL_UNLOCKED", 10);
 	}
 	// Use this for initialization
@@ -32,11 +32,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void AnimationFinishedLoading(AnimationController controller){
-		currAnimController = controller;
 		controller.PlayAnimation (currAnimation);
 	}
 
-	public void AnimationFinished(){
+	public void AnimationFinished(AnimationController currAnimController){
 		switch (currentState) {
 		case GameState.COLLECTION_CUT:
 			currAnimController.NextAnimation ();

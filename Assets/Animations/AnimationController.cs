@@ -23,7 +23,7 @@ public class AnimationController : MonoBehaviour {
 
 	void AnimationEnd(){
 		Destroy (currAnimation);
-		gameManager.AnimationFinished ();
+		gameManager.AnimationFinished (this);
 		Debug.Log ("Animation finished");
 	}
 
