@@ -34,17 +34,20 @@ static class GameData {
     // Tries to load data from the save file and returns whether the data was
     // loaded or not. The loaded data is available in GameData.data.
     public static bool Load() {
-        if (!File.Exists(SAVE_FILE)) return false;
+        string fname = Application.persistentDataPath + Path.DirectorySeparatorChar + SAVE_FILE + ".gz";
+        if (!File.Exists(fname))
+            return false;
 
         try {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
-            string json = dataHdl.LoadCompressed(SAVE_FILE);
+            string json = dataHdl.LoadCompressed(fname);
             data = JsonUtility.FromJson<PlayerData>(json);
         } catch (Exception e) {
-            LogHelper.Error(typeof(GameData), "Couldn't load save data from " + SAVE_FILE + ": " + e.StackTrace);
+            LogHelper.Error(typeof(GameData), "Couldn't load save data from " + fname + ": "
+                              + e.ToString() + e.StackTrace);
             return false;
         }
-
+        LogHelper.Ok(typeof(GameData), "Loaded save data from " + fname);
         return true;
     }
 
@@ -54,7 +57,10 @@ static class GameData {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
             dataHdl.SaveCompressed(JsonUtility.ToJson(data), SAVE_FILE);
         } catch (Exception e) {
-            LogHelper.Error(typeof(GameData), "Couldn't save data to " + SAVE_FILE + ": " + e.StackTrace);
+            LogHelper.Error(typeof(GameData), "Couldn't save data to " + SAVE_FILE + ": "
+                              + e.ToString() + e.StackTrace);
+            return;
         }
+        LogHelper.Ok(typeof(GameData), "Saved data to " + SAVE_FILE);
     }
 }
