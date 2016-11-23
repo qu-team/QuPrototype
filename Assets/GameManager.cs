@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour {
 		//FIXME DEBUG
 		currentState = GameState.COLLECTION_CUT;
 		PlayerPrefs.SetInt ("LEVEL_UNLOCKED", 10);
+		
 	}
 	// Use this for initialization
 	void Start () {
-	
+		if(GameObject.Find("GameManager") != null){
+			Destroy(gameObject);
+		}
 	}
 	
 	// Update is called once per frame
@@ -67,6 +70,15 @@ public class GameManager : MonoBehaviour {
 		//TODO
 		return 1;
 	}
+#endregion
+
+#region Map
+	public void MapFinishedLoading(MapManager mapManager){
+		//Todo
+		int lastlvl=0;
+		mapManager.MoveCameraAtLevel(lastlvl);
+	}
+
 #endregion
 
 	enum GameState{
