@@ -14,10 +14,11 @@ internal sealed class LocalDataHandler {
         persistentDataPath = path;
     }
 
-    // Saves the string `data` to a local file with an unique name and gzip's it.
+    // Saves the string `data` to a local file and gzip's it.
+    // If filename is not give, generate an unique file name with GenerateFileName().
     public bool SaveCompressed(string data, string filename = "") {
         string pathname = persistentDataPath + Path.DirectorySeparatorChar + 
-			(filename.Length == 0 ? GenerateFileName() : filename) + ".gz";
+            (filename.Length == 0 ? GenerateFileName() : filename) + ".gz";
         using (var compressedStream = File.Create(pathname)) {
             using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress)) {
                 byte[] buf = Encoding.UTF8.GetBytes(data);
@@ -29,6 +30,8 @@ internal sealed class LocalDataHandler {
     }
 
     public string LoadCompressed(string fname) {
+        if (!fname.EndsWith(".gz"))
+            fname += ".gz";
         // Check uncompressed size
         int ucsize = UncompressedSize(fname);
         if (ucsize < 0) {

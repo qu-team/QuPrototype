@@ -15,7 +15,11 @@ public class Menu : MonoBehaviour {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
         var score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
         if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
+        // Send locally cached data to the server
         Harvester.Instance.SendLocalData(this);
+        // Load player stats
+        if (!GameData.Load())
+            LogHelper.Warn(this, "Game data was not loaded from save file.");
     }
 
     void ColorizeMenuElements(Color color) {
@@ -41,4 +45,8 @@ public class Menu : MonoBehaviour {
     public void QuitGame() {
         Application.Quit();
     }
+
+	void OnApplicationQuit() {
+		GameData.Save();
+	}
 }
