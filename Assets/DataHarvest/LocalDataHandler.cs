@@ -15,8 +15,9 @@ internal sealed class LocalDataHandler {
     }
 
     // Saves the string `data` to a local file with an unique name and gzip's it.
-    public bool SaveCompressed(string data) {
-        string pathname = persistentDataPath + Path.DirectorySeparatorChar + GenerateFileName() + ".gz";
+    public bool SaveCompressed(string data, string filename = "") {
+        string pathname = persistentDataPath + Path.DirectorySeparatorChar + 
+			(filename.Length == 0 ? GenerateFileName() : filename) + ".gz";
         using (var compressedStream = File.Create(pathname)) {
             using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress)) {
                 byte[] buf = Encoding.UTF8.GetBytes(data);
