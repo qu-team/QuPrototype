@@ -7,7 +7,7 @@ public class LevelPopup : MonoBehaviour{
 	public Sprite[] Stars;
 
 	public void ShowPopup(GameManager gm, int level){
-		Title.text = (level+1)+ " - " + QuLevel.Levels[level].Name;	
+		Title.text = (level+1)+ " - " + gm.Levels[level].name;	
 		Info.text = "Best Score:\n"+ "-"
 			+ "\nSaved Qus:\n"+ "-"
 			+ "\nTo next level:\n"+ "-";

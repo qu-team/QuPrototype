@@ -12,9 +12,9 @@ struct PlayerData {
     bool[] cardsUnlocked;
     // level reached so far
     int curLevelUnlocked;
-    
+
     int NUnlockedCards {
-        get { 
+        get {
             return cardsUnlocked.Count(e => e);
         }
     }

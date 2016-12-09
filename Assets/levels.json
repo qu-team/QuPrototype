@@ -1,0 +1,12 @@
+{
+    "levels": [
+        {
+			"number": 0,
+			"name": "The Beginning",
+			"aperture": 0.5,
+			"blades": 3,
+			"difficultyExp": 1.0,
+			"quToNextLevel": 10
+        }
+    ]
+}

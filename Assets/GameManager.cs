@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class GameManager : MonoBehaviour {
 
 	private GameState currentState;
+	private LevelsData levels;
 
 	//Animation screen vars
 	public int currAnimation=0;
 	private AnimationController currAnimController;
 
+	public LevelsData Levels {
+		get { return levels; }
+		private set { levels = value; }
+	}
 
 	void Awake(){
 		DontDestroyOnLoad (gameObject);
@@ -16,21 +22,22 @@ public class GameManager : MonoBehaviour {
 		//FIXME DEBUG
 		currentState = GameState.COLLECTION_CUT;
 		PlayerPrefs.SetInt ("LEVEL_UNLOCKED", 10);
-		
+		levels = new LevelsData(Application.dataPath + Path.DirectorySeparatorChar + "levels.json");	
 	}
+
 	// Use this for initialization
 	void Start () {
-		if(GameObject.Find("GameManager") != null){
+		if(GameObject.Find("GameManager") != null) {
 			Destroy(gameObject);
 		}
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 	
 	}
 
-	public void Back(){
+	public void Back() {
 		//TODO caricare la scena precedente
 	}
 
@@ -41,7 +48,7 @@ public class GameManager : MonoBehaviour {
 	public void AnimationFinished(AnimationController currAnimController){
 		switch (currentState) {
 		case GameState.COLLECTION_CUT:
-			currAnimController.NextAnimation ();
+			currAnimController.NextAnimation();
 			break;
 		default:
 			//LoadNextScene();

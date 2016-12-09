@@ -28,16 +28,21 @@ public class Level : MonoBehaviour {
     int score = 0;
     bool finalClosing = false;
     bool playing;
-
     // Time when level was reinitialized last
-    private float partialStartTime;
-    private Harvester harvester;
+    float partialStartTime;
+    Harvester harvester;
 
     void Awake() {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
         colors = GetComponent<RGBColorGenerator>();
+        LoadLevelPrefs();
+        harvester = Harvester.Instance;
+    }
+
+    void LoadLevelPrefs() {
+        var levels = GameObject.FindObjectOfType<GameManager>().Levels;
         closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
         shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
         shutter.BackgroundColor = new Color {
@@ -50,7 +55,6 @@ public class Level : MonoBehaviour {
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
         duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
         difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
-        harvester = Harvester.Instance;
     }
 
     void Start() {

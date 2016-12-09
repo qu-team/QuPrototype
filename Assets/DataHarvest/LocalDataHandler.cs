@@ -32,7 +32,7 @@ internal sealed class LocalDataHandler {
     public string LoadCompressed(string fname) {
         if (!fname.EndsWith(".gz"))
             fname += ".gz";
-	LogHelper.Debug(this, "Loading file " + fname);
+        LogHelper.Debug(this, "Loading file " + fname);
         // Check uncompressed size
         int ucsize = UncompressedSize(fname);
         if (ucsize < 0) {
