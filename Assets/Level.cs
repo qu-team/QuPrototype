@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Level : MonoBehaviour {
 
@@ -31,6 +32,8 @@ public class Level : MonoBehaviour {
     // Time when level was reinitialized last
     float partialStartTime;
     Harvester harvester;
+    // Keeps track of the number of saved qu, max score, etc (for this session)
+    LevelData levelData;
 
     void Awake() {
         shutter.relativeSize = SIZE;
@@ -39,6 +42,7 @@ public class Level : MonoBehaviour {
         colors = GetComponent<RGBColorGenerator>();
         LoadLevelPrefs();
         harvester = Harvester.Instance;
+        levelData = new LevelData();
     }
 
     void LoadLevelPrefs() {
@@ -126,6 +130,9 @@ public class Level : MonoBehaviour {
         qu.BeHappy();
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
         harvester.SaveSingleSessionData(this, succeeded: true);
+        levelData.quSaved++;
+        if (score > levelData.maxScore)
+            levelData.maxScore = score;
     }
 
     void Failed() {
@@ -187,7 +194,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
-        harvester.SendStoredData(this);
+        SaveData();
         SceneManager.LoadScene("MapScene");
     }
 
@@ -198,7 +205,22 @@ public class Level : MonoBehaviour {
             time -= Time.deltaTime;
             yield return null;
         }
-        harvester.SendStoredData(this);
+        SaveData();
         SceneManager.LoadScene("MapScene");
+    }
+
+    void SaveData() {
+        harvester.SendStoredData(this);
+        var gm = GameObject.FindObjectOfType<GameManager>();
+        var lv = gm.CurrentLevel;
+        if (GameData.data.levels == null) {
+            GameData.data.levels = new List<LevelData>();
+            for (int i = 0; i < gm.Levels.Count; ++i)
+                GameData.data.levels.Add(new LevelData());
+            GameData.data.levels[lv] = levelData;
+        } else {
+            GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
+        }
+	GameData.Save();
     }
 }

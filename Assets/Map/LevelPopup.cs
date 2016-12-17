@@ -19,8 +19,11 @@ public class LevelPopup : MonoBehaviour{
 		this.gm = gm;
 		print("level = " + level);
 		Title.text = (level+1)+ " - " + gm.Levels[level].name;	
-		Info.text = "Best Score:\n"+ "-"
-			+ "\nSaved Qus:\n"+ "-"
+		LevelData? lvdata = null;
+		if (GameData.data.levels != null)
+			lvdata = GameData.data.levels[level];
+		Info.text = "Best Score:\n"+ (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
+			+ "\nSaved Qus:\n"+ (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-")
 			+ "\nTo next level:\n"+ "-";
 		//TODO stars
 		this.level = level;
