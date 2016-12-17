@@ -33,9 +33,10 @@ public class Menu : MonoBehaviour {
 
     public void StartGame() {
         play.interactable = false;
+	GameObject.Find("Buttons").SetActive(false);
         loading.text = "Loading...";
         AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
-        SceneManager.LoadSceneAsync("Level");
+        SceneManager.LoadSceneAsync("MapScene");
     }
 
     public void OpenPreferences() {

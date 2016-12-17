@@ -188,7 +188,7 @@ public class Level : MonoBehaviour {
 
     public void Quit() {
         harvester.SendStoredData(this);
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MapScene");
     }
 
     IEnumerator OutOfTimeAnimation() {
@@ -199,6 +199,6 @@ public class Level : MonoBehaviour {
             yield return null;
         }
         harvester.SendStoredData(this);
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MapScene");
     }
 }
