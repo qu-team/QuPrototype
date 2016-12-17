@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.IO;
-using System.Diagnostics.CodeAnalysis;
 
+// Mapping of appconfig.json
 [System.Serializable]
 internal class AppConfig {
     public static AppConfig FromFile(string confFile) {
@@ -10,11 +10,6 @@ internal class AppConfig {
     }
 
     private AppConfig() {}
-
-#pragma warning disable 0649
-    public DataServer dataserver;
-    public bool debug;
-#pragma warning restore
 
     override public string ToString() {
         return JsonUtility.ToJson(this);
@@ -26,4 +21,9 @@ internal class AppConfig {
         public int port;
         public string path;
     }
+
+#pragma warning disable 0649
+    public DataServer dataserver;
+    public bool debug;
+#pragma warning restore
 }

@@ -1,12 +1,36 @@
 {
     "levels": [
         {
-			"number": 0,
-			"name": "The Beginning",
-			"aperture": 0.5,
-			"blades": 3,
-			"difficultyExp": 1.0,
-			"quToNextLevel": 10
+		"number": 0,
+		"name": "The Beginning",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 10
+        },
+        {
+		"number": 1,
+		"name": "Level 2",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 10
         }
     ]
 }

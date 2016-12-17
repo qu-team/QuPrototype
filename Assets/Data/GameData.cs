@@ -9,7 +9,9 @@ struct PlayerData {
     // number of saved Qu
     int quSaved;
     List<LevelData> levels;
+#pragma warning disable 0649
     bool[] cardsUnlocked;
+#pragma warning restore
     // level reached so far
     int curLevelUnlocked;
 

@@ -16,7 +16,7 @@ public class Level : MonoBehaviour {
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 1f;
     public float resistance;
-    public int duration;
+    public uint duration;
     public AudioClip rightAnswerSound;
     public AudioClip wrongAnswerSound;
     public float PartialStartTime { get { return partialStartTime; } }
@@ -42,19 +42,32 @@ public class Level : MonoBehaviour {
     }
 
     void LoadLevelPrefs() {
-        var levels = GameObject.FindObjectOfType<GameManager>().Levels;
-        closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
-        shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
+	var gm = GameObject.FindObjectOfType<GameManager>();
+        var level = gm.Levels[gm.CurrentLevel];
+        closingSpeed = closingSpeed * level.bladesSpeed;
+        shutter.bladesNumber = level.blades;
         shutter.BackgroundColor = new Color {
-            r = PlayerPrefs.GetFloat(Preferences.BACKGROUND_RED, 0.1f),
-            g = PlayerPrefs.GetFloat(Preferences.BACKGROUND_GREEN, 0.1f),
-            b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
+            r = level.bgColor.r,
+            g = level.bgColor.g,
+            b = level.bgColor.b,
             a = 1f
         };
-        shutter.internalCircleRadius = PlayerPrefs.GetFloat(Preferences.INNER_RADIUS, 0.05f);
+        shutter.internalCircleRadius = level.innerRadius;
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
-        duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
-        difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
+        duration = level.duration;
+        difficultyExponent = level.difficultyExp;
+        //closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
+        //shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
+        //shutter.BackgroundColor = new Color {
+            //r = PlayerPrefs.GetFloat(Preferences.BACKGROUND_RED, 0.1f),
+            //g = PlayerPrefs.GetFloat(Preferences.BACKGROUND_GREEN, 0.1f),
+            //b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
+            //a = 1f
+        //};
+        //shutter.internalCircleRadius = PlayerPrefs.GetFloat(Preferences.INNER_RADIUS, 0.05f);
+        //resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
+        //duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
+        //difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
     }
 
     void Start() {

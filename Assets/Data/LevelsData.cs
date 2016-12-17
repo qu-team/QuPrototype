@@ -3,13 +3,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+// Mapping of levels.json
+[Serializable]
+struct QuLevels {
+	public List<QuLevel> levels;
+}
+
+// Contains data on levels' structure
 public sealed class LevelsData {
     public readonly List<QuLevel> levels;
 
     public LevelsData(string fname) {
         try {
             string json = File.ReadAllText(fname);
-            levels = JsonUtility.FromJson<List<QuLevel>>(json);
+            levels = JsonUtility.FromJson<QuLevels>(json).levels;
+            LogHelper.Ok(this, "Loaded " + levels.Count + " levels from " + fname + ".");
         } catch (Exception ex) {
             LogHelper.Error(this, "Couldn't load levels from " + fname + ": " + ex);
         }
@@ -18,6 +26,12 @@ public sealed class LevelsData {
     public QuLevel this[int n] {
         get {
             return levels[n];
+        }
+    }
+
+    public int Count {
+        get {
+            return levels.Count;
         }
     }
 }

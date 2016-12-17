@@ -3,9 +3,9 @@ using Gestures;
 
 public class MapManager : MonoBehaviour{
 	GameManager gm;
-	public GesturesDispatcher Dispatcher;
-	public LevelPopup Popup;
-	public Vector2 MapDimension;
+	public GesturesDispatcher dispatcher;
+	public LevelPopup popup;
+	public Vector2 mapDimension;
 	Vector3 orig;
 	bool justClosed;
 
@@ -13,16 +13,15 @@ public class MapManager : MonoBehaviour{
 	void Start(){
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 		SpriteRenderer sp = GetComponent<SpriteRenderer>();
-		MapDimension = new Vector2(sp.bounds.extents.x ,sp.bounds.extents.y
-				);
+		mapDimension = new Vector2(sp.bounds.extents.x ,sp.bounds.extents.y);
 		gm.MapFinishedLoading(this);
-		Dispatcher.OnTapEnd+= TapEnd;
-		Dispatcher.OnSwipeProgress += SwipeProgress;
-		Dispatcher.OnSwipeStart += SwipeStart;	
+		dispatcher.OnTapEnd+= TapEnd;
+		dispatcher.OnSwipeProgress += SwipeProgress;
+		dispatcher.OnSwipeStart += SwipeStart;	
 	}
 
 	public void ClickedLevel(int level){
-		Popup.ShowPopup(gm,level);	
+		popup.ShowPopup(gm, level);	
 	}
 
 	void TapEnd(Tap tap){
@@ -30,7 +29,7 @@ public class MapManager : MonoBehaviour{
 			justClosed = false;
 			return;
 		}
-		if(Popup.gameObject.activeSelf ) return;
+		if(popup.gameObject.activeSelf ) return;
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(tap.Position), Vector2.zero);
 		if(hit.collider==null) return;
 		LevelSelectButtons lv = hit.collider.gameObject.GetComponent<LevelSelectButtons>();
@@ -40,25 +39,25 @@ public class MapManager : MonoBehaviour{
 	}
 
 	void SwipeProgress(Swipe swipe) {	
-		if(Popup.gameObject.activeSelf ) return;
+		if(popup.gameObject.activeSelf ) return;
 		Camera camera = Camera.main;
 		Vector2 shift = (camera.ScreenToWorldPoint(swipe.End) -
 				camera.ScreenToWorldPoint(swipe.Start));
 		MoveCamera(shift);		
 	}
 	void SwipeStart(Swipe swipe) {
-		if(Popup.gameObject.activeSelf) return;
+		if(popup.gameObject.activeSelf) return;
 		orig =Camera.main.transform.position;
 	}
 	public void ClosePopup(){
 		justClosed= true;
-		Popup.gameObject.SetActive(false);
+		popup.gameObject.SetActive(false);
 	}
 
 	void MoveCamera(Vector2 shift){
 		Camera camera = Camera.main;
-		float xbound = MapDimension.x - camera.orthographicSize * camera.aspect,
-		      ybound = MapDimension.y - camera.orthographicSize;
+		float xbound = mapDimension.x - camera.orthographicSize * camera.aspect,
+		      ybound = mapDimension.y - camera.orthographicSize;
 		camera.transform.position = new Vector3(
 				Mathf.Clamp(orig.x - shift.x, -xbound, xbound),
 				Mathf.Clamp(orig.y - shift.y, -ybound, ybound), orig.z);

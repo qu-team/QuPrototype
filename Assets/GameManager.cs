@@ -1,35 +1,51 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
 
 public class GameManager : MonoBehaviour {
+
+	enum GameState {
+		MAIN_MENU,
+		CARD_COLLECTION,
+		COLLECTION_CUT,
+		GAME_CUT,
+		GAME,
+		MAP,
+	}
 
 	private GameState currentState;
 	private LevelsData levels;
 
 	//Animation screen vars
 	public int currAnimation=0;
+
 	private AnimationController currAnimController;
+	private int curLevel;
 
 	public LevelsData Levels {
 		get { return levels; }
 		private set { levels = value; }
 	}
 
+	public int CurrentLevel {
+		get { return curLevel; }
+	}
+
 	void Awake(){
-		DontDestroyOnLoad (gameObject);
+		DontDestroyOnLoad(gameObject);
 		//currentState = GameState.MAIN_MENU;
 		//FIXME DEBUG
 		currentState = GameState.COLLECTION_CUT;
-		PlayerPrefs.SetInt ("LEVEL_UNLOCKED", 10);
+		PlayerPrefs.SetInt("LEVEL_UNLOCKED", 10);
 		levels = new LevelsData(Application.dataPath + Path.DirectorySeparatorChar + "levels.json");	
 	}
 
 	// Use this for initialization
-	void Start () {
-		if(GameObject.Find("GameManager") != null) {
-			Destroy(gameObject);
-		}
+	void Start() {
+		//if(GameObject.Find("GameManager") != null) {
+			//Destroy(gameObject);
+		//}
 	}
 	
 	// Update is called once per frame
@@ -42,7 +58,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void AnimationFinishedLoading(AnimationController controller){
-		controller.PlayAnimation (currAnimation);
+		controller.PlayAnimation(currAnimation);
 	}
 
 	public void AnimationFinished(AnimationController currAnimController){
@@ -88,12 +104,8 @@ public class GameManager : MonoBehaviour {
 
 #endregion
 
-	enum GameState{
-		MAIN_MENU,
-		CARD_COLLECTION,
-		COLLECTION_CUT,
-		GAME_CUT,
-		GAME,
-		MAP,
+	public void PlayLevel(int lv) {
+		curLevel = lv;
+		SceneManager.LoadScene("Level");
 	}
 }
