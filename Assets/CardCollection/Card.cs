@@ -1,10 +1,9 @@
 using UnityEngine;
 
-class Card{
+public class Card{
 
 	public static Card[] Collection  = {
 		//FIXME, will need translation in various languages
-		new Card(),	
 		new Card(1,"Light","Colors are a result of blabla light", "Complete the campaign"),
 		new Card(2,"Animals","Dogs see everything grey, ugly life", "Get three stars in level one")	
 	};

@@ -9,6 +9,8 @@ public class CardCollectionManager : MonoBehaviour {
 	public Text CardsUnlocked;
 	public GameObject CardDetail;
 	public GameObject CardList;
+	public GameObject Content;
+	public GameObject miniCardTemplate;
 
 	GameManager gameManager;
 	public GameObject CardDisplayer;
@@ -26,6 +28,7 @@ public class CardCollectionManager : MonoBehaviour {
 		animator = CardDetail.GetComponent<Animator>();
 		CardDetail.GetComponent<AnimationCallbacks>().cardManager = this;	
 		//CardsUnlocked.text = "Unlocked Cards "+gameManager.UnlockedCards()+"/"+(Card.Collection.Length-1);
+		ShowCardList();
 		gameManager.CardColletionLoaded(this);
 	}
 
@@ -45,6 +48,18 @@ public class CardCollectionManager : MonoBehaviour {
 		currentDisplayedCard = card;
 	}
 
+	public void ShowCardList(){
+		foreach(Card c in Card.Collection){
+			GameObject go = GameObject.Instantiate(miniCardTemplate);
+			go.transform.SetParent( Content.transform);
+			go.transform.localPosition = Vector3.zero;
+			go.transform.localScale = Vector3.one;
+			ListCardBehaviour bh = miniCardTemplate.GetComponent<ListCardBehaviour>();
+			bh.myCard = c;
+			bh.manager = this;
+			bh.ShowCard();
+		}
+	}
 	public void BackButtonCallback(){
 		if(inDetail){
 			CardDetail.SetActive(false);
