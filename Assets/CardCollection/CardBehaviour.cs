@@ -5,11 +5,11 @@ class CardBehaviour : MonoBehaviour{
 
 	//Editor stuff
 	public CardCollectionManager manager;
-	public Text Title;
-	public Text Description;
-	public RawImage CardImage;
-	public Text Number;
-	public Texture LockedTexture;
+	public Text title;
+	public Text description;
+	public RawImage cardImage;
+	public Text number;
+	public Texture lockedTexture;
 
 	public GameManager GameManager;
 
@@ -20,14 +20,14 @@ class CardBehaviour : MonoBehaviour{
 		}
 		set{
 			_displayedCard = value;
-			Title.text = _displayedCard.Name;
-			Number.text = ""+_displayedCard.CardNumber;
+			title.text = _displayedCard.Name;
+			number.text = ""+_displayedCard.CardNumber;
 			if(GameManager.IsCardUnlocked( _displayedCard.CardNumber )){
-				Description.text = _displayedCard.Description;
-				CardImage.texture = _displayedCard.CardImage;
+				description.text = _displayedCard.Description;
+				cardImage.texture = _displayedCard.CardImage;
 			}else{
-				CardImage.texture = LockedTexture;
-				Description.text = _displayedCard.UnlockCondition;	
+				cardImage.texture = lockedTexture;
+				description.text = _displayedCard.UnlockCondition;	
 				}
 		}
 	}

@@ -46,7 +46,7 @@ public class Level : MonoBehaviour {
     }
 
     void LoadLevelPrefs() {
-	var gm = GameObject.FindObjectOfType<GameManager>();
+	var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         closingSpeed = closingSpeed * level.bladesSpeed;
         shutter.bladesNumber = level.blades;
@@ -211,7 +211,7 @@ public class Level : MonoBehaviour {
 
     void SaveData() {
         harvester.SendStoredData(this);
-        var gm = GameObject.FindObjectOfType<GameManager>();
+        var gm = GameManager.Instance;
         var lv = gm.CurrentLevel;
 	print("lv is " + gm.CurrentLevel);
         if (GameData.data.levels == null) {

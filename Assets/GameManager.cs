@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour {
 		MAP,
 	}
 
+	public static GameManager Instance {
+		get;
+		private set;
+	}
+
 	private GameState currentState;
 	private LevelsData levels;
 
@@ -33,6 +38,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Awake() {
+		if (Instance != null && Instance != this) {
+			Destroy(gameObject);
+			return;
+		}
+		Instance = this;
+
 		DontDestroyOnLoad(gameObject);
 		//currentState = GameState.MAIN_MENU;
 		//FIXME DEBUG

@@ -2,7 +2,6 @@ using UnityEngine;
 using Gestures;
 
 public class MapManager : MonoBehaviour{
-	GameManager gm;
 	public GesturesDispatcher dispatcher;
 	public LevelPopup popup;
 	public Vector2 mapDimension;
@@ -11,10 +10,9 @@ public class MapManager : MonoBehaviour{
 
 
 	void Start(){
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 		SpriteRenderer sp = GetComponent<SpriteRenderer>();
 		mapDimension = new Vector2(sp.bounds.extents.x ,sp.bounds.extents.y);
-		gm.MapFinishedLoading(this);
+		GameManager.Instance.MapFinishedLoading(this);
 		dispatcher.OnTapEnd+= TapEnd;
 		dispatcher.OnSwipeProgress += SwipeProgress;
 		dispatcher.OnSwipeStart += SwipeStart;	
@@ -26,7 +24,7 @@ public class MapManager : MonoBehaviour{
 	}
 
 	public void ClickedLevel(int level){
-		popup.ShowPopup(gm, level);	
+		popup.ShowPopup(GameManager.Instance, level);	
 	}
 
 	void TapEnd(Tap tap){

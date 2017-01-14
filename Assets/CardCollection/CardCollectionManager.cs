@@ -7,13 +7,12 @@ public class CardCollectionManager : MonoBehaviour {
 	//Editor stuff
 	public GesturesDispatcher Dispatcher;
 	public Text CardsUnlocked;
-	public GameObject CardDetail;
-	public GameObject CardList;
+	public GameObject cardDetail;
+	public GameObject cardList;
 	public GameObject Content;
 	public GameObject miniCardTemplate;
 
-	GameManager gameManager;
-	public GameObject CardDisplayer;
+	public GameObject cardDisplayer;
 	
 	private int currentDisplayedCard=-1;
 	private Animator animator;
@@ -23,20 +22,19 @@ public class CardCollectionManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Dispatcher.OnSwipeEnd+=OnSwipeEnd;
-		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-		CardDisplayer.GetComponent<CardBehaviour>().GameManager = gameManager;
-		animator = CardDetail.GetComponent<Animator>();
-		CardDetail.GetComponent<AnimationCallbacks>().cardManager = this;	
+		cardDisplayer.GetComponent<CardBehaviour>().GameManager = GameManager.Instance;
+		animator = cardDetail.GetComponent<Animator>();
+		cardDetail.GetComponent<AnimationCallbacks>().cardManager = this;	
 		//CardsUnlocked.text = "Unlocked Cards "+gameManager.UnlockedCards()+"/"+(Card.Collection.Length-1);
-		ShowCardList();
-		gameManager.CardCollectionLoaded(this);
+		ShowcardList();
+		GameManager.Instance.CardCollectionLoaded(this);
 	}
 
 	public void ShowCard(int card){
 		Debug.Log("showing card ..");
 		inDetail = true;
-		CardDetail.SetActive(true);
-		CardList.SetActive(false);
+		cardDetail.SetActive(true);
+		cardList.SetActive(false);
 		if(card == currentDisplayedCard || card<1 || card>=Card.Collection.Length || animating) return;
 		animating = true;
 		if(card > currentDisplayedCard){
@@ -48,7 +46,7 @@ public class CardCollectionManager : MonoBehaviour {
 		currentDisplayedCard = card;
 	}
 
-	public void ShowCardList(){
+	public void ShowcardList(){
 		foreach(Card c in Card.Collection){
 			GameObject go = GameObject.Instantiate(miniCardTemplate);
 			go.transform.SetParent( Content.transform);
@@ -62,8 +60,8 @@ public class CardCollectionManager : MonoBehaviour {
 	}
 	public void BackButtonCallback(){
 		if(inDetail){
-			CardDetail.SetActive(false);
-			CardList.SetActive(true);
+			cardDetail.SetActive(false);
+			cardList.SetActive(true);
 		}else{
 			//TODO LOAD PREV SCENE
 		}
@@ -71,7 +69,7 @@ public class CardCollectionManager : MonoBehaviour {
 	//FIXME DO NOT USE, ONLY FOR ANIMATION EVENT
 	public void DisplayDelayedCard(){
 		Debug.Log("Card number is "+currentDisplayedCard);
-		CardDisplayer.GetComponent<CardBehaviour>().DisplayedCard = Card.Collection[currentDisplayedCard];
+		cardDisplayer.GetComponent<CardBehaviour>().DisplayedCard = Card.Collection[currentDisplayedCard];
 	}	
 	public void AnimationEnded(){
 		animating = false;
