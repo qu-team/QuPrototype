@@ -43,7 +43,7 @@ public struct LevelData {
 }
 
 public static class GameData {
-    const string SAVE_FILE = "gamedata.sav";
+    const string SAVE_FILE = "gamedata.json";
 
     public static PlayerData data;
 
