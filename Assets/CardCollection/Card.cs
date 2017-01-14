@@ -12,17 +12,18 @@ public class Card{
 	public readonly string Description;
 	public readonly int CardNumber;
 	public readonly string UnlockCondition;
-	public Texture CardImage{
+
+	private Texture cardImage;
+	public Texture CardImage {
 		get {
-			//FIXME obj pool pls
-			return Resources.Load("Cards"+System.IO.Path.DirectorySeparatorChar+
-						CardNumber) as Texture;
+			if (cardImage != null) return cardImage;
+			return cardImage = Resources.Load("Cards" +
+					System.IO.Path.DirectorySeparatorChar
+					+ CardNumber) as Texture;
 		}
 	}
 
-	public Card(){
-	}
-	public Card(int num, string n, string desc, string unlock){
+	public Card(int num, string n, string desc, string unlock) {
 		Name = n;
 		Description = desc;
 		CardNumber = num;

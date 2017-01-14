@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	private LevelsData levels;
 
 	//Animation screen vars
-	public int currAnimation=0;
+	public int currAnimation = 0;
 
 	private AnimationController currAnimController;
 	private int curLevel;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 		get { return curLevel; }
 	}
 
-	void Awake(){
+	void Awake() {
 		DontDestroyOnLoad(gameObject);
 		//currentState = GameState.MAIN_MENU;
 		//FIXME DEBUG
@@ -57,11 +57,11 @@ public class GameManager : MonoBehaviour {
 		//TODO caricare la scena precedente
 	}
 
-	public void AnimationFinishedLoading(AnimationController controller){
+	public void AnimationFinishedLoading(AnimationController controller) {
 		controller.PlayAnimation(currAnimation);
 	}
 
-	public void AnimationFinished(AnimationController currAnimController){
+	public void AnimationFinished(AnimationController currAnimController) {
 		switch (currentState) {
 		case GameState.COLLECTION_CUT:
 			currAnimController.NextAnimation();
@@ -73,30 +73,29 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void LoadNextScene(){
+	void LoadNextScene() {
 
 	}
 
 #region CardCollection
-
-	public bool IsCardUnlocked(int number){
+	public bool IsCardUnlocked(int number) {
 		//FIXME
-		return (number <= Card.Collection.Length) && number%2==0;
+		return (number <= Card.Collection.Length) && number%2 == 0;
 	}
 
-	public void CardColletionLoaded(CardCollectionManager manager){
+	public void CardCollectionLoaded(CardCollectionManager manager) {
 		//FIXME
 		manager.ShowCard(1);
 	}
 
-	public int UnlockedCards(){
+	public int UnlockedCards() {
 		//TODO
 		return 1;
 	}
 #endregion
 
 #region Map
-	public void MapFinishedLoading(MapManager mapManager){
+	public void MapFinishedLoading(MapManager mapManager) {
 		//Todo
 		int lastlvl=0;
 		mapManager.MoveCameraAtLevel(lastlvl);

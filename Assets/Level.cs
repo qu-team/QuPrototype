@@ -213,6 +213,7 @@ public class Level : MonoBehaviour {
         harvester.SendStoredData(this);
         var gm = GameObject.FindObjectOfType<GameManager>();
         var lv = gm.CurrentLevel;
+	print("lv is " + gm.CurrentLevel);
         if (GameData.data.levels == null) {
             GameData.data.levels = new List<LevelData>();
             for (int i = 0; i < gm.Levels.Count; ++i)

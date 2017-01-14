@@ -29,7 +29,7 @@ public class CardCollectionManager : MonoBehaviour {
 		CardDetail.GetComponent<AnimationCallbacks>().cardManager = this;	
 		//CardsUnlocked.text = "Unlocked Cards "+gameManager.UnlockedCards()+"/"+(Card.Collection.Length-1);
 		ShowCardList();
-		gameManager.CardColletionLoaded(this);
+		gameManager.CardCollectionLoaded(this);
 	}
 
 	public void ShowCard(int card){

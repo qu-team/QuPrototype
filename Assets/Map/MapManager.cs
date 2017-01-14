@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour{
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(tap.Position), Vector2.zero);
 		if(hit.collider==null) return;
 		LevelSelectButtons lv = hit.collider.gameObject.GetComponent<LevelSelectButtons>();
-		if( lv != null){
+		if (lv != null){
 			ClickedLevel(lv.level);
 		}
 	}
@@ -70,7 +70,7 @@ public class MapManager : MonoBehaviour{
 	}
 
 	public void MoveCameraAtLevel(int lvl){
-		Vector2 target = GameObject.Find("Level" + (lvl+1)).transform.position;
+		Vector2 target = GameObject.Find("Level" + (lvl + 1)).transform.position;
 		MoveCamera(-target + (Vector2)Camera.main.transform.position);
 	}
 }
