@@ -17,9 +17,6 @@ public class Menu : MonoBehaviour {
         if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
         // Send locally cached data to the server
         Harvester.Instance.SendLocalData(this);
-        // Load player stats
-        if (!GameData.Load())
-            LogHelper.Warn(this, "Game data was not loaded from save file.");
     }
 
     void ColorizeMenuElements(Color color) {
@@ -33,9 +30,10 @@ public class Menu : MonoBehaviour {
 
     public void StartGame() {
         play.interactable = false;
+	GameObject.Find("Buttons").SetActive(false);
         loading.text = "Loading...";
         AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
-        SceneManager.LoadSceneAsync("Level");
+        SceneManager.LoadSceneAsync("MapScene");
     }
 
     public void OpenPreferences() {

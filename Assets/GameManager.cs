@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		//if(GameObject.Find("GameManager") != null) {
-			//Destroy(gameObject);
-		//}
+		// Load player stats
+		if (!GameData.Load())
+		    LogHelper.Warn(this, "Game data was not loaded from save file.");
 	}
 	
 	// Update is called once per frame
@@ -106,6 +106,13 @@ public class GameManager : MonoBehaviour {
 
 	public void PlayLevel(int lv) {
 		curLevel = lv;
-		SceneManager.LoadScene("Level");
+		// Find out if we should play the cutscene or not
+		if (GameData.data.levels == null || GameData.data.levels[lv].maxScore <= 0) {
+			currAnimation = lv + 1;
+			currentState = GameState.GAME_CUT;
+			SceneManager.LoadScene("Animations");
+		} else {
+			SceneManager.LoadScene("Level");
+		}
 	}
 }

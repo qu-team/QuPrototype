@@ -5,30 +5,44 @@ using System.Linq;
 using System.Collections.Generic;
 
 [Serializable]
-struct PlayerData {
-    // number of saved Qu
-    int quSaved;
-    List<LevelData> levels;
+public struct PlayerData {
+    public List<LevelData> levels;
 #pragma warning disable 0649
-    bool[] cardsUnlocked;
+    public bool[] cardsUnlocked;
 #pragma warning restore
     // level reached so far
-    int curLevelUnlocked;
+    public uint curLevelUnlocked;
 
-    int NUnlockedCards {
+    public uint NUnlockedCards {
         get {
-            return cardsUnlocked.Count(e => e);
+            return (uint)cardsUnlocked.Count(e => e);
+        }
+    }
+
+    public uint QuSaved {
+        get {
+            uint quSaved = 0;
+            foreach (var level in levels)
+                quSaved += level.quSaved;
+            return quSaved;
         }
     }
 }
 
 [Serializable]
-struct LevelData {
-    long maxScore;
-    int quSaved;
+public struct LevelData {
+    public long maxScore;
+    public uint quSaved;
+
+    public LevelData Overwrite(LevelData data) {
+        return new LevelData {
+            maxScore = Math.Max(data.maxScore, maxScore),
+            quSaved = quSaved + data.quSaved
+        };
+    }
 }
 
-static class GameData {
+public static class GameData {
     const string SAVE_FILE = "gamedata.sav";
 
     public static PlayerData data;

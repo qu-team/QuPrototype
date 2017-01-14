@@ -20,6 +20,11 @@ public class MapManager : MonoBehaviour{
 		dispatcher.OnSwipeStart += SwipeStart;	
 	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Q))
+			Application.Quit();
+	}
+
 	public void ClickedLevel(int level){
 		popup.ShowPopup(gm, level);	
 	}
