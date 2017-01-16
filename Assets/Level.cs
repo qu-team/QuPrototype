@@ -29,6 +29,7 @@ public class Level : MonoBehaviour {
     int score = 0;
     bool finalClosing = false;
     bool playing;
+    bool maxScoreReached = false;
     // Time when level was reinitialized last
     float partialStartTime;
     Harvester harvester;
@@ -108,6 +109,7 @@ public class Level : MonoBehaviour {
     void SetMaxScore() {
         var maxScore = PlayerPrefs.GetInt(Preferences.SCORE, 0);
         if (score > maxScore) {
+            maxScoreReached = true;
             PlayerPrefs.SetInt(Preferences.SCORE, (int)score);
             PlayerPrefs.Save();
         }
@@ -223,5 +225,10 @@ public class Level : MonoBehaviour {
             GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
         }
 	GameData.Save();
+        LoadNextScene();
+    }
+
+    void LoadNextScene() {
+        SceneManager.LoadScene(maxScoreReached ? "ShareScore" : "MapScene");
     }
 }
