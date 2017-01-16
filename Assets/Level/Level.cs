@@ -25,7 +25,8 @@ public class Level : MonoBehaviour {
     internal Timer timer;
 
     Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
-    RGBColorGenerator colors;
+    //RGBColorGenerator colors;
+    HSLColorGenerator colors;
     int score = 0;
     bool finalClosing = false;
     bool playing;
@@ -40,14 +41,14 @@ public class Level : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
-        colors = GetComponent<RGBColorGenerator>();
+        colors = GetComponent<HSLColorGenerator>();
         LoadLevelPrefs();
         harvester = Harvester.Instance;
         levelData = new LevelData();
     }
 
     void LoadLevelPrefs() {
-	var gm = GameManager.Instance;
+        var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         closingSpeed = closingSpeed * level.bladesSpeed;
         shutter.bladesNumber = level.blades;
@@ -125,8 +126,13 @@ public class Level : MonoBehaviour {
         levelData.quSaved++;
         if (score > levelData.maxScore) {
             levelData.maxScore = score;
-            maxScoreReached = true;
-	}
+            if (GameData.data.levels == null
+                    || GameData.data.levels.Count <= GameManager.Instance.CurrentLevel
+                    || score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
+            {
+                maxScoreReached = true;
+            }
+        }
     }
 
     void Failed() {
@@ -148,7 +154,7 @@ public class Level : MonoBehaviour {
     Color[] RandomColors() {
         Color[] randomColors;
         do {
-            colors.RandomizeCenter();
+            //colors.RandomizeCenter();
             randomColors = colors.Generate((int)shutter.bladesNumber);
         } while (AnyColorIsSimilarToBackground(randomColors));
         return randomColors;
@@ -167,7 +173,8 @@ public class Level : MonoBehaviour {
     }
 
     void SetDifficulty() {
-        colors.scale = 1f / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        //colors.scale = 1f / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        colors.arcAmplitude = 360f / (scoreAdder.Difficulty * difficultyExponent);
     }
 
     IEnumerator FinalClosingAnimation() {
@@ -188,8 +195,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
-        SaveData();
-        LoadNextScene();
+        SceneManager.LoadScene("Menu");
     }
 
     IEnumerator OutOfTimeAnimation() {
@@ -207,7 +213,7 @@ public class Level : MonoBehaviour {
         harvester.SendStoredData(this);
         var gm = GameManager.Instance;
         var lv = gm.CurrentLevel;
-	print("lv is " + gm.CurrentLevel);
+        print("lv is " + gm.CurrentLevel);
         if (GameData.data.levels == null) {
             GameData.data.levels = new List<LevelData>();
             for (int i = 0; i < gm.Levels.Count; ++i)
@@ -216,11 +222,10 @@ public class Level : MonoBehaviour {
         } else {
             GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
         }
-	GameData.Save();
+        GameData.Save();
     }
 
     void LoadNextScene() {
-	    print("maxScoreReached = " + maxScoreReached);
         SceneManager.LoadScene(maxScoreReached ? "ShareScore" : "MapScene");
     }
 }

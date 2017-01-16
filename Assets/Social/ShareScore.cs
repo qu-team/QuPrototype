@@ -7,10 +7,10 @@ public class ShareScore : MonoBehaviour {
 
     public Text scoreLabel;
 
-    int score;
+    long score;
 
     void Awake() {
-        score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
+        score = GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore;
         scoreLabel.text = score.ToString();
     }
 
@@ -23,11 +23,12 @@ public class ShareScore : MonoBehaviour {
     }
 
     public void ShareOnTwitter() {
-        string shareUrl = "https://twitter.com/intent/tweet?text=" + Uri.EscapeUriString("I scored " + score + " points on qU!");
+        string shareUrl = "https://twitter.com/intent/tweet?text=" 
+            + Uri.EscapeUriString("I scored " + score + " points on qU!");
         Application.OpenURL(shareUrl);
     }
 
     public void Continue() {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MapScene");
     }
 }

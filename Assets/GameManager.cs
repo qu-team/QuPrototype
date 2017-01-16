@@ -117,7 +117,9 @@ public class GameManager : MonoBehaviour {
 	public void PlayLevel(int lv) {
 		curLevel = lv;
 		// Find out if we should play the cutscene or not
-		if (GameData.data.levels == null || GameData.data.levels[lv].maxScore <= 0) {
+		if (GameData.data.levels == null || GameData.data.levels.Count <= lv 
+				|| GameData.data.levels[lv].maxScore <= 0) 
+		{
 			currAnimation = lv + 1;
 			currentState = GameState.GAME_CUT;
 			SceneManager.LoadScene("Animations");
