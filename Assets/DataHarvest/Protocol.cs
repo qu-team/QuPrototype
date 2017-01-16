@@ -57,7 +57,7 @@ public static class Protocol {
     public static string WrapUserData(List<DataBundle> gamedata) {
         IcarusMsg msg = new IcarusMsg();
         msg.debug = true;
-        msg.appdata.uuid = "NOT_IMPLEMENTED";
+        msg.appdata.uuid = GetUUID();
         msg.appdata.voiceover = false;
         msg.appdata.lang = Application.systemLanguage.ToString();
         msg.appdata.device = SystemInfo.deviceModel;
@@ -75,5 +75,14 @@ public static class Protocol {
         };
 
         return UnityEngine.JsonUtility.ToJson(msg);
+    }
+
+    private static string GetUUID() {
+        string uuid = PlayerPrefs.GetString("IcUUID", "");
+        if (uuid.Length == 0) {
+            uuid = Guid.NewGuid().ToString();
+            PlayerPrefs.SetString("IcUUID", uuid);
+        }
+        return uuid;
     }
 }
