@@ -95,7 +95,6 @@ public class Level : MonoBehaviour {
         if (!playing) { return; }
         if (timer.OutOfTime) {
             playing = false;
-            SetMaxScore();
             StartCoroutine(OutOfTimeAnimation());
         } else if (shutter.opening <= 0f) {
             shutter.opening = 0f;
@@ -103,15 +102,6 @@ public class Level : MonoBehaviour {
             StartCoroutine(FinalClosingAnimation());
         } else {
             shutter.opening -= closingSpeed * Time.deltaTime;
-        }
-    }
-
-    void SetMaxScore() {
-        var maxScore = PlayerPrefs.GetInt(Preferences.SCORE, 0);
-        if (score > maxScore) {
-            maxScoreReached = true;
-            PlayerPrefs.SetInt(Preferences.SCORE, (int)score);
-            PlayerPrefs.Save();
         }
     }
 
@@ -133,8 +123,10 @@ public class Level : MonoBehaviour {
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
         harvester.SaveSingleSessionData(this, succeeded: true);
         levelData.quSaved++;
-        if (score > levelData.maxScore)
+        if (score > levelData.maxScore) {
             levelData.maxScore = score;
+            maxScoreReached = true;
+	}
     }
 
     void Failed() {
@@ -197,7 +189,7 @@ public class Level : MonoBehaviour {
 
     public void Quit() {
         SaveData();
-        SceneManager.LoadScene("MapScene");
+        LoadNextScene();
     }
 
     IEnumerator OutOfTimeAnimation() {
@@ -208,7 +200,7 @@ public class Level : MonoBehaviour {
             yield return null;
         }
         SaveData();
-        SceneManager.LoadScene("MapScene");
+        LoadNextScene();
     }
 
     void SaveData() {
@@ -225,10 +217,10 @@ public class Level : MonoBehaviour {
             GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
         }
 	GameData.Save();
-        LoadNextScene();
     }
 
     void LoadNextScene() {
+	    print("maxScoreReached = " + maxScoreReached);
         SceneManager.LoadScene(maxScoreReached ? "ShareScore" : "MapScene");
     }
 }
