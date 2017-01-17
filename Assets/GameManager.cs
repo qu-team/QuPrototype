@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour {
         //Todo
         int lastlvl=0;
         mapManager.MoveCameraAtLevel(lastlvl);
+        currentState = GameState.MAP;
     }
 
 #endregion
