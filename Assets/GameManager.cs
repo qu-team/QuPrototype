@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void AnimationFinishedLoading(AnimationController controller) {
+		controller.IngameCut = currentState == GameState.GAME_CUT;
 		controller.PlayAnimation(currAnimation);
 	}
 
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour {
 		if (GameData.data.levels == null || GameData.data.levels.Count <= lv 
 				|| GameData.data.levels[lv].maxScore <= 0) 
 		{
-			currAnimation = lv + 1;
+			currAnimation = lv ;
 			currentState = GameState.GAME_CUT;
 			SceneManager.LoadScene("Animations");
 		} else {
