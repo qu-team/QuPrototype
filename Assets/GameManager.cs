@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void Back() {
-		//TODO caricare la scena precedente
+		//TODO caricare la scena precedene
 	}
 
 	public void AnimationFinishedLoading(AnimationController controller) {

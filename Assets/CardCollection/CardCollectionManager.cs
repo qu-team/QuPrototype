@@ -58,7 +58,7 @@ public class CardCollectionManager : MonoBehaviour {
 			go.transform.SetParent( Content.transform);
 			go.transform.localPosition = Vector3.zero;
 			go.transform.localScale = Vector3.one;
-			ListCardBehaviour bh = miniCardTemplate.GetComponent<ListCardBehaviour>();
+			ListCardBehaviour bh = go.GetComponent<ListCardBehaviour>();
 			bh.myCard = c;
 			bh.manager = this;
 			bh.ShowCard();
@@ -69,6 +69,7 @@ public class CardCollectionManager : MonoBehaviour {
 			ShowCardList();	
 		}else{
 			//TODO LOAD PREV SCENE
+			GameManager.Instance.Back();
 		}
 	}
 	//FIXME DO NOT USE, ONLY FOR ANIMATION EVENT
