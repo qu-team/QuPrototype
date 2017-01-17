@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour {
 
 	public void CardCollectionLoaded(CardCollectionManager manager) {
 		//FIXME
-		manager.ShowCard(1);
+		manager.ShowCardList();
 	}
 
 	public int UnlockedCards() {

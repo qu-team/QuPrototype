@@ -16,6 +16,6 @@ public class ListCardBehaviour : MonoBehaviour{
 		myText.text = myCard.CardNumber+""; 
 	}
 	public void ShowDetailCard(){
-		manager.ShowCard(int.Parse(myText.text));
+		manager.ShowCard(int.Parse(myText.text)-1);
 	}
 }
