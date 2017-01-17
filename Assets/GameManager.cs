@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
 
     //Animation screen vars
     public int currAnimation = 0;
+    public bool ignoreNextEscape = false;
 
     private AnimationController currAnimController;
     private int curLevel;
@@ -59,12 +60,13 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyUp(KeyCode.Escape)) {
+        if (currentState != GameState.CARD_COLLECTION && Input.GetKeyUp(KeyCode.Escape)) {
             Back();
         }
     }
 
     public void Back() {
+        print("back");
         switch (currentState) {
         case GameState.CARD_COLLECTION:
         case GameState.COLLECTION_CUT:
@@ -114,6 +116,7 @@ public class GameManager : MonoBehaviour {
 
     public void CardCollectionLoaded(CardCollectionManager manager) {
         //FIXME
+        currentState = GameState.CARD_COLLECTION;
         manager.ShowCardList();
     }
 
