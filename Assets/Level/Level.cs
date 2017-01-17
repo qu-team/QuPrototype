@@ -214,15 +214,19 @@ public class Level : MonoBehaviour {
         var gm = GameManager.Instance;
         var lv = gm.CurrentLevel;
         print("lv is " + gm.CurrentLevel);
-        if (GameData.data.levels == null) {
-            GameData.data.levels = new List<LevelData>();
-            for (int i = 0; i < gm.Levels.Count; ++i)
-                GameData.data.levels.Add(new LevelData());
-            GameData.data.levels[lv] = levelData;
-        } else {
-            GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
-        }
+        EnsureLevelsAreInitialized(gm);
+        GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
         GameData.Save();
+    }
+
+    void EnsureLevelsAreInitialized(GameManager gm) {
+        if (GameData.data.levels == null) { GameData.data.levels = new List<LevelData>(); }
+        if (GameData.data.levels.Count == 0) {
+            print("Initializing data for " + gm.Levels.Count + " levels");
+            for (int i = 0; i < gm.Levels.Count; ++i) {
+                GameData.data.levels.Add(new LevelData());
+            }
+        }
     }
 
     void LoadNextScene() {
