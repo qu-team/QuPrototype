@@ -30,7 +30,7 @@ public class Menu : MonoBehaviour {
 
     public void StartGame() {
         play.interactable = false;
-	GameObject.Find("Buttons").SetActive(false);
+        GameObject.Find("Buttons").SetActive(false);
         loading.text = "Loading...";
         AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
         SceneManager.LoadSceneAsync("MapScene");
@@ -40,11 +40,19 @@ public class Menu : MonoBehaviour {
         SceneManager.LoadScene("Preferences");
     }
 
+    public void OpenCards() {
+        SceneManager.LoadScene("CardCollection");
+    }
+
+    public void OpenCutscenes() {
+        SceneManager.LoadScene("Animations");
+    }
+
     public void QuitGame() {
         Application.Quit();
     }
 
-	void OnApplicationQuit() {
-		GameData.Save();
-	}
+    void OnApplicationQuit() {
+        GameData.Save();
+    }
 }
