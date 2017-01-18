@@ -8,8 +8,11 @@ public class ListCardBehaviour : MonoBehaviour{
 	public Card myCard;
 
 	public void ShowCard(){
-		myImg.texture = myCard.CardImage;
-		myText.text = myCard.CardNumber+"";
+		if(GameData.data.IsCardUnlocked(myCard.CardNumber)){
+			myImg.texture = myCard.CardImage;
+			myText.text = myCard.CardNumber+"";
+		}
+		else ShowLocked();
 
 	}
 	public void ShowLocked(){
