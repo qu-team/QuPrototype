@@ -73,7 +73,9 @@ public class L10N : MonoBehaviour {
     public enum Label {
         PLAY,
         SETTINGS,
-        THEATRE,
+        MEMORIES,
+        COLLECTION,
+        LOADING,
         SHARE,
         SCORE,
         CONTINUE,
@@ -86,10 +88,12 @@ public class L10N : MonoBehaviour {
         public English() : base(new Dictionary<Label, string>() {
             { Label.PLAY, Label.PLAY.ToString() },
             { Label.SETTINGS, Label.SETTINGS.ToString() },
-            { Label.THEATRE, Label.THEATRE.ToString() },
+            { Label.MEMORIES, Label.MEMORIES.ToString() },
+            { Label.COLLECTION, Label.COLLECTION.ToString() },
+            { Label.LOADING, "Loading..." },
             { Label.SHARE, "SHARE SCORE" },
-            { Label.SCORE, Label.THEATRE.ToString() },
-            { Label.CONTINUE, Label.THEATRE.ToString() },
+            { Label.SCORE, Label.MEMORIES.ToString() },
+            { Label.CONTINUE, Label.MEMORIES.ToString() },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
             { Label.FB_SCORED, "I scored {0} points!" },
             { Label.TWIT, "I scored {0} points on qU!" }
@@ -100,7 +104,9 @@ public class L10N : MonoBehaviour {
         public Italian() : base(new English(), new Dictionary<Label, string>() {
             { Label.PLAY, "GIOCA" },
             { Label.SETTINGS, "IMPOSTAZIONI" },
-            { Label.THEATRE, "RICORDI" },
+            { Label.MEMORIES, "RICORDI" },
+            { Label.COLLECTION, "COLLEZIONE" },
+            { Label.LOADING, "Caricamento..." },
             { Label.SHARE, "CONDIVIDI PUNTEGGIO" },
             { Label.SCORE, "PUNTEGGIO" },
             { Label.CONTINUE, "CONTINUA" },

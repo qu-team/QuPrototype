@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour {
 
     public Qu qu;
-    public Button play;
+    public GameObject buttons;
     public Text title;
     public Text maxScore;
     public Text loading;
@@ -21,35 +21,46 @@ public class Menu : MonoBehaviour {
 
     void ColorizeMenuElements(Color color) {
         qu.Color = color;
-        play.GetComponent<Image>().color = color;
-        var meanGrayColor = (color.r + color.g + color.b) / 3f;
-        play.GetComponentInChildren<Text>().color = (meanGrayColor < 0.5f) ? Color.white : Color.black;
+        ColorizeMenuButtons(buttons, color);
         title.color = color;
         maxScore.color = color;
     }
 
+    void ColorizeMenuButtons(GameObject buttonsParent, Color color) {
+        foreach (Transform button in buttonsParent.transform) {
+            var image = button.GetComponent<Image>();
+            if (image != null) { image.color = color; }
+            var meanGrayColor = (color.r + color.g + color.b) / 3f;
+            var text = button.GetComponentInChildren<Text>();
+            if (text != null) { text.color = (meanGrayColor < 0.5f) ? Color.white : Color.black; }
+        }
+    }
+
     public void StartGame() {
-        play.interactable = false;
-        GameObject.Find("Buttons").SetActive(false);
-        loading.text = "Loading...";
-        AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
+        GameObject.Find("Play").GetComponent<Button>().interactable = false;
+        buttons.SetActive(false);
+        loading.text = L10N.Translate(L10N.Label.LOADING);
+        PlayButtonSound();
         GameManager.Instance.LoadScene(QuScene.MAP);
     }
 
     public void OpenPreferences() {
+        PlayButtonSound();
         GameManager.Instance.LoadScene(QuScene.SETTINGS);
     }
 
     public void OpenCards() {
+        PlayButtonSound();
         GameManager.Instance.LoadScene(QuScene.CARD_COLLECTION);
     }
 
     public void OpenCutscenes() {
-       GameManager.Instance.LoadScene(QuScene.CUT_COLLECTION); 
+        PlayButtonSound();
+        GameManager.Instance.LoadScene(QuScene.CUT_COLLECTION);
     }
 
-    public void QuitGame() {
-        Application.Quit();
+    void PlayButtonSound() {
+        AudioSource.PlayClipAtPoint(buttonSound, buttons.transform.position);
     }
 
     void OnApplicationQuit() {
