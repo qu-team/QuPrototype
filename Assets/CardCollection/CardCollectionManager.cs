@@ -85,7 +85,7 @@ public class CardCollectionManager : MonoBehaviour {
 
     //FIXME DO NOT USE, ONLY FOR ANIMATION EVENT
     public void DisplayDelayedCard(){
-        Debug.Log("Card number is "+currentDisplayedCard);
+		LogHelper.Debug(this, "Delayed card index is "+currentDisplayedCard);
         cardDisplayer.GetComponent<CardBehaviour>().DisplayedCard = Card.Collection[currentDisplayedCard];
     }
 

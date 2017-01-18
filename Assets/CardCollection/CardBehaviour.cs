@@ -13,21 +13,21 @@ class CardBehaviour : MonoBehaviour{
 
 	public GameManager GameManager;
 
-	private Card _displayedCard;
+	private Card displayedCard;
 	public Card DisplayedCard{
 		get {
-			return _displayedCard;
+			return displayedCard;
 		}
 		set{
-			_displayedCard = value;
-			title.text = _displayedCard.Name;
-			number.text = ""+_displayedCard.CardNumber;
-			if(GameManager.IsCardUnlocked( _displayedCard.CardNumber )){
-				description.text = _displayedCard.Description;
-				cardImage.texture = _displayedCard.CardImage;
+			displayedCard = value;
+			title.text = displayedCard.Name;
+			number.text = ""+displayedCard.CardNumber;
+			if(GameData.data.IsCardUnlocked(number)){
+				description.text = displayedCard.Description;
+				cardImage.texture = displayedCard.CardImage;
 			}else{
 				cardImage.texture = lockedTexture;
-				description.text = _displayedCard.UnlockCondition;	
+				description.text = displayedCard.UnlockCondition;	
 				}
 		}
 	}
