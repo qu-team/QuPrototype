@@ -181,7 +181,7 @@ public class Level : MonoBehaviour {
 
     void SetDifficulty() {
         //colors.scale = 1f / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
-        colors.arcAmplitude = 360f / (scoreAdder.Difficulty * difficultyExponent);
+        colors.Difficulty = scoreAdder.Difficulty * difficultyExponent;
     }
 
     IEnumerator FinalClosingAnimation() {

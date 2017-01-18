@@ -59,14 +59,16 @@ public class L10N : MonoBehaviour {
     public enum Label {
         PLAY,
         SETTINGS,
-        THEATRE,
+        MEMORIES,
+        CARDS
     }
 
     private class English : Language {
         public English() : base(new Dictionary<Label, string>() {
             { Label.PLAY, Label.PLAY.ToString() },
             { Label.SETTINGS, Label.SETTINGS.ToString() },
-            { Label.THEATRE, Label.THEATRE.ToString() },
+            { Label.MEMORIES, Label.MEMORIES.ToString() },
+            { Label.CARDS, "CARD COLLECTION" },
         }) { }
     }
 
@@ -74,7 +76,8 @@ public class L10N : MonoBehaviour {
         public Italian() : base(new English(), new Dictionary<Label, string>() {
             { Label.PLAY, "GIOCA" },
             { Label.SETTINGS, "IMPOSTAZIONI" },
-            { Label.THEATRE, "RICORDI" }
+            { Label.MEMORIES, "RICORDI" },
+            { Label.CARDS, "COLLEZIONE DI CARTE" },
         }) { }
     }
 }

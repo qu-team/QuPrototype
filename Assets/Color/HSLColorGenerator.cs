@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class HSLColorGenerator : MonoBehaviour {
 
-    [Range(0, 360)]
-    public float arcAmplitude = 360f;
+    public float Difficulty {
+        set {
+            arcAmplitude = 240f / value;
+        }
+    }
+
+    [Range(0, 1)]
+    public float saturation = 1f;
+
+    float arcAmplitude = 240f;
 
     struct HSLColor {
         public float h; // range: [0, 360)
@@ -18,25 +26,27 @@ public class HSLColorGenerator : MonoBehaviour {
     }
 
     void Start() {
-        arcAmplitude = 360f;
+        saturation = 1f;
     }
 
     public Color[] Generate(int n) {
         /* We use the following algorithm:
          * - first we generate a random angle [0, 360);
          * - then we select the n colors which are equally spaced along the
-         *   arc centered in said angle.
+         *   arc starting at that angle;
          * - the arc has an amplitude depending on the difficulty coefficient.
          */
-        float center = Random.Range(0, 360);
-	print("arc ampl = " + arcAmplitude);
-        float startAngle = center - arcAmplitude * 0.5f;
-        float angleStep = arcAmplitude / n;
+        float startAngle = Random.Range(0f, 360f);
+        float angleStep = arcAmplitude / (n - 1);
+        LogHelper.Debug(this, "arc ampl = " + arcAmplitude + ", startAngle = " + startAngle + ", step = " + angleStep);
         Color[] colors = new Color[n];
         for (int i = 0; i < n; ++i) {
+            float h = startAngle + angleStep * i;
+            if (h > 360)
+                h -= 360;
             colors[i] = HSLToRGB(new HSLColor {
-                h = startAngle + angleStep * i,
-                s = 1f,
+                h = h,
+                s = saturation,
                 l = 0.5f
             });
         }
@@ -75,8 +85,10 @@ public class HSLColorGenerator : MonoBehaviour {
                                  0
             );
         float m = color.l - 0.5f * c;
-	print("x = " + x + ", c = " + c + ", hp = " + hp);
-	print("HSL = " + color + ", RGB = " + (new Color(col1.r + m, col1.g + m, col1.b + m)));
+
+        LogHelper.Debug(this, "x = " + x + ", c = " + c + ", hp = " + hp);
+        LogHelper.Debug(this, "HSL = " + color + ", RGB = " + (new Color(col1.r + m, col1.g + m, col1.b + m)));
+
         return new Color(col1.r + m, col1.g + m, col1.b + m);
     }
 }
