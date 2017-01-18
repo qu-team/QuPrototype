@@ -59,11 +59,11 @@ public static class GameData {
             string json = dataHdl.LoadCompressed(fname);
             data = JsonUtility.FromJson<PlayerData>(json);
         } catch (Exception e) {
-            LogHelper.Error(typeof(GameData), "Couldn't load save data from " + fname + ": "
+            LogHelper.Error("GameData", "Couldn't load save data from " + fname + ": "
                               + e.ToString() + e.StackTrace);
             return false;
         }
-        LogHelper.Ok(typeof(GameData), "Loaded save data from " + fname);
+        LogHelper.Ok("GameData", "Loaded save data from " + fname);
         return true;
     }
 
@@ -73,10 +73,10 @@ public static class GameData {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
             dataHdl.SaveCompressed(JsonUtility.ToJson(data), SAVE_FILE);
         } catch (Exception e) {
-            LogHelper.Error(typeof(GameData), "Couldn't save data to " + SAVE_FILE + ": "
+            LogHelper.Error("GameData", "Couldn't save data to " + SAVE_FILE + ": "
                               + e.ToString() + e.StackTrace);
             return;
         }
-        LogHelper.Ok(typeof(GameData), "Saved data to " + SAVE_FILE);
+        LogHelper.Ok("GameData", "Saved data to " + SAVE_FILE);
     }
 }

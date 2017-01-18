@@ -80,7 +80,7 @@ public static class Data {
                 return null;
             return new List<DataBundle>(bundles.items);
         } catch (System.ArgumentException) {
-            LogHelper.Warn(typeof(Data), "failed to parse JSON: " + data);
+            LogHelper.Warn("Data", "failed to parse JSON: " + data);
             return null;
         }
     }
