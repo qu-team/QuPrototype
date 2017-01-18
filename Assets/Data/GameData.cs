@@ -19,6 +19,10 @@ public struct PlayerData {
         }
     }
 
+    public bool IsCardUnlocked(int idx) {
+        return cardsUnlocked.Length > idx && cardsUnlocked[idx];
+    }
+
     public uint QuSaved {
         get {
             uint quSaved = 0;
