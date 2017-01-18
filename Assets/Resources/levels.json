@@ -13,7 +13,7 @@
 		"bladesSpeed": 1.0,
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
-		"duration": 3,
+		"duration": 30,
 		"quToNextLevel": 10
         },
         {
