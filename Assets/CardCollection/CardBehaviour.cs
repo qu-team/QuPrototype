@@ -22,7 +22,7 @@ class CardBehaviour : MonoBehaviour{
 			displayedCard = value;
 			title.text = displayedCard.Name;
 			number.text = ""+displayedCard.CardNumber;
-			if(GameData.data.IsCardUnlocked(number)){
+			if(GameData.data.IsCardUnlocked(displayedCard.CardNumber)){
 				description.text = displayedCard.Description;
 				cardImage.texture = displayedCard.CardImage;
 			}else{

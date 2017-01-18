@@ -33,19 +33,19 @@ public class Menu : MonoBehaviour {
         GameObject.Find("Buttons").SetActive(false);
         loading.text = "Loading...";
         AudioSource.PlayClipAtPoint(buttonSound, play.transform.position);
-        SceneManager.LoadSceneAsync("MapScene");
+        GameManager.Instance.LoadScene(QuScene.MAP);
     }
 
     public void OpenPreferences() {
-        SceneManager.LoadScene("Preferences");
+        GameManager.Instance.LoadScene(QuScene.SETTINGS);
     }
 
     public void OpenCards() {
-        SceneManager.LoadScene("CardCollection");
+        GameManager.Instance.LoadScene(QuScene.CARD_COLLECTION);
     }
 
     public void OpenCutscenes() {
-        SceneManager.LoadScene("Animations");
+       GameManager.Instance.LoadScene(QuScene.CUT_COLLECTION); 
     }
 
     public void QuitGame() {

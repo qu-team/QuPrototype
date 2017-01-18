@@ -65,23 +65,25 @@ public class AnimationController : MonoBehaviour {
     }
 
     public void PrevAnimation(){
-        if(currAnimationIndex > 0){
             HideControls();
-            PlayAnimation(currAnimationIndex -1);
-        }
+            PlayAnimation(Mathf.Max(currAnimationIndex-1,0));
     }
     public void NextAnimation(){
         HideControls();
-        if(currAnimationIndex+1 <animations.Length && currAnimationIndex+1 < PlayerPrefs.GetInt("LEVEL_UNLOCKED")){
+        if(currAnimationIndex+1 <animations.Length && currAnimationIndex+1 < (int)GameData.data.curLevelUnlocked){
             PlayAnimation(currAnimationIndex + 1);
         } else {
-            gameManager.Back();
+            //gameManager.Back();
+			ShowAnimationControls();
         }
     }
     public void Back(){
         gameManager.Back();
     }
-
+	private void ShowAnimationControls(){
+		animationControls.SetActive(true);
+        PauseCurrentAnimation();
+	}
     private void OnTapEnd(Tap tap){
         if(disabling) {
             disabling = false;
@@ -89,8 +91,7 @@ public class AnimationController : MonoBehaviour {
         }
         if(IngameCut) return;
         if(animationControls.active == false){
-            animationControls.SetActive(true);
-            PauseCurrentAnimation();
+		ShowAnimationControls();	
         }
     }
 }

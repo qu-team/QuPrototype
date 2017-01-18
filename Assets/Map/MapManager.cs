@@ -68,7 +68,9 @@ public class MapManager : MonoBehaviour{
     }
 
     public void MoveCameraAtLevel(int lvl){
+		LogHelper.Debug(this, "Moving camera at lvl"+lvl);
         Vector2 target = GameObject.Find("Level" + (lvl + 1)).transform.position;
+		LogHelper.Debug(this, "Found object level :" + target);
         MoveCamera(-target + (Vector2)Camera.main.transform.position);
     }
 
