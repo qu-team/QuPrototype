@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
         //FIXME DEBUG
         currentState = QuScene.CUT_COLLECTION;
         PlayerPrefs.SetInt("LEVEL_UNLOCKED", 10);
-        levels = new LevelsData(Application.dataPath + Path.DirectorySeparatorChar + "levels.json");
+        levels = new LevelsData("levels.json");
     }
 
     void Start() {

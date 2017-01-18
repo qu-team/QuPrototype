@@ -15,7 +15,7 @@ public sealed class LevelsData {
 
     public LevelsData(string fname) {
         try {
-            string json = File.ReadAllText(fname);
+            string json = Resources.Load<TextAsset>(fname.Replace(".json", "")).text;
             levels = JsonUtility.FromJson<QuLevels>(json).levels;
             LogHelper.Ok(this, "Loaded " + levels.Count + " levels from " + fname + ".");
         } catch (Exception ex) {
