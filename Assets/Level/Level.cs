@@ -83,7 +83,7 @@ public class Level : MonoBehaviour {
         partialStartTime = Time.time;
     }
 
-    void MatchQuColor(Color color) {
+    internal void MatchQuColor(Color color) {
         if (qu.Dead) { return; }
         if (!playing) { return; }
         if (color == qu.Color) { Succeeded(); } else { Failed(); }
