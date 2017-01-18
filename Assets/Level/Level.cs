@@ -35,7 +35,7 @@ public class Level : MonoBehaviour {
     float partialStartTime;
     Harvester harvester;
     // Keeps track of the number of saved qu, max score, etc (for this session)
-    LevelData levelData;
+    LevelSaveData levelData;
 
     void Awake() {
         shutter.relativeSize = SIZE;
@@ -44,7 +44,7 @@ public class Level : MonoBehaviour {
         colors = GetComponent<HSLColorGenerator>();
         LoadLevelPrefs();
         harvester = Harvester.Instance;
-        levelData = new LevelData();
+        levelData = new LevelSaveData();
     }
 
     void LoadLevelPrefs() {
@@ -124,14 +124,21 @@ public class Level : MonoBehaviour {
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
         harvester.SaveSingleSessionData(this, succeeded: true);
         levelData.quSaved++;
+        int lv = GameManager.Instance.CurrentLevel;
+        // Check if we reached the max score
         if (score > levelData.maxScore) {
             levelData.maxScore = score;
             if (GameData.data.levels == null
-                    || GameData.data.levels.Count <= GameManager.Instance.CurrentLevel
-                    || score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
+                            || GameData.data.levels.Count <= GameManager.Instance.CurrentLevel
+                            || score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
             {
                 maxScoreReached = true;
             }
+        }
+        // Check if we saved enough Qu for next level
+        if (levelData.quSaved == GameManager.Instance.Levels[lv].quToNextLevel) {
+            GameData.data.curLevelUnlocked++;
+            // TODO: show text "unlocked level"
         }
     }
 
@@ -220,11 +227,11 @@ public class Level : MonoBehaviour {
     }
 
     void EnsureLevelsAreInitialized(GameManager gm) {
-        if (GameData.data.levels == null) { GameData.data.levels = new List<LevelData>(); }
+        if (GameData.data.levels == null) { GameData.data.levels = new List<LevelSaveData>(); }
         if (GameData.data.levels.Count == 0) {
             print("Initializing data for " + gm.Levels.Count + " levels");
             for (int i = 0; i < gm.Levels.Count; ++i) {
-                GameData.data.levels.Add(new LevelData());
+                GameData.data.levels.Add(new LevelSaveData());
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 [Serializable]
 public struct PlayerData {
-    public List<LevelData> levels;
+    public List<LevelSaveData> levels;
 #pragma warning disable 0649
     public bool[] cardsUnlocked;
 #pragma warning restore
@@ -20,7 +20,7 @@ public struct PlayerData {
     }
 
     public bool IsCardUnlocked(int idx) {
-        return cardsUnlocked.Length > idx && cardsUnlocked[idx];
+        return cardsUnlocked != null && cardsUnlocked.Length > idx && cardsUnlocked[idx];
     }
 
     public uint QuSaved {
@@ -34,12 +34,12 @@ public struct PlayerData {
 }
 
 [Serializable]
-public struct LevelData {
+public struct LevelSaveData {
     public long maxScore;
     public uint quSaved;
 
-    public LevelData Overwrite(LevelData data) {
-        return new LevelData {
+    public LevelSaveData Overwrite(LevelSaveData data) {
+        return new LevelSaveData {
             maxScore = Math.Max(data.maxScore, maxScore),
             quSaved = quSaved + data.quSaved
         };
