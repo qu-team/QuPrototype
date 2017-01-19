@@ -31,8 +31,6 @@ public class Menu : MonoBehaviour {
             var image = button.GetComponent<Image>();
             if (image != null) { image.color = color; }
             var meanGrayColor = (color.r + color.g + color.b) / 3f;
-            var text = button.GetComponentInChildren<Text>();
-            if (text != null) { text.color = (meanGrayColor < 0.5f) ? Color.white : Color.black; }
         }
     }
 
