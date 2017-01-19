@@ -18,8 +18,22 @@ public class L10N : MonoBehaviour {
         }
     }
 
-    public static string Translate(string label) {
-        return lang.Translate(label);
+    /// <summary>
+    /// Returns the string associated to the given label string in the current language.
+    /// If the string contains format placeholders, extra arguments can be passed to fill them.
+    /// </summary>
+    public static string Translate(string label, params object[] arguments) {
+        var translated = lang.Translate(label);
+        if (arguments.Length == 0) { return translated; }
+        return string.Format(translated, arguments);
+    }
+
+    /// <summary>
+    /// Returns the string associated to the given label in the current language.
+    /// If the string contains format placeholders, extra arguments can be passed to fill them.
+    /// </summary>
+    public static string Translate(Label label, params object[] arguments) {
+        return Translate(label.ToString(), arguments);
     }
 
     void Start() {
@@ -60,7 +74,14 @@ public class L10N : MonoBehaviour {
         PLAY,
         SETTINGS,
         MEMORIES,
-        CARDS
+        COLLECTION,
+        LOADING,
+        SHARE,
+        SCORE,
+        CONTINUE,
+        FB_NEW_HIGH_SCORE,
+        FB_SCORED,
+        TWIT
     }
 
     private class English : Language {
@@ -68,7 +89,14 @@ public class L10N : MonoBehaviour {
             { Label.PLAY, Label.PLAY.ToString() },
             { Label.SETTINGS, Label.SETTINGS.ToString() },
             { Label.MEMORIES, Label.MEMORIES.ToString() },
-            { Label.CARDS, "CARD COLLECTION" },
+            { Label.COLLECTION, Label.COLLECTION.ToString() },
+            { Label.LOADING, "Loading..." },
+            { Label.SHARE, "SHARE SCORE" },
+            { Label.SCORE, Label.MEMORIES.ToString() },
+            { Label.CONTINUE, Label.MEMORIES.ToString() },
+            { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
+            { Label.FB_SCORED, "I scored {0} points!" },
+            { Label.TWIT, "I scored {0} points on qU!" }
         }) { }
     }
 
@@ -77,7 +105,14 @@ public class L10N : MonoBehaviour {
             { Label.PLAY, "GIOCA" },
             { Label.SETTINGS, "IMPOSTAZIONI" },
             { Label.MEMORIES, "RICORDI" },
-            { Label.CARDS, "COLLEZIONE DI CARTE" },
+            { Label.COLLECTION, "COLLEZIONE" },
+            { Label.LOADING, "Caricamento..." },
+            { Label.SHARE, "CONDIVIDI PUNTEGGIO" },
+            { Label.SCORE, "PUNTEGGIO" },
+            { Label.CONTINUE, "CONTINUA" },
+            { Label.FB_NEW_HIGH_SCORE, "Nuovo punteggio massimo su qU!" },
+            { Label.FB_SCORED, "Ho totalizzato {0} punti!" },
+            { Label.TWIT, "Ho totalizzato {0} punti su qU!" }
         }) { }
     }
 }
