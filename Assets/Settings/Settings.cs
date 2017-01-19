@@ -26,15 +26,7 @@ public class Settings : MonoBehaviour {
 
     void Start() {
         selectedLanguage = L10N.CurrentLanguage;
-        ResizeQu();
         SetQuFlag();
-    }
-
-    void ResizeQu() {
-        var parentRect = GameObject.Find("Language").GetComponent<RectTransform>().rect;
-        var scale = Mathf.Min(parentRect.width, parentRect.height) / 1500f;
-        var transform = qu.GetComponent<Transform>();
-        transform.localScale = new Vector3(scale, scale, 1f);
     }
 
     void SetQuFlag() {
