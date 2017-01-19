@@ -12,10 +12,11 @@ public class Shutter : MonoBehaviour {
     public Material material;
     public Sprite circle;
     public float internalCircleRadius;
+    public Color internalCircleRadiusColor;
 
     public IList<Color> BladeColors { get { return bladeColors; } }
 
-    GameObject[] blades;
+    internal GameObject[] blades;
     IList<Color> bladeColors = new List<Color>() { Color.black };
     float lastOpening = 1f;
     uint lastBladesNumber = 6;

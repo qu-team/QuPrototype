@@ -37,7 +37,7 @@ public struct Score {
 
     public void Failed() {
         //currentDifficulty = Mathf.Max(currentDifficulty / 2, 1);
-	currentDifficulty = Mathf.Max(currentDifficulty - 2, 1);
+        currentDifficulty = Mathf.Max(currentDifficulty - 2, 1);
         combo = 0;
         snapshot = Time.fixedTime;
     }
