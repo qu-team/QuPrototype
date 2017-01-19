@@ -46,6 +46,7 @@ public class Settings : MonoBehaviour {
         dataQuestionLabel.text = L10N.Translate(L10N.Label.DATA_QUESTION);
         back.GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
         SetQuFlag();
+        qu.BeHappy();
     }
 
     public void Back() {
