@@ -41,7 +41,12 @@ public class Menu : MonoBehaviour {
         buttons.SetActive(false);
         loading.text = L10N.Translate(L10N.Label.LOADING);
         PlayButtonSound();
-        GameManager.Instance.LoadScene(QuScene.MAP);
+        // If tutorial was not played yet, play it
+        if (PlayerPrefs.GetInt(Preferences.PLAYED_TUTORIAL, 0) == 0) {
+            GameManager.Instance.LoadScene(QuScene.TUTORIAL);
+        } else {
+            GameManager.Instance.LoadScene(QuScene.MAP);
+        }
     }
 
     public void OpenPreferences() {

@@ -49,6 +49,7 @@ public class Level : MonoBehaviour {
         colors = GetComponent<HSLColorGenerator>();
         harvester = Harvester.Instance;
         levelData = new LevelSaveData();
+        GameManager.Instance.LevelLoaded();
     }
 
     void LoadLevelPrefs() {
@@ -211,6 +212,7 @@ public class Level : MonoBehaviour {
             SaveData();
         } else {
             LogHelper.Info(this, "Level is tutorial: not saving data");
+            PlayerPrefs.SetInt(Preferences.PLAYED_TUTORIAL, 1);
         }
         LoadNextScene();
     }

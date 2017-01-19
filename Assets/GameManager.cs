@@ -4,6 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
+public enum QuScene {
+    MENU,
+    GAME,
+    CARD_COLLECTION,
+    CUT_COLLECTION,
+    CUT_GAME,
+    MAP,
+    SETTINGS,
+    SHARE,
+    TUTORIAL
+}
+
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance {
@@ -13,17 +25,17 @@ public class GameManager : MonoBehaviour {
 
     private QuScene currentState;
     private LevelsData levels;
-	private Dictionary<QuScene,string> sceneNames = new Dictionary<QuScene,string> {
-		{QuScene.MENU, "Menu"},
-		{QuScene.CARD_COLLECTION, "CardCollection"},
-		{QuScene.CUT_GAME, "Animations"},
-		{QuScene.CUT_COLLECTION, "Animations"},
-		{QuScene.MAP, "MapScene"},
-		{QuScene.GAME, "Level"},
-		{QuScene.SETTINGS, "Preferences"},
-		{QuScene.SHARE, "ShareScore"}
-
-	};
+    private Dictionary<QuScene,string> sceneNames = new Dictionary<QuScene,string> {
+        {QuScene.MENU, "Menu"},
+        {QuScene.CARD_COLLECTION, "CardCollection"},
+        {QuScene.CUT_GAME, "Animations"},
+        {QuScene.CUT_COLLECTION, "Animations"},
+        {QuScene.MAP, "MapScene"},
+        {QuScene.GAME, "Level"},
+        {QuScene.SETTINGS, "Preferences"},
+        {QuScene.SHARE, "ShareScore"},
+        {QuScene.TUTORIAL, "Level"}
+    };
 
     //Animation screen vars
     public int currAnimation = 0;
@@ -49,10 +61,7 @@ public class GameManager : MonoBehaviour {
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
-        //currentState = QuScene.MENU;
-        //FIXME DEBUG
-        currentState = QuScene.CUT_COLLECTION;
-        PlayerPrefs.SetInt("LEVEL_UNLOCKED", 10);
+        currentState = QuScene.MENU;
         levels = new LevelsData("levels.json");
     }
 
@@ -98,22 +107,23 @@ public class GameManager : MonoBehaviour {
             currAnimController.NextAnimation();
             break;
         default:
-			LoadScene(QuScene.GAME);
-			break;
+            LoadScene(QuScene.GAME);
+            break;
         }
     }
 
-	public void LoadScene(QuScene scene){
-		switch(scene){
-			case QuScene.GAME:
-				SceneManager.LoadSceneAsync(sceneNames[scene]);
-				break;
-			default:
-				SceneManager.LoadScene(sceneNames[scene]);
+    public void LoadScene(QuScene scene){
+        switch(scene){
+            case QuScene.GAME:
+            case QuScene.TUTORIAL:
+                SceneManager.LoadSceneAsync(sceneNames[scene]);
                 break;
-		}
-		currentState = scene;
-	}
+            default:
+                SceneManager.LoadScene(sceneNames[scene]);
+                break;
+        }
+        currentState = scene;
+    }
 
 #region CardCollection
 
@@ -134,8 +144,8 @@ public class GameManager : MonoBehaviour {
     public void PlayLevel(int lv) {
         curLevel = lv;
         // Find out if we should play the cutscene or not
-        if (GameData.data.levels == null || GameData.data.levels.Count <= lv 
-                || GameData.data.levels[lv].maxScore <= 0) 
+        if (GameData.data.levels == null || GameData.data.levels.Count <= lv
+                || GameData.data.levels[lv].maxScore <= 0)
         {
             currAnimation = lv ;
             LoadScene(QuScene.CUT_GAME);
@@ -143,16 +153,11 @@ public class GameManager : MonoBehaviour {
             LoadScene(QuScene.GAME);
         }
     }
-
-}
-
-public enum QuScene{
-	MENU,
-	GAME,
-	CARD_COLLECTION,
-	CUT_COLLECTION,
-	CUT_GAME,
-	MAP,
-	SETTINGS,
-	SHARE
+    
+    public void LevelLoaded() {
+        if (currentState == QuScene.TUTORIAL) {
+            LogHelper.Debug(this, "Setting level as tutorial");
+            new GameObject("Tutorial", new System.Type[] { typeof(Tutorial) });
+        }
+    }
 }

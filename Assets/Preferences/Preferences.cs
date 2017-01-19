@@ -4,16 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class Preferences : MonoBehaviour {
 
-    public static readonly string BLADES_SPEED = "BladesSpeed";
-    public static readonly string BACKGROUND_RED = "BackgroundRed";
-    public static readonly string BACKGROUND_GREEN = "BackgroundGreen";
-    public static readonly string BACKGROUND_BLUE = "BackgroundBlue";
-    public static readonly string BLADES = "Blades";
-    public static readonly string INNER_RADIUS = "InnerRadius";
-    public static readonly string RESISTANCE = "Resistance";
-    public static readonly string DURATION = "Duration";
-    public static readonly string DIFFICULTY = "Difficulty";
-    public static readonly string SCORE = "Score";
+    public const string BLADES_SPEED = "BladesSpeed";
+    public const string BACKGROUND_RED = "BackgroundRed";
+    public const string BACKGROUND_GREEN = "BackgroundGreen";
+    public const string BACKGROUND_BLUE = "BackgroundBlue";
+    public const string BLADES = "Blades";
+    public const string INNER_RADIUS = "InnerRadius";
+    public const string RESISTANCE = "Resistance";
+    public const string DURATION = "Duration";
+    public const string DIFFICULTY = "Difficulty";
+    public const string SCORE = "Score";
+    public const string PLAYED_TUTORIAL = "PlayedTutorial";
+    public const string LEVEL_UNLOCKED = "LevelUnlocked";
 
     public Slider bladesSpeedSlider;
     public Text bladesSpeedLabel;

@@ -30,7 +30,135 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 10
+		"quToNextLevel": 15
+        },
+        {
+		"number": 2,
+		"name": "Level 3",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.07,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 20
+        },
+        {
+		"number": 3,
+		"name": "Level 4",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 25
+        },
+        {
+		"number": 4,
+		"name": "Level 5",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 30
+        },
+        {
+		"number": 5,
+		"name": "Level 6",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 30
+        },
+        {
+		"number": 6,
+		"name": "Level 7",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 35
+        },
+        {
+		"number": 7,
+		"name": "Level 8",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 40
+        },
+        {
+		"number": 8,
+		"name": "Level 9",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 40
+        },
+        {
+		"number": 9,
+		"name": "Level 10",
+		"bgColor": {
+			"r": 0.153,
+			"g": 0.153,
+			"b": 0.153
+		},
+		"aperture": 0.5,
+		"blades": 3,
+		"bladesSpeed": 1.0,
+		"innerRadius": 0.05,
+		"difficultyExp": 1.0,
+		"duration": 60,
+		"quToNextLevel": 50
         }
     ]
 }

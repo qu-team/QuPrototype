@@ -24,7 +24,7 @@ public class LevelPopup : MonoBehaviour{
 			lvdata = GameData.data.levels[level];
 		Info.text = "Best Score:\n"+ (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
 			+ "\nSaved Qus:\n"+ (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-")
-			+ "\nTo next level:\n"+ "-";
+			+ "\nTo next level:\n"+ gm.Levels[level].quToNextLevel.ToString();
 		//TODO stars
 		this.level = level;
 		gameObject.SetActive(true);

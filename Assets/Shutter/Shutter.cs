@@ -12,6 +12,7 @@ public class Shutter : MonoBehaviour {
     public Material material;
     public Sprite circle;
     public float internalCircleRadius;
+    public Color internalCircleRadiusColor;
 
     public IList<Color> BladeColors { get { return bladeColors; } }
 

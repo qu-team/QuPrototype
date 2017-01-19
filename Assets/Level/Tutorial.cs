@@ -7,7 +7,7 @@ public class Tutorial : MonoBehaviour {
     GameObject hand;
 
     void Awake() {
-        hand = transform.FindChild("Hand").gameObject;
+        hand = GameObject.Find("Hand");
         hand.SetActive(false);
 
         // disable score
