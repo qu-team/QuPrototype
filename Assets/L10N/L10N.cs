@@ -101,7 +101,13 @@ public class L10N : MonoBehaviour {
         TWIT,
         SELECT_LANGUAGE,
         DATA_COLLECTION,
-        DATA_QUESTION
+        DATA_QUESTION,
+        CARD_1_TITLE,
+        CARD_1_DESCRIPTION,
+        CARD_1_TASK,
+        CARD_2_TITLE,
+        CARD_2_DESCRIPTION,
+        CARD_2_TASK
     }
 
     private class English : Language {
@@ -120,7 +126,13 @@ public class L10N : MonoBehaviour {
             { Label.TWIT, "I scored {0} points on qU!" },
             { Label.SELECT_LANGUAGE, "SELECT LANGUAGE" },
             { Label.DATA_COLLECTION, "DATA COLLECTION" },
-            { Label.DATA_QUESTION, "Do you agree to send anonymous information about the gameplay?" }
+            { Label.DATA_QUESTION, "Do you agree to send anonymous information about the gameplay?" },
+            { Label.CARD_1_TITLE, "Light" },
+            { Label.CARD_1_DESCRIPTION, "Colors are a result of blabla light" },
+            { Label.CARD_1_TASK, "Complete the campaign" },
+            { Label.CARD_2_TITLE, "Animals" },
+            { Label.CARD_2_DESCRIPTION, "Dogs see everything grey, ugly life" },
+            { Label.CARD_2_TASK, "Get three stars in level one" }
         }) { }
     }
 
@@ -140,7 +152,13 @@ public class L10N : MonoBehaviour {
             { Label.TWIT, "Ho totalizzato {0} punti su qU!" },
             { Label.SELECT_LANGUAGE, "SELEZIONA LINGUA" },
             { Label.DATA_COLLECTION, "RACCOLTA DATI" },
-            { Label.DATA_QUESTION, "Acconsenti di inviare informazioni anonime riguardo il gameplay?" }
+            { Label.DATA_QUESTION, "Acconsenti di inviare informazioni anonime riguardo il gameplay?" },
+            { Label.CARD_1_TITLE, "Luce" },
+            { Label.CARD_1_DESCRIPTION, "I colori sono il risultato di blabla luce" },
+            { Label.CARD_1_TASK, "Completa la campagna" },
+            { Label.CARD_2_TITLE, "Animali" },
+            { Label.CARD_2_DESCRIPTION, "I cani vedono tutto grigio, brutta vita" },
+            { Label.CARD_2_TASK, "Ottieni tre stelle nel primo livello" }
         }) { }
     }
 }

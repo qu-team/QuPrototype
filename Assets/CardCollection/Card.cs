@@ -3,9 +3,8 @@ using UnityEngine;
 public class Card{
 
 	public static Card[] Collection  = {
-		//FIXME, will need translation in various languages
-		new Card(1,"Light","Colors are a result of blabla light", "Complete the campaign"),
-		new Card(2,"Animals","Dogs see everything grey, ugly life", "Get three stars in level one")	
+		new Card(1, L10N.Label.CARD_1_TITLE.ToString(), L10N.Label.CARD_1_DESCRIPTION.ToString(), L10N.Label.CARD_1_TASK.ToString()),
+        new Card(2, L10N.Label.CARD_2_TITLE.ToString(), L10N.Label.CARD_2_DESCRIPTION.ToString(), L10N.Label.CARD_2_TASK.ToString())
 	};
 
 	public readonly string Name;

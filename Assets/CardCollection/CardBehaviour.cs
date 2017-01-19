@@ -20,18 +20,15 @@ class CardBehaviour : MonoBehaviour{
 		}
 		set{
 			displayedCard = value;
-			title.text = displayedCard.Name;
-			number.text = ""+displayedCard.CardNumber;
-			if(GameData.data.IsCardUnlocked(displayedCard.CardNumber)){
-				description.text = displayedCard.Description;
+			title.text = L10N.Translate(displayedCard.Name);
+			number.text = "" + displayedCard.CardNumber;
+			if (GameData.data.IsCardUnlocked(displayedCard.CardNumber)) {
+				description.text = L10N.Translate(displayedCard.Description);
 				cardImage.texture = displayedCard.CardImage;
-			}else{
+			} else {
 				cardImage.texture = lockedTexture;
-				description.text = displayedCard.UnlockCondition;	
-				}
+				description.text = L10N.Translate(displayedCard.UnlockCondition);
+			}
 		}
-	}
-
-	void Start(){
 	}
 }
