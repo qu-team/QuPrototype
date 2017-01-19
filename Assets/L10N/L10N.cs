@@ -8,13 +8,29 @@ public class L10N : MonoBehaviour {
     static Language lang;
 
     void Awake() {
-        if (lang == null) { lang = LanguageFor(Application.systemLanguage); }
+        if (lang == null) { lang = LanguageFor(CurrentLanguage); }
     }
 
     static Language LanguageFor(SystemLanguage language) {
         switch (language) {
             case SystemLanguage.Italian: return new Italian();
             default: return new English();
+        }
+    }
+
+    public static SystemLanguage CurrentLanguage {
+        get {
+            if (!PlayerPrefs.HasKey("Language")) { return Application.systemLanguage; }
+            switch(PlayerPrefs.GetString("Language")) {
+                case "Italian": return SystemLanguage.Italian;
+                default: return SystemLanguage.English;
+            }
+        }
+
+        set {
+            lang = LanguageFor(value);
+            PlayerPrefs.SetString("Language", value.ToString());
+            PlayerPrefs.Save();
         }
     }
 
@@ -75,6 +91,7 @@ public class L10N : MonoBehaviour {
         SETTINGS,
         MEMORIES,
         COLLECTION,
+        BACK,
         LOADING,
         SHARE,
         SCORE,
@@ -82,6 +99,9 @@ public class L10N : MonoBehaviour {
         FB_NEW_HIGH_SCORE,
         FB_SCORED,
         TWIT,
+        SELECT_LANGUAGE,
+        DATA_COLLECTION,
+        DATA_QUESTION
     }
 
     private class English : Language {
@@ -90,13 +110,17 @@ public class L10N : MonoBehaviour {
             { Label.SETTINGS, Label.SETTINGS.ToString() },
             { Label.MEMORIES, Label.MEMORIES.ToString() },
             { Label.COLLECTION, Label.COLLECTION.ToString() },
+            { Label.BACK, Label.BACK.ToString() },
             { Label.LOADING, "Loading..." },
             { Label.SHARE, "SHARE SCORE" },
             { Label.SCORE, Label.MEMORIES.ToString() },
             { Label.CONTINUE, Label.CONTINUE.ToString() },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
             { Label.FB_SCORED, "I scored {0} points!" },
-            { Label.TWIT, "I scored {0} points on qU!" }
+            { Label.TWIT, "I scored {0} points on qU!" },
+            { Label.SELECT_LANGUAGE, "SELECT LANGUAGE" },
+            { Label.DATA_COLLECTION, "DATA COLLECTION" },
+            { Label.DATA_QUESTION, "Do you agree to send anonymous information about the gameplay?" }
         }) { }
     }
 
@@ -106,13 +130,17 @@ public class L10N : MonoBehaviour {
             { Label.SETTINGS, "IMPOSTAZIONI" },
             { Label.MEMORIES, "RICORDI" },
             { Label.COLLECTION, "COLLEZIONE" },
+            { Label.BACK, "INDIETRO" },
             { Label.LOADING, "Caricamento..." },
             { Label.SHARE, "CONDIVIDI PUNTEGGIO" },
             { Label.SCORE, "PUNTEGGIO" },
             { Label.CONTINUE, "CONTINUA" },
             { Label.FB_NEW_HIGH_SCORE, "Nuovo punteggio massimo su qU!" },
             { Label.FB_SCORED, "Ho totalizzato {0} punti!" },
-            { Label.TWIT, "Ho totalizzato {0} punti su qU!" }
+            { Label.TWIT, "Ho totalizzato {0} punti su qU!" },
+            { Label.SELECT_LANGUAGE, "SELEZIONA LINGUA" },
+            { Label.DATA_COLLECTION, "RACCOLTA DATI" },
+            { Label.DATA_QUESTION, "Acconsenti di inviare informazioni anonime riguardo il gameplay?" }
         }) { }
     }
 }

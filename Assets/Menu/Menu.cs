@@ -49,7 +49,7 @@ public class Menu : MonoBehaviour {
         }
     }
 
-    public void OpenPreferences() {
+    public void OpenSettings() {
         PlayButtonSound();
         GameManager.Instance.LoadScene(QuScene.SETTINGS);
     }

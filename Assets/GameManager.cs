@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
         {QuScene.CUT_COLLECTION, "Animations"},
         {QuScene.MAP, "MapScene"},
         {QuScene.GAME, "Level"},
-        {QuScene.SETTINGS, "Preferences"},
+        {QuScene.SETTINGS, "Settings"},
         {QuScene.SHARE, "ShareScore"},
         {QuScene.TUTORIAL, "Level"}
     };
@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour {
         case QuScene.CARD_COLLECTION:
         case QuScene.CUT_COLLECTION:
         case QuScene.MAP:
+        case QuScene.SETTINGS:
             LoadScene(QuScene.MENU);
             break;
         case QuScene.GAME:
