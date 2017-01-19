@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Settings : MonoBehaviour {
 
     Qu qu;
+    SpriteRenderer halo;
     Button back;
     Text selectLanguageLabel;
     Text dataCollectionLabel;
@@ -14,6 +16,8 @@ public class Settings : MonoBehaviour {
 
     void Awake() {
         qu = FindObjectOfType<Qu>();
+        halo = GameObject.Find("FlagHalo").GetComponent<SpriteRenderer>();
+        halo.gameObject.SetActive(false);
         back = GameObject.Find("Back").GetComponent<Button>();
         selectLanguageLabel = GameObject.Find("SelectLanguage").GetComponent<Text>();
         dataCollectionLabel = GameObject.Find("DataCollection").GetComponent<Text>();
@@ -47,6 +51,26 @@ public class Settings : MonoBehaviour {
         back.GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
         SetQuFlag();
         qu.BeHappy();
+        StartCoroutine(FireHalo());
+    }
+
+    IEnumerator FireHalo() {
+        var language = selectedLanguage;
+        halo.sprite = flags[language];
+        var scale = 0.1f;
+        halo.transform.localScale = new Vector3(scale, scale);
+        halo.color = Color.white;
+        var alpha = 1f;
+        halo.gameObject.SetActive(true);
+        yield return null;
+        while (alpha >= 0.01f && language == selectedLanguage) {
+            scale += 2f * Time.deltaTime;
+            alpha -= 2f * Time.deltaTime;
+            halo.transform.localScale = new Vector3(scale, scale);
+            halo.color = new Color(1f, 1f, 1f, alpha);
+            yield return null;
+        }
+        if (language == selectedLanguage) { halo.gameObject.SetActive(false); }
     }
 
     public void Back() {
