@@ -81,7 +81,7 @@ public class L10N : MonoBehaviour {
         CONTINUE,
         FB_NEW_HIGH_SCORE,
         FB_SCORED,
-        TWIT
+        TWIT,
     }
 
     private class English : Language {
@@ -93,7 +93,7 @@ public class L10N : MonoBehaviour {
             { Label.LOADING, "Loading..." },
             { Label.SHARE, "SHARE SCORE" },
             { Label.SCORE, Label.MEMORIES.ToString() },
-            { Label.CONTINUE, Label.MEMORIES.ToString() },
+            { Label.CONTINUE, Label.CONTINUE.ToString() },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
             { Label.FB_SCORED, "I scored {0} points!" },
             { Label.TWIT, "I scored {0} points on qU!" }

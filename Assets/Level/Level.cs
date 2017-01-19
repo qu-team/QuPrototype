@@ -22,6 +22,11 @@ public class Level : MonoBehaviour {
     public AudioClip wrongAnswerSound;
     public float PartialStartTime { get { return partialStartTime; } }
 
+    public bool IsTutorial {
+        get;
+        internal set;
+    }
+
     internal Timer timer;
 
     Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
@@ -42,7 +47,6 @@ public class Level : MonoBehaviour {
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
         colors = GetComponent<HSLColorGenerator>();
-        LoadLevelPrefs();
         harvester = Harvester.Instance;
         levelData = new LevelSaveData();
     }
@@ -52,31 +56,21 @@ public class Level : MonoBehaviour {
         var level = gm.Levels[gm.CurrentLevel];
         closingSpeed = closingSpeed * level.bladesSpeed;
         shutter.bladesNumber = level.blades;
-        shutter.BackgroundColor = new Color {
-            r = level.bgColor.r,
-            g = level.bgColor.g,
-            b = level.bgColor.b,
-            a = 1f
-        };
+        shutter.BackgroundColor = level.bgColor;
         shutter.internalCircleRadius = level.innerRadius;
         resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
         duration = level.duration;
         difficultyExponent = level.difficultyExp;
-        //closingSpeed = closingSpeed * PlayerPrefs.GetFloat(Preferences.BLADES_SPEED, 1f);
-        //shutter.bladesNumber = (uint)PlayerPrefs.GetInt(Preferences.BLADES, 3);
-        //shutter.BackgroundColor = new Color {
-            //r = PlayerPrefs.GetFloat(Preferences.BACKGROUND_RED, 0.1f),
-            //g = PlayerPrefs.GetFloat(Preferences.BACKGROUND_GREEN, 0.1f),
-            //b = PlayerPrefs.GetFloat(Preferences.BACKGROUND_BLUE, 0.1f),
-            //a = 1f
-        //};
-        //shutter.internalCircleRadius = PlayerPrefs.GetFloat(Preferences.INNER_RADIUS, 0.05f);
-        //resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
-        //duration = PlayerPrefs.GetInt(Preferences.DURATION, duration);
-        //difficultyExponent = PlayerPrefs.GetFloat(Preferences.DIFFICULTY, difficultyExponent);
     }
 
     void Start() {
+        if (IsTutorial) {
+            shutter.bladesNumber = 3;
+            shutter.BackgroundColor = new Color(45/255f, 45/255f, 45/255f);
+            duration = 10;
+        } else {
+            LoadLevelPrefs();
+        }
         SetupQuAndBladesColors();
         timer.Set(duration);
         playing = true;
@@ -202,7 +196,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
-        SceneManager.LoadScene("Menu");
+        GameManager.Instance.LoadScene(QuScene.MENU);
     }
 
     IEnumerator OutOfTimeAnimation() {
@@ -212,7 +206,12 @@ public class Level : MonoBehaviour {
             time -= Time.deltaTime;
             yield return null;
         }
-        SaveData();
+        if (!IsTutorial) {
+            LogHelper.Info(this, "Saving data");
+            SaveData();
+        } else {
+            LogHelper.Info(this, "Level is tutorial: not saving data");
+        }
         LoadNextScene();
     }
 
@@ -220,7 +219,6 @@ public class Level : MonoBehaviour {
         harvester.SendStoredData(this);
         var gm = GameManager.Instance;
         var lv = gm.CurrentLevel;
-        print("lv is " + gm.CurrentLevel);
         EnsureLevelsAreInitialized(gm);
         GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
         GameData.Save();
@@ -229,7 +227,7 @@ public class Level : MonoBehaviour {
     void EnsureLevelsAreInitialized(GameManager gm) {
         if (GameData.data.levels == null) { GameData.data.levels = new List<LevelSaveData>(); }
         if (GameData.data.levels.Count == 0) {
-            print("Initializing data for " + gm.Levels.Count + " levels");
+            LogHelper.Info(this, "Initializing data for " + gm.Levels.Count + " levels");
             for (int i = 0; i < gm.Levels.Count; ++i) {
                 GameData.data.levels.Add(new LevelSaveData());
             }
@@ -237,6 +235,6 @@ public class Level : MonoBehaviour {
     }
 
     void LoadNextScene() {
-        SceneManager.LoadScene(maxScoreReached ? "ShareScore" : "MapScene");
+        GameManager.Instance.LoadScene((!IsTutorial && maxScoreReached) ? QuScene.SHARE : QuScene.MAP);
     }
 }

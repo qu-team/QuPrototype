@@ -21,6 +21,9 @@ public struct DataColor {
     public float r;
     public float g;
     public float b;
+    public static implicit operator Color(DataColor d) {
+        return new Color(d.r, d.g, d.b);
+    }
 }
 
 public static class Data {
