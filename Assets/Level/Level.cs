@@ -142,9 +142,12 @@ public class Level : MonoBehaviour {
         battery.Set(scoreAdder);
         feedback.Wrong();
         qu.BeScared();
+        timer.TimePenality(SecondsOfPenality);
         GetComponent<AudioSource>().PlayOneShot(wrongAnswerSound);
         harvester.SaveSingleSessionData(this, succeeded: false);
     }
+
+    float SecondsOfPenality { get { return 5f - (Time.time - partialStartTime); } }
 
     void SetupQuAndBladesColors() {
         var colors = RandomColors();

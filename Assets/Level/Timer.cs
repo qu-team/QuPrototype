@@ -20,6 +20,13 @@ public class Timer : MonoBehaviour {
         UpdateTimerBoard();
     }
 
+    public void TimePenality(float seconds) {
+        if (seconds <= 0f) { return; }
+        remainingTime -= seconds;
+        if (remainingTime < 0f) { remainingTime = 0f; }
+        UpdateTimerBoard();
+    }
+
     void Update() {
         if (remainingTime <= 0f) { return; }
         remainingTime -= Time.deltaTime;
