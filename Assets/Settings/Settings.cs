@@ -18,7 +18,7 @@ public class Settings : MonoBehaviour {
         qu = FindObjectOfType<Qu>();
         halo = GameObject.Find("FlagHalo").GetComponent<SpriteRenderer>();
         halo.gameObject.SetActive(false);
-        back = GameObject.Find("Back").GetComponent<Button>();
+        back = GameObject.Find("BackButton").GetComponent<Button>();
         selectLanguageLabel = GameObject.Find("SelectLanguage").GetComponent<Text>();
         dataCollectionLabel = GameObject.Find("DataCollection").GetComponent<Text>();
         dataQuestionLabel = GameObject.Find("DataQuestion").GetComponent<Text>();
