@@ -9,8 +9,6 @@ public class Settings : MonoBehaviour {
     SpriteRenderer halo;
     Button back;
     Text selectLanguageLabel;
-    Text dataCollectionLabel;
-    Text dataQuestionLabel;
     SystemLanguage selectedLanguage;
     Dictionary<SystemLanguage, Sprite> flags;
 
@@ -20,8 +18,6 @@ public class Settings : MonoBehaviour {
         halo.gameObject.SetActive(false);
         back = GameObject.Find("BackButton").GetComponent<Button>();
         selectLanguageLabel = GameObject.Find("SelectLanguage").GetComponent<Text>();
-        dataCollectionLabel = GameObject.Find("DataCollection").GetComponent<Text>();
-        dataQuestionLabel = GameObject.Find("DataQuestion").GetComponent<Text>();
         flags = new Dictionary<SystemLanguage, Sprite>();
         foreach (var language in FLAGS.Keys) {
             flags[language] = Resources.Load<Sprite>("Flags" + System.IO.Path.DirectorySeparatorChar + FLAGS[language]);
@@ -46,8 +42,6 @@ public class Settings : MonoBehaviour {
         }
         L10N.CurrentLanguage = selectedLanguage;
         selectLanguageLabel.text = L10N.Translate(L10N.Label.SELECT_LANGUAGE);
-        dataCollectionLabel.text = L10N.Translate(L10N.Label.DATA_COLLECTION);
-        dataQuestionLabel.text = L10N.Translate(L10N.Label.DATA_QUESTION);
         back.GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
         SetQuFlag();
         qu.BeHappy();
@@ -75,11 +69,6 @@ public class Settings : MonoBehaviour {
 
     public void Back() {
         GameManager.Instance.Back();
-    }
-
-    public void DataCollectionUserAgreement(bool userAgrees) {
-        print(userAgrees);
-        // TODO: set user preference about data collection
     }
 
     static readonly Dictionary<SystemLanguage, string> FLAGS = new Dictionary<SystemLanguage, string>() {
