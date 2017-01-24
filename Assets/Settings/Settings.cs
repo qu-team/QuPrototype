@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour {
 
+    public AudioClip changeLanguageSound;
+
     Qu qu;
     SpriteRenderer halo;
     Button back;
@@ -46,6 +48,7 @@ public class Settings : MonoBehaviour {
         SetQuFlag();
         qu.BeHappy();
         StartCoroutine(FireHalo());
+        AudioSource.PlayClipAtPoint(changeLanguageSound, Camera.main.transform.position);
     }
 
     IEnumerator FireHalo() {
