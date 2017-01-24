@@ -200,7 +200,7 @@ public class Level : MonoBehaviour {
     }
 
     public void Quit() {
-        GameManager.Instance.LoadScene(QuScene.MENU);
+        GameManager.Instance.Back();
     }
 
     IEnumerator OutOfTimeAnimation() {
