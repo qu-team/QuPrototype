@@ -35,9 +35,8 @@ public static class Data {
             answerCorrect = succeeded,
             responseTime = Time.time - level.PartialStartTime,
             timeSinceStart = level.timer.TimeSinceStart,
-            bladeQuDistance = CalculateDistance(level.shutter.opening, 1f), // FIXME: use Qu's actual radius
-            bladeQuBorderDistance = CalculateDistance(level.shutter.opening,
-                                                      level.shutter.internalCircleRadius),
+            bladeQuDistance = BladesAbsoluteDistanceFromQu(level),
+            bladeQuBorderDistance = BladesAbsoluteDistanceFromBorder(level),
             correctColor = new DataColor {
                 r = level.qu.Color.r,
                 g = level.qu.Color.g,
@@ -88,9 +87,16 @@ public static class Data {
         }
     }
 
+    // Converts the shutter's `opening` [0-1] to the distance (in Unity's units) from blades to qU
+    static float BladesAbsoluteDistanceFromQu(Level level) {
+        var absoluteOpening = level.shutter.opening * level.shutter.relativeSize;
+        return absoluteOpening - level.qu.transform.localScale.x;
+    }
+
     // Converts the shutter's `opening` [0-1] to the distance (in Unity's units) from blades to `radius`
-    static float CalculateDistance(float opening, float borderRadius) {
-        return opening; // TODO 
+    static float BladesAbsoluteDistanceFromBorder(Level level) {
+        var absoluteOpening = level.shutter.opening * level.shutter.relativeSize;
+        return absoluteOpening - level.shutter.internalCircleRadius;
     }
 
     [System.Serializable]
