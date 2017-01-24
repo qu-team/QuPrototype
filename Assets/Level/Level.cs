@@ -71,6 +71,7 @@ public class Level : MonoBehaviour {
             duration = 10;
         } else {
             LoadLevelPrefs();
+            GameObject.Find("Hand").SetActive(false);
         }
         SetupQuAndBladesColors();
         timer.Set(duration);
