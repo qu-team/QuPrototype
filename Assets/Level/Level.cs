@@ -97,7 +97,7 @@ public class Level : MonoBehaviour {
             shutter.opening = 0f;
             finalClosing = true;
             StartCoroutine(FinalClosingAnimation());
-        } else {
+        } else if (timer.enabled) {
             shutter.opening -= closingSpeed * Time.deltaTime;
         }
     }
@@ -199,6 +199,16 @@ public class Level : MonoBehaviour {
             finalClosing = false;
         }
     }
+
+    public void Pause() {
+        timer.enabled = false;
+    }
+
+    public void Resume() {
+        timer.enabled = true;
+    }
+
+    public bool Paused { get { return !timer.enabled; } }
 
     public void Quit() {
         GameManager.Instance.Back();

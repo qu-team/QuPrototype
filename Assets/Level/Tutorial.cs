@@ -1,14 +1,18 @@
 using UnityEngine;
+using System.Collections;
 
 public class Tutorial : MonoBehaviour {
 
     bool listening;
     Level level;
     GameObject hand;
+    GameObject arrow;
 
     void Awake() {
         hand = GameObject.Find("Hand");
+        arrow = GameObject.Find("Arrow");
         hand.SetActive(false);
+        arrow.SetActive(false);
 
         // disable score
         GameObject.Find("Score").SetActive(false);
@@ -24,20 +28,55 @@ public class Tutorial : MonoBehaviour {
     }
 
     void Update() {
-        if (listening && level.shutter.opening <= 0.1f) {
-            listening = false;
-            SetHandAtCorrectColor();
-            hand.SetActive(true);
-            Time.timeScale = 0f;
+        if (!level.Paused && listening && level.shutter.opening <= 0.1f) {
+            level.Pause();
+            StartCoroutine(ShowColorEquality());
         }
     }
 
     void Continue(Color color) {
-        if (Time.timeScale != 0f) return;
-        Time.timeScale = 1f;
+        if (listening) { return; }
+        level.Resume();
         level.MatchQuColor(color);
         listening = true;
         hand.SetActive(false);
+        print("eactivated hand");
+    }
+
+    IEnumerator ShowColorEquality() {
+        SetArrowAtCorrectColor();
+        arrow.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        arrow.SetActive(false);
+        SetHandAtCorrectColor();
+        hand.SetActive(true);
+        yield return null;
+        listening = false;
+    }
+
+    // Warning: this only works if there are exactly 3 blades!
+    void SetArrowAtCorrectColor() {
+        foreach (var blade in level.shutter.blades) {
+            if (blade.GetComponentInChildren<MeshRenderer>().material.color == level.qu.Color) {
+                var bpos = blade.transform.FindChild("Shape").position;
+                var qpos = level.qu.transform.position;
+                float coef = bpos.y > qpos.y
+                             ? 0.8f // Upper blade
+                             : bpos.x > qpos.x
+                                ? 0.8f // Lower blade
+                                : 0.8f // Left blade
+                             ;
+                arrow.transform.position = bpos + (qpos - bpos) * coef + new Vector3(0, 0, -3);
+                float angle = bpos.y > qpos.y
+                             ? 15f // Upper blade
+                             : bpos.x > qpos.x
+                                ? 80f // Lower blade
+                                : 130f // Left blade
+                             ;
+                arrow.transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                return;
+            }
+        }
     }
 
     // Warning: this only works if there are exactly 3 blades!
