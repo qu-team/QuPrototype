@@ -96,6 +96,9 @@ public class L10N : MonoBehaviour {
         SHARE,
         SCORE,
         CONTINUE,
+        RESUME,
+        PREV,
+        NEXT,
         FB_NEW_HIGH_SCORE,
         FB_SCORED,
         TWIT,
@@ -105,7 +108,10 @@ public class L10N : MonoBehaviour {
         CARD_1_TASK,
         CARD_2_TITLE,
         CARD_2_DESCRIPTION,
-        CARD_2_TASK
+        CARD_2_TASK,
+        ANIMATION_1_TEXT,
+        ANIMATION_2_TEXT,
+        ANIMATION_3_TEXT
     }
 
     private class English : Language {
@@ -119,6 +125,9 @@ public class L10N : MonoBehaviour {
             { Label.SHARE, "SHARE SCORE" },
             { Label.SCORE, Label.MEMORIES.ToString() },
             { Label.CONTINUE, Label.CONTINUE.ToString() },
+            { Label.RESUME, Label.RESUME.ToString() },
+            { Label.PREV, "⇦" },
+            { Label.NEXT, "⇨" },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
             { Label.FB_SCORED, "I scored {0} points!" },
             { Label.TWIT, "I scored {0} points on qU!" },
@@ -128,7 +137,10 @@ public class L10N : MonoBehaviour {
             { Label.CARD_1_TASK, "Complete the campaign" },
             { Label.CARD_2_TITLE, "Animals" },
             { Label.CARD_2_DESCRIPTION, "Dogs see everything grey, ugly life" },
-            { Label.CARD_2_TASK, "Get three stars in level one" }
+            { Label.CARD_2_TASK, "Get three stars in level one" },
+            { Label.ANIMATION_1_TEXT, "We need help" },
+            { Label.ANIMATION_2_TEXT, "We're lost" },
+            { Label.ANIMATION_3_TEXT, "We came here" }
         }) { }
     }
 
@@ -143,6 +155,7 @@ public class L10N : MonoBehaviour {
             { Label.SHARE, "CONDIVIDI PUNTEGGIO" },
             { Label.SCORE, "PUNTEGGIO" },
             { Label.CONTINUE, "CONTINUA" },
+            { Label.RESUME, "RIPRENDI" },
             { Label.FB_NEW_HIGH_SCORE, "Nuovo punteggio massimo su qU!" },
             { Label.FB_SCORED, "Ho totalizzato {0} punti!" },
             { Label.TWIT, "Ho totalizzato {0} punti su qU!" },
@@ -152,7 +165,10 @@ public class L10N : MonoBehaviour {
             { Label.CARD_1_TASK, "Completa la campagna" },
             { Label.CARD_2_TITLE, "Animali" },
             { Label.CARD_2_DESCRIPTION, "I cani vedono tutto grigio, brutta vita" },
-            { Label.CARD_2_TASK, "Ottieni tre stelle nel primo livello" }
+            { Label.CARD_2_TASK, "Ottieni tre stelle nel primo livello" },
+            { Label.ANIMATION_1_TEXT, "Auitaci" },
+            { Label.ANIMATION_2_TEXT, "Siamo smarriti" },
+            { Label.ANIMATION_3_TEXT, "Arrivammo qui" }
         }) { }
     }
 }

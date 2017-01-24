@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Gestures;
-using System.Collections;
 
 public class AnimationController : MonoBehaviour {
 
@@ -62,6 +62,8 @@ public class AnimationController : MonoBehaviour {
         anim.GetComponent<EventAnimationEnd>().EndAnimation += AnimationEnd;
         currAnimation = anim;
         currAnimationIndex = number;
+        var message = anim.transform.FindChild("Text").GetComponent<Text>();
+        message.text = L10N.Translate(message.text);
     }
 
     public void PrevAnimation(){
