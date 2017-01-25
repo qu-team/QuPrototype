@@ -66,17 +66,26 @@ public class Level : MonoBehaviour {
 
     void Start() {
         if (IsTutorial) {
-            shutter.bladesNumber = 3;
-            shutter.BackgroundColor = new Color(45/255f, 45/255f, 45/255f);
-            duration = 10;
+            SetTutorialSettings();
         } else {
             LoadLevelPrefs();
-            GameObject.Find("Hand").SetActive(false);
+            DisableTutorialGraphics();
         }
         SetupQuAndBladesColors();
         timer.Set(duration);
         playing = true;
         partialStartTime = Time.time;
+    }
+
+    void SetTutorialSettings() {
+        shutter.bladesNumber = 3;
+        shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
+        duration = 10;
+    }
+
+    void DisableTutorialGraphics() {
+        GameObject.Find("Hand").SetActive(false);
+        GameObject.Find("Arrow").SetActive(false);
     }
 
     internal void MatchQuColor(Color color) {
