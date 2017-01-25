@@ -29,6 +29,6 @@ public class ShareScore : MonoBehaviour {
     }
 
     public void Continue() {
-        SceneManager.LoadScene("MapScene");
+        GameManager.Instance.LoadScene(QuScene.MAP);
     }
 }
