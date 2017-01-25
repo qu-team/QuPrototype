@@ -4,7 +4,6 @@ public struct Score {
 
     public uint basePoints;
     public float difficultyMultiplier;
-    public float difficultyExponent;
 
     int currentDifficulty;
     int combo;
@@ -18,7 +17,7 @@ public struct Score {
 
     public int Value {
         get {
-            var difficultyScore = difficultyMultiplier * Mathf.Pow(currentDifficulty, difficultyExponent);
+            var difficultyScore = difficultyMultiplier * currentDifficulty;
             var delay = Time.fixedTime - snapshot;
             var score = (basePoints + difficultyScore) / (1f + delay);
             return (int)score;
@@ -36,7 +35,6 @@ public struct Score {
     }
 
     public void Failed() {
-        //currentDifficulty = Mathf.Max(currentDifficulty / 2, 1);
         currentDifficulty = Mathf.Max(currentDifficulty - 2, 1);
         combo = 0;
         snapshot = Time.fixedTime;

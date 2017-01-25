@@ -29,7 +29,7 @@ public class Level : MonoBehaviour {
 
     internal Timer timer;
 
-    Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f, difficultyExponent = 5f };
+    Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f };
     //RGBColorGenerator colors;
     HSLColorGenerator colors;
     int score = 0;
