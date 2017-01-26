@@ -73,8 +73,9 @@ public class MapManager : MonoBehaviour{
     }
 
     public void MoveCameraAtLevel(int lvl){
-        Vector2 target = GameObject.Find("Level" + (lvl + 1)).transform.position;
-        MoveCamera(-(Vector3)target + (Vector3)Camera.main.transform.position);
+        var level = GameObject.Find("Level" + (lvl + 1));
+        if (level == null) { return; }
+        MoveCamera(-level.transform.position + Camera.main.transform.position);
     }
 
     public void BackButton() {
