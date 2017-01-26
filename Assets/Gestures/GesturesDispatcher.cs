@@ -20,8 +20,7 @@ namespace Gestures {
         public event Action<Sprinch> OnSpreadStart, OnSpreadProgress, OnSpreadEnd;
 
         void Awake() {
-            var debug = !(Application.platform == RuntimePlatform.Android);
-//			var debug = false;
+            var debug = !Application.isMobilePlatform;
             if (debug) {
                 gesturesEmulator.OnClickStart += (position, duration) => NotifyGestureStart(Tap(position, duration));
                 gesturesEmulator.OnClickProgress += (position, duration) => NotifyGestureProgress(Tap(position, duration));
