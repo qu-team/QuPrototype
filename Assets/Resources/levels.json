@@ -14,7 +14,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 30,
-		"quToNextLevel": 10
+		"quToNextLevel": 10,
+		"stars": {
+		    "first": 50,
+			"second": 100,
+			"third": 150
+		}
         },
         {
 		"number": 1,
@@ -30,7 +35,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 15
+		"quToNextLevel": 15,
+		"stars": {
+		    "first": 100,
+			"second": 200,
+			"third": 400
+		}
         },
         {
 		"number": 2,
@@ -46,7 +56,12 @@
 		"innerRadius": 0.07,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 20
+		"quToNextLevel": 20,
+		"stars": {
+		    "first": 150,
+			"second": 300,
+			"third": 450
+		}
         },
         {
 		"number": 3,
@@ -62,7 +77,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 25
+		"quToNextLevel": 25,
+		"stars": {
+		    "first": 200,
+			"second": 400,
+			"third": 600
+		}
         },
         {
 		"number": 4,
@@ -78,7 +98,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 30
+		"quToNextLevel": 30,
+		"stars": {
+		    "first": 250,
+			"second": 500,
+			"third": 750
+		}
         },
         {
 		"number": 5,
@@ -94,7 +119,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 30
+		"quToNextLevel": 30,
+		"stars": {
+		    "first": 300,
+			"second": 600,
+			"third": 900
+		}
         },
         {
 		"number": 6,
@@ -110,7 +140,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 35
+		"quToNextLevel": 35,
+		"stars": {
+		    "first": 350,
+			"second": 700,
+			"third": 1050
+		}
         },
         {
 		"number": 7,
@@ -126,7 +161,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 40
+		"quToNextLevel": 40,
+		"stars": {
+		    "first": 400,
+			"second": 800,
+			"third": 1200
+		}
         },
         {
 		"number": 8,
@@ -142,7 +182,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 40
+		"quToNextLevel": 40,
+		"stars": {
+		    "first": 450,
+			"second": 900,
+			"third": 1350
+		}
         },
         {
 		"number": 9,
@@ -158,7 +203,12 @@
 		"innerRadius": 0.05,
 		"difficultyExp": 1.0,
 		"duration": 60,
-		"quToNextLevel": 50
+		"quToNextLevel": 50,
+		"stars": {
+		    "first": 500,
+			"second": 1000,
+			"third": 1500
+		}
         }
     ]
 }

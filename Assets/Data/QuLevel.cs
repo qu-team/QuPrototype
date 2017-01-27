@@ -10,4 +10,12 @@ public struct QuLevel {
 	public float bladesSpeed;
 	public float difficultyExp;
 	public uint quToNextLevel;
+    public StarsPoints stars;
+}
+
+[System.Serializable]
+public struct StarsPoints {
+    public uint first;
+    public uint second;
+    public uint third;
 }
