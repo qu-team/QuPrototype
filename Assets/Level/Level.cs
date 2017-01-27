@@ -140,11 +140,6 @@ public class Level : MonoBehaviour {
                 maxScoreReached = true;
             }
         }
-        // Check if we saved enough Qu for next level
-        if (levelData.quSaved == GameManager.Instance.Levels[lv].quToNextLevel) {
-            GameData.data.curLevelUnlocked++;
-            // TODO: show text "unlocked level"
-        }
     }
 
     void Failed() {
@@ -242,21 +237,14 @@ public class Level : MonoBehaviour {
 
     void SaveData() {
         harvester.SendStoredData(this);
-        var gm = GameManager.Instance;
-        var lv = gm.CurrentLevel;
-        EnsureLevelsAreInitialized(gm);
+        var game = GameManager.Instance;
+        var lv = game.CurrentLevel;
+        GameData.EnsureLevelsAreInitialized();
         GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
-        GameData.Save();
-    }
-
-    void EnsureLevelsAreInitialized(GameManager gm) {
-        if (GameData.data.levels == null) { GameData.data.levels = new List<LevelSaveData>(); }
-        if (GameData.data.levels.Count == 0) {
-            LogHelper.Info(this, "Initializing data for " + gm.Levels.Count + " levels");
-            for (int i = 0; i < gm.Levels.Count; ++i) {
-                GameData.data.levels.Add(new LevelSaveData());
-            }
+        if (lv == GameData.data.curLevelUnlocked && GameData.data.levels[lv].quSaved >= game.Levels[lv].quToNextLevel) {
+            ++GameData.data.curLevelUnlocked;
         }
+        GameData.Save();
     }
 
     void LoadNextScene() {

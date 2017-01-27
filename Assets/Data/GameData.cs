@@ -83,4 +83,12 @@ public static class GameData {
         }
         LogHelper.Ok("GameData", "Saved data to " + SAVE_FILE);
     }
+
+    public static void EnsureLevelsAreInitialized() {
+        int levels = GameManager.Instance.Levels.Count;
+        if (data.levels == null) { data.levels = new List<LevelSaveData>(); }
+        for (int i = data.levels.Count; i < levels; ++i) {
+            data.levels.Add(new LevelSaveData());
+        }
+    }
 }

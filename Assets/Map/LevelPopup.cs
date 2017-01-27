@@ -27,8 +27,14 @@ public class LevelPopup : MonoBehaviour{
 			+ "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" + gm.Levels[level].quToNextLevel.ToString();
 		//TODO stars
 		this.level = level;
-		gameObject.SetActive(true);
-	}
+        gameObject.SetActive(true);
+        DisablePlayButtonIfLevelLocked();
+    }
+
+    void DisablePlayButtonIfLevelLocked() {
+        var unlocked = level <= GameData.data.curLevelUnlocked;
+        GameObject.Find("PlayButton").GetComponent<Button>().interactable = unlocked;
+    }
 
 	public void PlayLevel() {
 		gm.PlayLevel(level);
