@@ -14,6 +14,7 @@ public class Level : MonoBehaviour {
     public Text scoreboard;
     public Feedback feedback;
     public Battery battery;
+    public GameObject stars;
     [Tooltip("Color radius decreases like 1/n^difficultyExponent")]
     public float difficultyExponent = 1f;
     public float resistance;
@@ -220,11 +221,14 @@ public class Level : MonoBehaviour {
 
     IEnumerator OutOfTimeAnimation() {
         var time = 2f;
+        EnableStars();
         while (time > 0) {
             Camera.main.orthographicSize *= 1.1f;
+            SetStarsAlpha(Mathf.Min(time, 2f - time));
             time -= Time.deltaTime;
             yield return null;
         }
+        SetStarsAlpha(0f);
         if (!IsTutorial) {
             LogHelper.Info(this, "Saving data");
             SaveData();
@@ -233,6 +237,21 @@ public class Level : MonoBehaviour {
             PlayerPrefs.SetInt(Preferences.PLAYED_TUTORIAL, 1);
         }
         LoadNextScene();
+    }
+
+    void EnableStars() {
+        stars.SetActive(true);
+        var starScores = GameManager.Instance.Levels[GameManager.Instance.CurrentLevel].stars;
+        if (starScores.first > score) { stars.transform.FindChild("Star1").gameObject.SetActive(false); }
+        if (starScores.second > score) { stars.transform.FindChild("Star2").gameObject.SetActive(false); }
+        if (starScores.third > score) { stars.transform.FindChild("Star3").gameObject.SetActive(false); }
+    }
+
+    void SetStarsAlpha(float alpha) {
+        foreach (Transform star in stars.transform) {
+            var image = star.gameObject.GetComponent<Image>();
+            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+        }
     }
 
     void SaveData() {
