@@ -50,6 +50,10 @@ public class AnimationController : MonoBehaviour {
         disabling = true;
     }
     public void PlayAnimation(int number){
+        if (number >= animations.Length) {
+            AnimationEnd();
+            return;
+        }
         Destroy(currAnimation);
         GameObject anim = GameObject.Instantiate(animations [number]);
         anim.transform.SetParent(AnimationRoot);
