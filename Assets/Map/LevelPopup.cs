@@ -17,7 +17,7 @@ public class LevelPopup : MonoBehaviour{
 
     }
 
-	public void ShowPopup(GameManager gm, int level){
+	public void ShowPopup(GameManager gm, int level, Color color){
 		if (level >= gm.Levels.Count) {
 			LogHelper.Warn(this, "Called ShowPopup(lv=" + (level + 1) + "), but only "
 					+ gm.Levels.Count + " levels have been loaded.");
@@ -34,6 +34,7 @@ public class LevelPopup : MonoBehaviour{
 			+ "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" + gm.Levels[level].quToNextLevel.ToString();
 		this.level = level;
         gameObject.SetActive(true);
+        GetComponent<Image>().color = color;
         DisablePlayButtonIfLevelLocked();
         DisplayStars();
     }

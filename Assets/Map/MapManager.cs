@@ -24,8 +24,8 @@ public class MapManager : MonoBehaviour{
             Application.Quit();
     }
 
-    public void ClickedLevel(int level){
-        popup.ShowPopup(GameManager.Instance, level);    
+    public void ClickedLevel(LevelSelectButtons level){
+        popup.ShowPopup(GameManager.Instance, level.level, level.Color);
     }
 
     void TapEnd(Tap tap){
@@ -43,7 +43,7 @@ public class MapManager : MonoBehaviour{
 			return;
         LevelSelectButtons lv = hit.collider.gameObject.GetComponent<LevelSelectButtons>();
         if (lv != null){
-            ClickedLevel(lv.level);
+            ClickedLevel(lv);
         }
     }
 
