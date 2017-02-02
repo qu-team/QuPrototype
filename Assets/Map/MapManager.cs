@@ -66,9 +66,11 @@ public class MapManager : MonoBehaviour{
 
     void MoveCamera(Vector3 shift){
         Camera camera = Camera.main;
+        var level = GameObject.Find("Level" + (GameData.data.curLevelUnlocked + 1));
+	var upperY = Mathf.Min(upperBounds.y, level.transform.position.y + 2);
         camera.transform.position = new Vector3(
                 Mathf.Clamp(orig.x - shift.x, lowerBounds.x, upperBounds.x),
-                Mathf.Clamp(orig.y - shift.y, lowerBounds.y, upperBounds.y), orig.z);
+                Mathf.Clamp(orig.y - shift.y, lowerBounds.y, upperY), orig.z);
 
     }
 
