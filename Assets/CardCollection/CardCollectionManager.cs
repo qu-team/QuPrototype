@@ -43,7 +43,6 @@ public class CardCollectionManager : MonoBehaviour {
     }
 
     public void ShowCard(int card){
-        //Debug.Log("showing card ..");
         inDetail = true;
         cardDisplayer.SetActive(true);
         cardList.SetActive(false);
@@ -59,7 +58,6 @@ public class CardCollectionManager : MonoBehaviour {
     }
 
     private void PopulateCardList(){
-        Debug.Log( Card.Collection.Length);
         foreach(Card c in Card.Collection){
             GameObject go = GameObject.Instantiate(miniCardTemplate);
             go.transform.SetParent( Content.transform);
@@ -85,7 +83,7 @@ public class CardCollectionManager : MonoBehaviour {
 
     //FIXME DO NOT USE, ONLY FOR ANIMATION EVENT
     public void DisplayDelayedCard(){
-		LogHelper.Debug(this, "Delayed card index is "+currentDisplayedCard);
+        LogHelper.Debug(this, "Delayed card index is "+currentDisplayedCard);
         cardDisplayer.GetComponent<CardBehaviour>().DisplayedCard = Card.Collection[currentDisplayedCard];
     }
 
