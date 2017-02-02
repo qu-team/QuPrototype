@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HSLColorGenerator : MonoBehaviour {
+public class HSLColorGenerator {
 
     public float Difficulty {
         set {

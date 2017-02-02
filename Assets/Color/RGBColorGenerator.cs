@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RGBColorGenerator : MonoBehaviour {
+public class RGBColorGenerator {
 
     public Vector3 center = new Vector3(0.5f, 0.5f, 0.5f);
     public float radius = 0.5f;

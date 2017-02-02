@@ -31,8 +31,6 @@ public class Level : MonoBehaviour {
     internal Timer timer;
 
     Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f };
-    //RGBColorGenerator colors;
-    //HSLColorGenerator colors;
     LABColorGenerator colors;
     int score = 0;
     bool finalClosing = false;
@@ -48,7 +46,6 @@ public class Level : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
-        //colors = GetComponent<LABColorGenerator>();
 	colors = new LABColorGenerator();
         harvester = Harvester.Instance;
         levelData = new LevelSaveData();
