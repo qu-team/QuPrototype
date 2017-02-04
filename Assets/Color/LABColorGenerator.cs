@@ -10,23 +10,11 @@ public class LABColorGenerator {
         }
     }
 
-    [Range(0, 50)]
+    [Range(0, 100)]
     public float lightness = 50f;
 
     /** Initial sum of spacings between picked colors */
     float totalSpacing = 200f;
-
-    struct LABColor {
-        public float h; // range: [0, 360)
-        public float s;
-        public float l;
-        public string ToString() {
-            return "(" + h + ", " + s + ", " + l + ")";
-        }
-        public static implicit operator string(LABColor c) {
-            return c.ToString();
-        }
-    }
 
     void Start() {
         lightness = 50f;
@@ -57,7 +45,6 @@ public class LABColorGenerator {
             }.To<Rgb>();
             LogHelper.Debug(this, "values = " + lightness + ", " + (pickA ? a : b) + ", " + (pickA ? b : a));
             LogHelper.Debug(this, "color["+i+"] = "+colors[i]);
-            Debug.Assert(colors[i] != null);
         }
         return colors;
     }

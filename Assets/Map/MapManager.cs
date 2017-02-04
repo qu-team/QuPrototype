@@ -11,8 +11,7 @@ public class MapManager : MonoBehaviour{
 
 
     void Start(){
-        SpriteRenderer sp = GetComponent<SpriteRenderer>();
-		orig = Camera.main.transform.position;
+	orig = Camera.main.transform.position;
         GameManager.Instance.MapFinishedLoading(this);
         dispatcher.OnTapEnd+= TapEnd;
         dispatcher.OnSwipeProgress += SwipeProgress;

@@ -54,7 +54,7 @@ public static class GameData {
     // Tries to load data from the save file and returns whether the data was
     // loaded or not. The loaded data is available in GameData.data.
     public static bool Load() {
-        string fname = Application.persistentDataPath + Path.DirectorySeparatorChar + SAVE_FILE + ".gz";
+        string fname = Application.persistentDataPath + "/" + SAVE_FILE + ".gz";
         if (!File.Exists(fname))
             return false;
 

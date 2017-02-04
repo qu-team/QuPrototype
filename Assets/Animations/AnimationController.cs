@@ -5,7 +5,6 @@ using Gestures;
 public class AnimationController : MonoBehaviour {
 
     GameManager gameManager;
-    GameObject canvas;
     GameObject currAnimation;
     public Transform AnimationRoot;
     public GameObject animationControls;
@@ -21,7 +20,6 @@ public class AnimationController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         gameManager = GameManager.Instance;
-        canvas = GameObject.Find("Canvas");
         gameManager.AnimationFinishedLoading(this);
         dispatcher.OnTapEnd += OnTapEnd;
     }
@@ -95,8 +93,8 @@ public class AnimationController : MonoBehaviour {
             disabling = false;
             return;
         }
-        if(IngameCut) return;
-        if(animationControls.active == false){
+        if (IngameCut) return;
+        if (!animationControls.activeSelf) {
 		ShowAnimationControls();	
         }
     }

@@ -17,7 +17,7 @@ public class HSLColorGenerator {
         public float h; // range: [0, 360)
         public float s;
         public float l;
-        public string ToString() {
+        public override string ToString() {
             return "(" + h + ", " + s + ", " + l + ")";
         }
         public static implicit operator string(HSLColor c) {

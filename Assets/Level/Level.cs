@@ -46,7 +46,7 @@ public class Level : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
-	colors = new LABColorGenerator();
+        colors = new LABColorGenerator();
         harvester = Harvester.Instance;
         levelData = new LevelSaveData();
         GameManager.Instance.LevelLoaded();

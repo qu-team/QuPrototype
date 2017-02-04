@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-class CardBehaviour : MonoBehaviour{
+class CardBehaviour : MonoBehaviour {
 
+#pragma warning disable 0649
 	//Editor stuff
 	public CardCollectionManager manager;
 	public Text title;
@@ -10,15 +11,14 @@ class CardBehaviour : MonoBehaviour{
 	public RawImage cardImage;
 	public Text number;
 	public Texture lockedTexture;
-
-	public GameManager GameManager;
+#pragma warning restore 0649
 
 	private Card displayedCard;
 	public Card DisplayedCard{
 		get {
 			return displayedCard;
 		}
-		set{
+		set {
 			displayedCard = value;
 			title.text = L10N.Translate(displayedCard.Name);
 			number.text = "" + displayedCard.CardNumber;

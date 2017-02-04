@@ -21,7 +21,6 @@ public class CardCollectionManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         Dispatcher.OnSwipeEnd+=OnSwipeEnd;
-        cardDisplayer.GetComponent<CardBehaviour>().GameManager = GameManager.Instance;
         animator = cardDisplayer.GetComponent<Animator>();
         cardDisplayer.GetComponent<AnimationCallbacks>().cardManager = this;    
         //CardsUnlocked.text = "Unlocked Cards "+gameManager.UnlockedCards()+"/"+(Card.Collection.Length-1);
@@ -92,7 +91,7 @@ public class CardCollectionManager : MonoBehaviour {
     }
 
     void OnSwipeEnd(Swipe sw){
-        if(cardDisplayer.active == false) return;
+        if(!cardDisplayer.activeSelf) return;
         if(animating)return;
         if(sw.Duration < 0.2f){
             if(Vector2.Dot(sw.End-sw.Start, Vector2.left)<0){

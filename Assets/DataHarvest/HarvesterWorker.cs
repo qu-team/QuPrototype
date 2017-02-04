@@ -5,6 +5,9 @@ using System.Text;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_WSA
+    using System.Linq;
+#endif
 
 internal sealed class HarvesterWorker {
 
@@ -19,8 +22,8 @@ internal sealed class HarvesterWorker {
     public HarvesterWorker() {
         path = Application.persistentDataPath;
         try {
-            LogHelper.Debug(this, "loading " + Application.dataPath + Path.DirectorySeparatorChar + "appconfig.json");
-            var conf = AppConfig.FromFile(Application.dataPath + Path.DirectorySeparatorChar + "appconfig.json");
+            LogHelper.Debug(this, "loading " + Application.dataPath + "/" + "appconfig.json");
+            var conf = AppConfig.FromFile(Application.dataPath + "/" + "appconfig.json");
             if (!conf.debug) {
                 SERVER_ADDRESS = conf.dataserver.address;
                 SERVER_PORT = conf.dataserver.port;
@@ -71,7 +74,14 @@ internal sealed class HarvesterWorker {
     public IEnumerator SendLocal() {
         LogHelper.Info(this, "checking for local data...");
 
-        foreach (string fname in Directory.GetFiles(path, "qudata_*.gz")) {
+#if UNITY_WSA
+        string[] files = new List<string>(Directory.GetFiles(path)).Where(file => {
+                return file.StartsWith("qudata_") && file.EndsWith(".gz");
+        }).ToArray();
+#else
+        string[] files = Directory.GetFiles(path, "qudata_*.gz");
+#endif
+        foreach (string fname in files) {
             LogHelper.Debug(this, "loading file " + fname);
             string datastr = localData.LoadCompressed(fname);
             if (datastr == null)

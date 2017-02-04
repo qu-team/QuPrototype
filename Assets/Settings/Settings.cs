@@ -22,7 +22,7 @@ public class Settings : MonoBehaviour {
         selectLanguageLabel = GameObject.Find("SelectLanguage").GetComponent<Text>();
         flags = new Dictionary<SystemLanguage, Sprite>();
         foreach (var language in FLAGS.Keys) {
-            flags[language] = Resources.Load<Sprite>("Flags" + System.IO.Path.DirectorySeparatorChar + FLAGS[language]);
+            flags[language] = Resources.Load<Sprite>("Flags/" + FLAGS[language]);
         }
     }
 

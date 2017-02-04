@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour {
     public Text maxScore;
     public Text loading;
     public AudioClip buttonSound;
-
+ 
     void Start() {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
         var score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
@@ -30,7 +30,7 @@ public class Menu : MonoBehaviour {
         foreach (Transform button in buttonsParent.transform) {
             var image = button.GetComponent<Image>();
             if (image != null) { image.color = color; }
-            var meanGrayColor = (color.r + color.g + color.b) / 3f;
+            //var meanGrayColor = (color.r + color.g + color.b) / 3f;
         }
     }
 
