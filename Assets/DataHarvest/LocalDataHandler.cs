@@ -53,7 +53,7 @@ internal sealed class LocalDataHandler {
                     return null;
                 }
 #if UNITY_WSA
-                return Encoding.UTF8.GetString(buf, 0, ucsize - 1);
+                return Encoding.UTF8.GetString(buf, 0, ucsize);
 #else
                 return Encoding.UTF8.GetString(buf);
 #endif

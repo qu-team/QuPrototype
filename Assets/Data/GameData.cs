@@ -61,6 +61,7 @@ public static class GameData {
         try {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
             string json = dataHdl.LoadCompressed(fname);
+	    LogHelper.Debug("GameData", "loaded raw json = " + json);
             data = JsonUtility.FromJson<PlayerData>(json);
         } catch (Exception e) {
             LogHelper.Error("GameData", "Couldn't load save data from " + fname + ": "
