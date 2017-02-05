@@ -26,8 +26,7 @@ public class LevelPopup : MonoBehaviour{
             return;
         }
         this.gm = gm;
-        print("level = " + (level + 1));
-        Title.text = (level + 1) + " - " + gm.Levels[level].name;    
+        Title.text = (level + 1) + " - " + gm.Levels[level].name;
         LevelSaveData? lvdata = null;
         if (GameData.data.levels != null && GameData.data.levels.Count > level)
             lvdata = GameData.data.levels[level];
