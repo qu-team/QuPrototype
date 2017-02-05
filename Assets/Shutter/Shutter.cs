@@ -10,7 +10,7 @@ public class Shutter : MonoBehaviour {
     public uint bladesNumber = 6;
     public float relativeSize = 1f;
     public Material material;
-    public Sprite circle;
+    public Sprite[] wedges;
     public float internalCircleRadius;
     public Color internalCircleRadiusColor;
 
@@ -49,21 +49,41 @@ public class Shutter : MonoBehaviour {
             blade.transform.parent = transform;
             blade.transform.localPosition = new Vector2(Mathf.Cos(i * triangle.topAngle), Mathf.Sin(i * triangle.topAngle)) * relativeSize;
             AddBladeShape(blade, triangle, ColorForBlade(i));
-            SetCircle(blade, triangle);
+            SetWedge(blade, triangle);
             blades[i] = blade;
         }
         ResetOpening();
         UpdateBladesRotation();
     }
 
-    void SetCircle(GameObject blade, Triangle triangle) {
+    void SetWedge(GameObject blade, Triangle triangle) {
         var child = new GameObject();
         child.transform.parent = blade.transform;
         var renderer = child.AddComponent<SpriteRenderer>();
-        renderer.sprite = circle;
+        SelectWedgeSprite(renderer);
         renderer.color = backgroundColor;
         child.transform.localPosition = new Vector3(-triangle.Height, -triangle.HalfWidth, -1f);
         child.transform.localScale = new Vector3(internalCircleRadius, internalCircleRadius, 1f);
+    }
+
+    void SelectWedgeSprite(SpriteRenderer renderer) {
+        switch (bladesNumber) {
+        case 3:
+            renderer.sprite = wedges[1];
+            renderer.transform.rotation = Quaternion.Euler(0, 0, 60);
+            break;
+        case 4:
+            renderer.sprite = wedges[2];
+            renderer.transform.rotation = Quaternion.Euler(0, 0, 45);
+            break;
+        case 5:
+            renderer.sprite = wedges[3];
+            renderer.transform.rotation = Quaternion.Euler(0, 0, 40);
+            break;
+        default:
+            renderer.sprite = wedges[0];
+            break;
+        }
     }
 
     void DestroyPreviousBlades() {

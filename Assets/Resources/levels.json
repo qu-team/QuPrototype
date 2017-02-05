@@ -1,220 +1,232 @@
 {
-    "levels": [
-        {
-		"number": 0,
-		"name": "The Beginning",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
+	"levels": [
+		{
+			"number": 0,
+			"name": "The Beginning",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 30,
+			"quResistance": 1,
+			"quToNextLevel": 10,
+			"stars": {
+				"first": 50,
+				"second": 100,
+				"third": 150
+			},
+			"hasCutscene": true,
+			"cutscene": 0
 		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 30,
-		"quToNextLevel": 10,
-		"stars": {
-		    "first": 50,
-			"second": 100,
-			"third": 150
+		{
+			"number": 1,
+			"name": "Why So Hasty?",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.15,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 60,
+			"quResistance": 1,
+			"quToNextLevel": 15,
+			"stars": {
+				"first": 100,
+				"second": 200,
+				"third": 400
+			}
 		},
-		"hasCutscene": true,
-		"cutscene": 0
-        },
-        {
-		"number": 1,
-		"name": "Level 2",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
+		{
+			"number": 2,
+			"name": "Don't Hug Me I'm Scared",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.08,
+			"difficultyExp": 1.5,
+			"duration": 60,
+			"quResistance": 1,
+			"quToNextLevel": 20,
+			"stars": {
+				"first": 150,
+				"second": 300,
+				"third": 450
+			},
+			"hasCutscene": true,
+			"cutscene": 1
 		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 15,
-		"stars": {
-		    "first": 100,
-			"second": 200,
-			"third": 400
+		{
+			"number": 3,
+			"name": "No Time Four Games",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 4,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 0.9,
+			"duration": 60,
+			"quResistance": 1.5,
+			"quToNextLevel": 25,
+			"stars": {
+				"first": 200,
+				"second": 400,
+				"third": 600
+			}
+		},
+		{
+			"number": 4,
+			"name": "50 Shades Of Gray",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 60,
+			"quResistance": 1,
+			"quToNextLevel": 30,
+			"stars": {
+				"first": 250,
+				"second": 500,
+				"third": 750
+			},
+			"saturation": 0.1
+		},
+		{
+			"number": 5,
+			"name": "Feeling Blue",
+			"bgColor": {
+				"r": 0.100,
+				"g": 0.100,
+				"b": 0.500
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 60,
+			"quResistance": 1,
+			"quToNextLevel": 30,
+			"stars": {
+				"first": 300,
+				"second": 600,
+				"third": 900
+			},
+			"hasCutscene": true,
+			"cutscene": 2
+		},
+		{
+			"number": 6,
+			"name": "Am I Really That Popular?",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 5,
+			"bladesSpeed": 0.9,
+			"innerRadius": 0.07,
+			"difficultyExp": 0.6,
+			"duration": 60,
+			"quResistance": 1.5,
+			"quToNextLevel": 25,
+			"stars": {
+				"first": 250,
+				"second": 400,
+				"third": 750
+			}
+		},
+		{
+			"number": 7,
+			"name": "Long Way To The Top",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.5,
+			"innerRadius": 0.05,
+			"difficultyExp": 2.0,
+			"duration": 60,
+			"quResistance": 0.8,
+			"quToNextLevel": 40,
+			"stars": {
+				"first": 400,
+				"second": 800,
+				"third": 1200
+			}
+		},
+		{
+			"number": 8,
+			"name": "Bleached",
+			"bgColor": {
+				"r": 0.153,
+				"g": 0.153,
+				"b": 0.153
+			},
+			"aperture": 0.5,
+			"blades": 3,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 60,
+			"quResistance": 1,
+			"quToNextLevel": 40,
+			"stars": {
+				"first": 450,
+				"second": 900,
+				"third": 1350
+			},
+			"brightness": 0.9
+		},
+		{
+			"number": 9,
+			"name": "Enter The Light",
+			"bgColor": {
+				"r": 1.000,
+				"g": 1.000,
+				"b": 1.000
+			},
+			"aperture": 0.5,
+			"blades": 4,
+			"bladesSpeed": 1.0,
+			"innerRadius": 0.05,
+			"difficultyExp": 1.0,
+			"duration": 60,
+			"quResistance": 1.5,
+			"quToNextLevel": 50,
+			"stars": {
+				"first": 500,
+				"second": 1000,
+				"third": 1500
+			}
 		}
-        },
-        {
-		"number": 2,
-		"name": "Level 3",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.07,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 20,
-		"stars": {
-		    "first": 150,
-			"second": 300,
-			"third": 450
-		},
-		"hasCutscene": true,
-		"cutscene": 1
-        },
-        {
-		"number": 3,
-		"name": "Level 4",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 25,
-		"stars": {
-		    "first": 200,
-			"second": 400,
-			"third": 600
-		}
-        },
-        {
-		"number": 4,
-		"name": "Level 5",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 30,
-		"stars": {
-		    "first": 250,
-			"second": 500,
-			"third": 750
-		}
-        },
-        {
-		"number": 5,
-		"name": "Level 6",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 30,
-		"stars": {
-		    "first": 300,
-			"second": 600,
-			"third": 900
-		},
-		"hasCutscene": true,
-		"cutscene": 2
-        },
-        {
-		"number": 6,
-		"name": "Level 7",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 35,
-		"stars": {
-		    "first": 350,
-			"second": 700,
-			"third": 1050
-		}
-        },
-        {
-		"number": 7,
-		"name": "Level 8",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 40,
-		"stars": {
-		    "first": 400,
-			"second": 800,
-			"third": 1200
-		}
-        },
-        {
-		"number": 8,
-		"name": "Level 9",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 40,
-		"stars": {
-		    "first": 450,
-			"second": 900,
-			"third": 1350
-		}
-        },
-        {
-		"number": 9,
-		"name": "Level 10",
-		"bgColor": {
-			"r": 0.153,
-			"g": 0.153,
-			"b": 0.153
-		},
-		"aperture": 0.5,
-		"blades": 3,
-		"bladesSpeed": 1.0,
-		"innerRadius": 0.05,
-		"difficultyExp": 1.0,
-		"duration": 60,
-		"quToNextLevel": 50,
-		"stars": {
-		    "first": 500,
-			"second": 1000,
-			"third": 1500
-		}
-        }
-    ]
+	]
 }

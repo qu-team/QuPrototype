@@ -4,6 +4,8 @@ public class HSLColorGenerator : IColorGenerator {
 
     [Range(0, 1)]
     public float saturation = 1f;
+    [Range(0, 1)]
+    public float lightness = 0.5f;
 
     float arcAmplitude = 240f;
 
@@ -43,7 +45,7 @@ public class HSLColorGenerator : IColorGenerator {
             colors[i] = HSLToRGB(new HSLColor {
                 h = h,
                 s = saturation,
-                l = 0.5f
+                l = lightness
             });
         }
         return colors;

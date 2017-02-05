@@ -67,6 +67,12 @@ public class L10N : MonoBehaviour {
     }
 
     private abstract class Language {
+        protected const string EGRAVE = "\x00e8",
+                               EACUTE = "\x00e9",
+                               AGRAVE = "\x00e0",
+                               IGRAVE = "\x00ec",
+                               OGRAVE = "\x00f2",
+                               UGRAVE = "\x00f9";
 
         readonly IDictionary<string, string> translations;
         readonly Language fallback;
@@ -100,6 +106,7 @@ public class L10N : MonoBehaviour {
         PREV,
         NEXT,
         BEST_SCORE,
+        LEVEL_LOCKED,
         SAVED_QUS,
         TO_NEXT_LEVEL,
         FB_NEW_HIGH_SCORE,
@@ -132,6 +139,7 @@ public class L10N : MonoBehaviour {
             { Label.PREV, "⇦" },
             { Label.NEXT, "⇨" },
             { Label.BEST_SCORE, "Best score" },
+            { Label.LEVEL_LOCKED, "This level is locked!" },
             { Label.SAVED_QUS, "Saved qUs" },
             { Label.TO_NEXT_LEVEL, "To next level" },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
@@ -146,7 +154,7 @@ public class L10N : MonoBehaviour {
             { Label.CARD_2_TASK, "Get three stars in level one" },
             { Label.ANIMATION_1_TEXT, "We need help" },
             { Label.ANIMATION_2_TEXT, "We're lost" },
-            { Label.ANIMATION_3_TEXT, "We came here" }
+            { Label.ANIMATION_3_TEXT, "We came here" },
         }) { }
     }
 
@@ -163,6 +171,7 @@ public class L10N : MonoBehaviour {
             { Label.CONTINUE, "CONTINUA" },
             { Label.RESUME, "RIPRENDI" },
             { Label.BEST_SCORE, "Miglior punteggio" },
+            { Label.LEVEL_LOCKED, "Questo livello " + EGRAVE + " bloccato!" },
             { Label.SAVED_QUS, "qU salvati" },
             { Label.TO_NEXT_LEVEL, "Al prossimo livello" },
             { Label.FB_NEW_HIGH_SCORE, "Nuovo punteggio massimo su qU!" },

@@ -30,9 +30,14 @@ public class LevelPopup : MonoBehaviour{
         LevelSaveData? lvdata = null;
         if (GameData.data.levels != null && GameData.data.levels.Count > level)
             lvdata = GameData.data.levels[level];
-        Info.text = L10N.Translate(L10N.Label.BEST_SCORE) + ":\n"+ (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
-            + "\n" + L10N.Translate(L10N.Label.SAVED_QUS) + ":\n" + (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-")
-            + "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" + gm.Levels[level].quToNextLevel.ToString();
+
+        Info.text = L10N.Translate(L10N.Label.BEST_SCORE) + ":\n"
+                + (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
+                + "\n" + L10N.Translate(L10N.Label.SAVED_QUS) + ":\n" 
+                + (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-")
+                + "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" 
+                + gm.Levels[level].quToNextLevel.ToString();
+
         this.level = level;
         gameObject.SetActive(true);
         GetComponent<Image>().color = color;

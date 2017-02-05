@@ -6,6 +6,7 @@ public struct QuLevel {
     public float aperture;
     public float innerRadius;
     public uint duration;
+    public float quResistance;
     public uint blades;
     public float bladesSpeed;
     public float difficultyExp;
@@ -13,6 +14,10 @@ public struct QuLevel {
     public StarsPoints stars;
     public bool hasCutscene;
     public int cutscene;
+    // If > 0, this forces the color generator to be HSL with this saturation
+    public float saturation;
+    // If > 0, this forces the color generator to be HSL with this brightness
+    public float brightness;
 }
 
 [System.Serializable]

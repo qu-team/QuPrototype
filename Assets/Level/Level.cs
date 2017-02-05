@@ -46,7 +46,6 @@ public class Level : MonoBehaviour {
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
-        colors = new LABColorGenerator();
         harvester = Harvester.Instance;
         levelData = new LevelSaveData();
         GameManager.Instance.LevelLoaded();
@@ -59,9 +58,20 @@ public class Level : MonoBehaviour {
         shutter.bladesNumber = level.blades;
         shutter.BackgroundColor = level.bgColor;
         shutter.internalCircleRadius = level.innerRadius;
-        resistance = PlayerPrefs.GetFloat(Preferences.RESISTANCE, resistance);
+        resistance = level.quResistance;
         duration = level.duration;
         difficultyExponent = level.difficultyExp;
+        // Create the ColorGenerator
+        if (level.saturation > 0 || level.brightness > 0) {
+            colors = new HSLColorGenerator();
+            if (level.saturation > 0)
+                (colors as HSLColorGenerator).saturation = level.saturation;
+            if (level.brightness > 0)
+                (colors as HSLColorGenerator).lightness = level.brightness;
+        } else {
+            // default
+            colors = new LABColorGenerator();
+        }
     }
 
     void Start() {
