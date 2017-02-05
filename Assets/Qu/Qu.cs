@@ -12,6 +12,7 @@ public class Qu : MonoBehaviour {
     Vector3 originalScale;
     bool dead = false;
     int expressionCount = 0;
+    IEnumerator deathCoroutine;
 
     void Awake() {
         sprite = GetComponent<SpriteRenderer>();
@@ -42,7 +43,15 @@ public class Qu : MonoBehaviour {
 
     public void Die() {
         dead = true;
-        StartCoroutine(DeathAnimation());
+        deathCoroutine = DeathAnimation();
+        StartCoroutine(deathCoroutine);
+    }
+
+    public void StopDying() {
+        if (deathCoroutine != null) {
+            StopCoroutine(deathCoroutine);
+            deathCoroutine = null;
+        }
     }
 
     public bool Dead { get { return dead; } }

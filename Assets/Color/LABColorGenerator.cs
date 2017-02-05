@@ -33,7 +33,7 @@ public class LABColorGenerator {
         float a = Random.Range(-128, 128);
         float firstValue = Random.Range(-128, 128 - totalSpacing);
         float step = totalSpacing / (n - 1);
-        LogHelper.Debug(this, "totalSpacing = " + totalSpacing + ", firstValue = " + firstValue + ", step = " + step);
+        //LogHelper.Debug(this, "totalSpacing = " + totalSpacing + ", firstValue = " + firstValue + ", step = " + step);
         Color[] colors = new Color[n];
         for (int i = 0; i < n; ++i) {
             float b = firstValue + step * i;
@@ -43,8 +43,8 @@ public class LABColorGenerator {
                     A = pickA ? a : b,
                     B = pickA ? b : a
             }.To<Rgb>();
-            LogHelper.Debug(this, "values = " + lightness + ", " + (pickA ? a : b) + ", " + (pickA ? b : a));
-            LogHelper.Debug(this, "color["+i+"] = "+colors[i]);
+            //LogHelper.Debug(this, "values = " + lightness + ", " + (pickA ? a : b) + ", " + (pickA ? b : a));
+            //LogHelper.Debug(this, "color["+i+"] = "+colors[i]);
         }
         return colors;
     }

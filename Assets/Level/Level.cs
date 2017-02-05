@@ -199,6 +199,7 @@ public class Level : MonoBehaviour {
         if (finalClosing) {
             yield return new WaitForSeconds(0.5f);
             Reinitialize();
+            qu.StopDying();
             qu.OpenEyes();
             finalClosing = false;
         }
