@@ -31,7 +31,7 @@ public class Level : MonoBehaviour {
     internal Timer timer;
 
     Score scoreAdder = new Score { basePoints = 10, difficultyMultiplier = 4f };
-    LABColorGenerator colors;
+    IColorGenerator colors;
     int score = 0;
     bool finalClosing = false;
     bool playing;
@@ -155,25 +155,24 @@ public class Level : MonoBehaviour {
     float SecondsOfPenality { get { return 5f - (Time.time - partialStartTime); } }
 
     void SetupQuAndBladesColors() {
-        var colors = RandomColors();
+        var rcolors = RandomColors();
         var index = Random.Range(0, (int)shutter.bladesNumber);
-        shutter.SetBladeColors(colors);
-        qu.Color = colors[index];
+        shutter.SetBladeColors(rcolors);
+        qu.Color = rcolors[index];
     }
 
     Color[] RandomColors() {
         Color[] randomColors;
         do {
-            //colors.RandomizeCenter();
             randomColors = colors.Generate((int)shutter.bladesNumber);
         } while (AnyColorIsSimilarToBackground(randomColors));
         return randomColors;
     }
 
-    bool AnyColorIsSimilarToBackground(Color[] colors) {
+    bool AnyColorIsSimilarToBackground(Color[] cols) {
         const float threshold = 5f / 256f;
         var background = shutter.BackgroundColor;
-        foreach (var color in colors) {
+        foreach (var color in cols) {
             if (Mathf.Abs(background.r - color.r) >= threshold) { continue; }
             if (Mathf.Abs(background.g - color.g) >= threshold) { continue; }
             if (Mathf.Abs(background.b - color.b) >= threshold) { continue; }
@@ -183,7 +182,7 @@ public class Level : MonoBehaviour {
     }
 
     void SetDifficulty() {
-        //colors.scale = 1f / Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
+        //colors.Difficulty = Mathf.Pow(scoreAdder.Difficulty, difficultyExponent);
         colors.Difficulty = scoreAdder.Difficulty * difficultyExponent;
     }
 

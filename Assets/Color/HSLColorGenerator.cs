@@ -1,12 +1,6 @@
 using UnityEngine;
 
-public class HSLColorGenerator {
-
-    public float Difficulty {
-        set {
-            arcAmplitude = 240f / value;
-        }
-    }
+public class HSLColorGenerator : IColorGenerator {
 
     [Range(0, 1)]
     public float saturation = 1f;
@@ -25,8 +19,10 @@ public class HSLColorGenerator {
         }
     }
 
-    void Start() {
-        saturation = 1f;
+    public float Difficulty {
+        set {
+            arcAmplitude = 240f / value;
+        }
     }
 
     public Color[] Generate(int n) {

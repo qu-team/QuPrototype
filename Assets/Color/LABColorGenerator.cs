@@ -2,13 +2,7 @@ using UnityEngine;
 using ColorMine.ColorSpaces;
 using ColorMine.ColorSpaces.Conversions;
 
-public class LABColorGenerator {
-
-    public float Difficulty {
-        set {
-            totalSpacing = 200f / Mathf.Pow(value, 0.5f);
-        }
-    }
+public class LABColorGenerator : IColorGenerator {
 
     [Range(0, 100)]
     public float lightness = 50f;
@@ -16,8 +10,10 @@ public class LABColorGenerator {
     /** Initial sum of spacings between picked colors */
     float totalSpacing = 200f;
 
-    void Start() {
-        lightness = 50f;
+    public float Difficulty {
+        set {
+            totalSpacing = 200f / Mathf.Pow(value, 0.5f);
+        }
     }
 
     public Color[] Generate(int n) {

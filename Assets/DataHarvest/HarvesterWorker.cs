@@ -38,11 +38,10 @@ internal sealed class HarvesterWorker {
         localData = new LocalDataHandler(path);
     }
 
-    // Tries to send `data` to the server.
+    // Coroutine which tries to send `data` to the server.
     // If `sourceFile` is given, the data is assumed to come from that file, therefore
     // that file will be deleted after a successful send operation, and no local file will be
     // written if said operation fails.
-    // Returns success or failure status.
     public IEnumerator SendData(List<DataBundle> data, string sourceFile = null) {
         LogHelper.Info(this, "sending data to " + REQUEST_URL + "...");
 
@@ -71,7 +70,7 @@ internal sealed class HarvesterWorker {
         yield return null;
     }
 
-    // Checks local data directory and tries to send all data found inside.
+    // Coroutine which checks local data directory and tries to send all data found inside.
     public IEnumerator SendLocal() {
         LogHelper.Info(this, "checking for local data...");
 

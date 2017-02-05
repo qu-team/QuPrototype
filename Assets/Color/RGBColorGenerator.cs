@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 
-public class RGBColorGenerator {
+public class RGBColorGenerator : IColorGenerator {
 
-    public Vector3 center = new Vector3(0.5f, 0.5f, 0.5f);
-    public float radius = 0.5f;
-    public float padding = 0.2f;
-    public float scale = 1f;
+    Vector3 center = new Vector3(0.5f, 0.5f, 0.5f);
+    float radius = 0.5f;
+    float padding = 0.2f;
+    float scale = 1f;
 
     public float Radius { get { return radius * scale; } }
-
     public float Padding { get { return padding * scale; } }
 
-    public void RandomizeCenter() {
-        var r = Radius;
-        var range = 1f - r * 2;
-        center = new Vector3(
-            Random.Range(0f, range) + r,
-            Random.Range(0f, range) + r,
-            Random.Range(0f, range) + r);
+    public float Difficulty {
+        set {
+            scale = 1f / value;
+        }
     }
 
     public Color[] Generate(int n) {
+        RandomizeCenter();
         var r = Radius;
         var reds = RandomPoints(n, center.x - r, center.x + r);
         var greens = RandomPoints(n, center.y - r, center.y + r);
@@ -33,6 +30,15 @@ public class RGBColorGenerator {
             colors[i] = new Color(reds[i], greens[i], blues[i]);
         }
         return colors;
+    }
+
+    void RandomizeCenter() {
+        var r = Radius;
+        var range = 1f - r * 2;
+        center = new Vector3(
+            Random.Range(0f, range) + r,
+            Random.Range(0f, range) + r,
+            Random.Range(0f, range) + r);
     }
 
     /// <summary>
