@@ -4,6 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+/*
+ * This is the mapping of the json found in
+ * Application.persistentDataPath/gamedata.json.gz
+ */
 [Serializable]
 public struct PlayerData {
     public List<LevelSaveData> levels;
@@ -33,6 +37,11 @@ public struct PlayerData {
     }
 }
 
+/*
+ * Keeps track of the "map progress" of the player.
+ * This information is embedded in PlayerData and serialized
+ * in Application.persistentDataPath/gamedata.json.gz
+ */
 [Serializable]
 public struct LevelSaveData {
     public long maxScore;
@@ -46,6 +55,11 @@ public struct LevelSaveData {
     }
 }
 
+/*
+ * This class provides a convenient interface to gamedata.json.
+ * One typically loads the data with Load(), changes entries in `data`
+ * and finally calls Save() to serialize the changes.
+ */
 public static class GameData {
     const string SAVE_FILE = "gamedata.json";
 
@@ -61,7 +75,6 @@ public static class GameData {
         try {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
             string json = dataHdl.LoadCompressed(fname);
-	    LogHelper.Debug("GameData", "loaded raw json = " + json);
             data = JsonUtility.FromJson<PlayerData>(json);
         } catch (Exception e) {
             LogHelper.Error("GameData", "Couldn't load save data from " + fname + ": "

@@ -22,15 +22,16 @@ internal sealed class HarvesterWorker {
     public HarvesterWorker() {
         path = Application.persistentDataPath;
         try {
-            LogHelper.Debug(this, "loading " + Application.dataPath + "/" + "appconfig.json");
-            var conf = AppConfig.FromFile(Application.dataPath + "/" + "appconfig.json");
+            LogHelper.Debug(this, "loading " + Application.dataPath + "/appconfig.json");
+            var conf = AppConfig.FromFile(Application.dataPath + "/appconfig.json");
             if (!conf.debug) {
                 SERVER_ADDRESS = conf.dataserver.address;
                 SERVER_PORT = conf.dataserver.port;
                 REQUEST_PATH = conf.dataserver.path;
             }
         } catch (Exception ex) {
-            LogHelper.Warn(this, ex.StackTrace);
+            LogHelper.Warn(this, "AppConfig wasn't loaded correctly from " + 
+                    Application.dataPath + "/appconfig.json:\n" + ex);
         }
         REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
         LogHelper.Info(this, "request url: " + REQUEST_URL);

@@ -19,7 +19,9 @@
 		    "first": 50,
 			"second": 100,
 			"third": 150
-		}
+		},
+		"hasCutscene": true,
+		"cutscene": 0
         },
         {
 		"number": 1,
@@ -61,7 +63,9 @@
 		    "first": 150,
 			"second": 300,
 			"third": 450
-		}
+		},
+		"hasCutscene": true,
+		"cutscene": 1
         },
         {
 		"number": 3,
@@ -124,7 +128,9 @@
 		    "first": 300,
 			"second": 600,
 			"third": 900
-		}
+		},
+		"hasCutscene": true,
+		"cutscene": 2
         },
         {
 		"number": 6,

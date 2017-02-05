@@ -145,20 +145,30 @@ public class GameManager : MonoBehaviour {
     public void PlayLevel(int lv) {
         curLevel = lv;
         // Find out if we should play the cutscene or not
-        if (GameData.data.levels == null || GameData.data.levels.Count <= lv
-                || GameData.data.levels[lv].maxScore <= 0)
-        {
-            currAnimation = lv ;
+        currAnimation = GetCutscene(lv);
+        if (currAnimation >= 0) {
             LoadScene(QuScene.CUT_GAME);
         } else {
             LoadScene(QuScene.GAME);
         }
     }
-    
+
     public void LevelLoaded() {
         if (currentState == QuScene.TUTORIAL) {
             LogHelper.Debug(this, "Setting level as tutorial");
             new GameObject("Tutorial", new System.Type[] { typeof(Tutorial) });
         }
+    }
+
+    // Given level index `lv`, returns a non-negative integer if the cutscene with
+    // that index should be played, or -1 if none should be played.
+    int GetCutscene(int lv) {
+        LogHelper.Debug(this, "Called GetCutscene("+lv+")");
+        var lvs = GameData.data.levels;
+        if (lvs == null || lvs.Count <= lv || levels.Count <= lv)
+            return -1;
+        var levelPlayerData = lvs[lv];
+        var levelData = levels[lv];
+        return (levelData.hasCutscene && levelPlayerData.maxScore <= 0) ? levelData.cutscene : -1;
     }
 }
