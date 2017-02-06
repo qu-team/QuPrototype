@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelPopup : MonoBehaviour{
+public class LevelPopup : MonoBehaviour {
     public Text Info;
     public Text Title;
 
     public GameObject playButton;
     public GameObject lockedPanel;
     public GameObject statsPanel;
+    public GameObject buttonPanel;
+    public GameObject loadingPanel;
     public Image star1;
     public Image star2;
     public Image star3;
@@ -67,6 +69,8 @@ public class LevelPopup : MonoBehaviour{
     }
 
     public void PlayLevel() {
+        buttonPanel.SetActive(false);
+        loadingPanel.SetActive(true);
         gm.PlayLevel(level);
     }
 }
