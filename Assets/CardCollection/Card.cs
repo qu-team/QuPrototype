@@ -3,8 +3,12 @@ using UnityEngine;
 public class Card{
 
     public static Card[] Collection  = {
-        new Card(1, L10N.Label.CARD_1_TITLE.ToString(), L10N.Label.CARD_1_DESCRIPTION.ToString(), L10N.Label.CARD_1_TASK.ToString()),
-        new Card(2, L10N.Label.CARD_2_TITLE.ToString(), L10N.Label.CARD_2_DESCRIPTION.ToString(), L10N.Label.CARD_2_TASK.ToString())
+        new Card(1, L10N.Label.CARD_1_TITLE.ToString(),
+			L10N.Label.CARD_1_DESCRIPTION.ToString(),
+			L10N.Label.CARD_1_TASK.ToString()),
+        new Card(2, L10N.Label.CARD_2_TITLE.ToString(),
+			L10N.Label.CARD_2_DESCRIPTION.ToString(),
+			L10N.Label.CARD_2_TASK.ToString())
     };
 
     public readonly string Name;
@@ -16,7 +20,7 @@ public class Card{
     public Texture CardImage {
         get {
             if (cardImage != null) return cardImage;
-            return cardImage = Resources.Load("Cards/" + CardNumber) as Texture;
+            return cardImage = Resources.Load<Texture>("Cards/" + CardNumber);
         }
     }
 

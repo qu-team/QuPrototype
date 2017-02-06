@@ -46,11 +46,13 @@ public struct PlayerData {
 public struct LevelSaveData {
     public long maxScore;
     public uint quSaved;
+    public uint maxCombo;
 
     public LevelSaveData Overwrite(LevelSaveData data) {
         return new LevelSaveData {
             maxScore = Math.Max(data.maxScore, maxScore),
-            quSaved = quSaved + data.quSaved
+            quSaved = quSaved + data.quSaved,
+            maxCombo = Math.Max(data.maxCombo, maxCombo)
         };
     }
 }

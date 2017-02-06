@@ -139,6 +139,7 @@ public class Level : MonoBehaviour {
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
         harvester.SaveSingleSessionData(this, succeeded: true);
         levelData.quSaved++;
+        levelData.maxCombo = (uint)Mathf.Max(levelData.maxCombo, scoreAdder.Combo);
         int lv = GameManager.Instance.CurrentLevel;
         // Check if we reached the max score
         if (score > levelData.maxScore) {
