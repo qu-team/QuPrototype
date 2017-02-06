@@ -30,8 +30,8 @@ public class LevelPopup : MonoBehaviour {
         this.gm = gm;
         Title.text = (level + 1) + " - " + gm.Levels[level].name;
         LevelSaveData? lvdata = null;
-        if (GameData.data.levels != null && GameData.data.levels.Count > level)
-            lvdata = GameData.data.levels[level];
+        Debug.Assert(GameData.data.levels != null && GameData.data.levels.Count > level);
+        lvdata = GameData.data.levels[level];
 
         Info.text = L10N.Translate(L10N.Label.BEST_SCORE) + ":\n"
                 + (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
@@ -55,17 +55,12 @@ public class LevelPopup : MonoBehaviour {
     }
 
     void DisplayStars() {
-        if (GameData.data.levels == null || GameData.data.levels.Count <= level) {
-            star1.color = Color.gray;
-            star2.color = Color.gray;
-            star3.color = Color.gray;
-        } else {
-            var maxScore = GameData.data.levels[level].maxScore;
-            var starScores = GameManager.Instance.Levels[level].stars;
-            star1.color = (starScores.first <= maxScore) ? Color.yellow : Color.gray;
-            star2.color = (starScores.second <= maxScore) ? Color.yellow : Color.gray;
-            star3.color = (starScores.third <= maxScore) ? Color.yellow : Color.gray;
-        }
+        Debug.Assert(GameData.data.levels != null && GameData.data.levels.Count > level);
+        var maxScore = GameData.data.levels[level].maxScore;
+        var starScores = GameManager.Instance.Levels[level].stars;
+        star1.color = (starScores.first <= maxScore) ? Color.yellow : Color.gray;
+        star2.color = (starScores.second <= maxScore) ? Color.yellow : Color.gray;
+        star3.color = (starScores.third <= maxScore) ? Color.yellow : Color.gray;
     }
 
     public void PlayLevel() {

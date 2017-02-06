@@ -38,11 +38,11 @@ internal static class UnlockConditions {
     static int EveryLevel { get { return GameData.data.levels.Count; } }
 
     static bool Cond1() {
-        return LevelComplete(1);
+        return LevelComplete(0);
     }
 
     static bool Cond2() {
-        return LevelComplete(5);
+        return LevelComplete(4);
     }
 
     static bool Cond3() {
@@ -62,7 +62,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond7() {
-        return LevelComplete(9);
+        return LevelComplete(8);
     }
 
     static bool Cond8() {
@@ -102,7 +102,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond16() {
-        return false; // TODO: play for 3 hours
+        return GameManager.Instance.TotalTimePlayed >= 3 * 60 * 60;
     }
 
     static bool Cond17() {

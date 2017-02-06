@@ -69,25 +69,36 @@ public static class GameData {
 
     // Tries to load data from the save file and returns whether the data was
     // loaded or not. The loaded data is available in GameData.data.
+    // This data is guaranteed to have the following properties:
+    // 1. data.levels.Count >= GameManager.Instance.Levels.Count (i.e. if a level exists, we have a save entry for it)
+    // 2. data.cardsUnlocked.Length >= Card.Collection.Length (i.e. if there are N cards, we know whether a card j is
+    //                                                        unlocked or not for 0 <= j < N.)
+    // 3. data.curLevelUnlocked < GameManager.Instance.Levels.Count (i.e. curlevelunlocked is a valid level index)
     public static bool Load() {
         string fname = Application.persistentDataPath + "/" + SAVE_FILE + ".gz";
-        if (!File.Exists(fname))
+        if (!File.Exists(fname)) {
+            // Create a new PlayerData
+            InitPlayerData();
             return false;
+        }
 
         try {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
             string json = dataHdl.LoadCompressed(fname);
+            LogHelper.Debug("GameData", "json = " + json);
             data = JsonUtility.FromJson<PlayerData>(json);
+            Validate();
         } catch (Exception e) {
             LogHelper.Error("GameData", "Couldn't load save data from " + fname + ": "
                               + e.ToString() + e.StackTrace);
             return false;
         }
+
         LogHelper.Ok("GameData", "Loaded save data from " + fname);
         return true;
     }
 
-    // Serializes the player data into SAVE_FILE.
+    // Serializes the player data into SAVE_FILE. This method does NOT validate the data before serializing it.
     public static void Save() {
         try {
             var dataHdl = new LocalDataHandler(Application.persistentDataPath);
@@ -100,11 +111,34 @@ public static class GameData {
         LogHelper.Ok("GameData", "Saved data to " + SAVE_FILE);
     }
 
-    public static void EnsureLevelsAreInitialized() {
+    static void InitPlayerData() {
+        data = new PlayerData {
+            levels = new List<LevelSaveData>(),
+            cardsUnlocked = new bool[Card.Collection.Length]
+        };
         int levels = GameManager.Instance.Levels.Count;
-        if (data.levels == null) { data.levels = new List<LevelSaveData>(); }
         for (int i = data.levels.Count; i < levels; ++i) {
             data.levels.Add(new LevelSaveData());
         }
+    }
+
+    static void Validate() {
+        // Ensure level save data are not less than actual levels
+        int diff = data.levels.Count - GameManager.Instance.Levels.Count;
+        if (diff > 0) {
+            LogHelper.Warn("GameData", "saved level data have less entries than the correct number of levels: repairing");
+            for (int i = 0; i < diff; ++i)
+                data.levels.Add(new LevelSaveData());
+        }
+        // Ensure cards data are not less than actual cards
+        diff = data.cardsUnlocked.Length - Card.Collection.Length;
+        if (diff > 0) {
+            LogHelper.Warn("GameData", "unlocked cards data have less entries than the correct number of levels: repairing");
+            bool[] tmpCardsUnlocked = new bool[Card.Collection.Length];
+            Array.Copy(data.cardsUnlocked, tmpCardsUnlocked, data.cardsUnlocked.Length);
+            data.cardsUnlocked = tmpCardsUnlocked;
+        }
+        // Ensure cur level unlocked is not greater than maximum level index
+        data.curLevelUnlocked = (uint)Math.Min(data.curLevelUnlocked, GameManager.Instance.Levels.Count - 1);
     }
 }

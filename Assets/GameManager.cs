@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour {
     private AnimationController currAnimController;
     private int curLevel;
 
+    float totalTimePlayed;
+    public float TotalTimePlayed {
+        get { return totalTimePlayed + Time.time; }
+    }
+
     public LevelsData Levels {
         get { return levels; }
         private set { levels = value; }
@@ -63,18 +68,26 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         currentState = QuScene.MENU;
         levels = new LevelsData("levels.json");
+        totalTimePlayed = PlayerPrefs.GetFloat(Preferences.TIME_PLAYED, 0);
     }
 
     void Start() {
         // Load player stats
         if (!GameData.Load())
             LogHelper.Warn(this, "Game data was not loaded from save file.");
+        LogHelper.Debug(this, "gamedata = " + GameData.data);
     }
 
     void Update() {
         if (currentState != QuScene.CARD_COLLECTION && Input.GetKeyUp(KeyCode.Escape)) {
             Back();
         }
+    }
+
+    void OnApplicationQuit() {
+        // Save total time played
+        PlayerPrefs.SetFloat(Preferences.TIME_PLAYED, TotalTimePlayed);
+        GameData.Save();
     }
 
     public void Back() {
@@ -165,7 +178,7 @@ public class GameManager : MonoBehaviour {
     int GetCutscene(int lv) {
         LogHelper.Debug(this, "Called GetCutscene("+lv+")");
         var lvs = GameData.data.levels;
-        if (lvs == null || lvs.Count <= lv || levels.Count <= lv)
+        if (lvs.Count <= lv || levels.Count <= lv)
             return -1;
         var levelPlayerData = lvs[lv];
         var levelData = levels[lv];

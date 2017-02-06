@@ -144,12 +144,10 @@ public class Level : MonoBehaviour {
         // Check if we reached the max score
         if (score > levelData.maxScore) {
             levelData.maxScore = score;
-            if (GameData.data.levels == null
-                            || GameData.data.levels.Count <= GameManager.Instance.CurrentLevel
-                            || score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
-            {
+            Debug.Assert(GameData.data.levels != null 
+                    && GameData.data.levels.Count > GameManager.Instance.CurrentLevel);
+            if (score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
                 maxScoreReached = true;
-            }
         }
     }
 
@@ -246,6 +244,7 @@ public class Level : MonoBehaviour {
             LogHelper.Info(this, "Level is tutorial: not saving data");
             PlayerPrefs.SetInt(Preferences.PLAYED_TUTORIAL, 1);
         }
+        CheckCardsUnlocked();
         LoadNextScene();
     }
 
@@ -268,12 +267,23 @@ public class Level : MonoBehaviour {
         harvester.SendStoredData(this);
         var game = GameManager.Instance;
         var lv = game.CurrentLevel;
-        GameData.EnsureLevelsAreInitialized();
         GameData.data.levels[lv] = GameData.data.levels[lv].Overwrite(levelData);
+        // Check if we unlocked next level
         if (lv == GameData.data.curLevelUnlocked && GameData.data.levels[lv].quSaved >= game.Levels[lv].quToNextLevel) {
             ++GameData.data.curLevelUnlocked;
         }
         GameData.Save();
+    }
+
+    void CheckCardsUnlocked() {
+        var unlocked = GameData.data.cardsUnlocked;
+        for (int i = 0; i < unlocked.Length; ++i) {
+            if (unlocked[i]) continue;
+            if (UnlockConditions.IsUnlockConditionTrue((uint)i)) {
+                // TODO
+                LogHelper.Info(this, "Card " + i + " has unlock condition true");
+            }
+        }
     }
 
     void LoadNextScene() {

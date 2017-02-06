@@ -16,6 +16,7 @@ public class Preferences : MonoBehaviour {
     public const string SCORE = "Score";
     public const string PLAYED_TUTORIAL = "PlayedTutorial";
     public const string LEVEL_UNLOCKED = "LevelUnlocked";
+    public const string TIME_PLAYED = "TimePlayed";
 
     public Slider bladesSpeedSlider;
     public Text bladesSpeedLabel;

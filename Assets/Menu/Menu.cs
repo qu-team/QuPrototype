@@ -65,8 +65,4 @@ public class Menu : MonoBehaviour {
     void PlayButtonSound() {
         AudioSource.PlayClipAtPoint(buttonSound, buttons.transform.position);
     }
-
-    void OnApplicationQuit() {
-        GameData.Save();
-    }
 }
