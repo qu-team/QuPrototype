@@ -17,7 +17,7 @@ public class Card{
             L10N.Label.CARD_4_TASK.ToString()),
         new Card(5, L10N.Label.CARD_5_TITLE.ToString(),
             L10N.Label.CARD_5_DESCRIPTION.ToString(),
-            L10N.Label.CARD_5_TASK.ToString())
+            L10N.Label.CARD_5_TASK.ToString()),
         new Card(6, L10N.Label.CARD_6_TITLE.ToString(),
             L10N.Label.CARD_6_DESCRIPTION.ToString(),
             L10N.Label.CARD_6_TASK.ToString()),

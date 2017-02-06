@@ -61,6 +61,12 @@ public class Level : MonoBehaviour {
         resistance = level.quResistance;
         duration = level.duration;
         difficultyExponent = level.difficultyExp;
+        CreateColorGenerator();
+    }
+
+    void CreateColorGenerator() {
+        var gm = GameManager.Instance;
+        var level = gm.Levels[gm.CurrentLevel];
         // Create the ColorGenerator
         if (level.saturation > 0 || level.brightness > 0) {
             colors = new HSLColorGenerator();
@@ -76,6 +82,7 @@ public class Level : MonoBehaviour {
 
     void Start() {
         if (IsTutorial) {
+            CreateColorGenerator();
             SetTutorialSettings();
         } else {
             LoadLevelPrefs();

@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour {
         // Load player stats
         if (!GameData.Load())
             LogHelper.Warn(this, "Game data was not loaded from save file.");
-        LogHelper.Debug(this, "gamedata = " + GameData.data);
     }
 
     void Update() {

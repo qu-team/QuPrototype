@@ -9,13 +9,20 @@ using System.Collections.Generic;
  * Application.persistentDataPath/gamedata.json.gz
  */
 [Serializable]
-public struct PlayerData {
+public class PlayerData {
     public List<LevelSaveData> levels;
-#pragma warning disable 0649
     public bool[] cardsUnlocked;
-#pragma warning restore
     // level reached so far
     public uint curLevelUnlocked;
+
+    public PlayerData() {
+        levels = new List<LevelSaveData>();
+        cardsUnlocked = new bool[Card.Collection.Length];
+        int lvnum = GameManager.Instance.Levels.Count;
+        for (int i = 0; i < lvnum; ++i) {
+            levels.Add(new LevelSaveData());
+        }
+    }
 
     public uint NUnlockedCards {
         get {
@@ -65,7 +72,14 @@ public struct LevelSaveData {
 public static class GameData {
     const string SAVE_FILE = "gamedata.json";
 
-    public static PlayerData data;
+    static PlayerData _data;
+    public static PlayerData data {
+        get { return _data; }
+        set { 
+            Debug.LogError("set _data");
+            _data = value;
+        }
+    }
 
     // Tries to load data from the save file and returns whether the data was
     // loaded or not. The loaded data is available in GameData.data.
@@ -77,8 +91,7 @@ public static class GameData {
     public static bool Load() {
         string fname = Application.persistentDataPath + "/" + SAVE_FILE + ".gz";
         if (!File.Exists(fname)) {
-            // Create a new PlayerData
-            InitPlayerData();
+            data = new PlayerData();
             return false;
         }
 
@@ -91,6 +104,7 @@ public static class GameData {
         } catch (Exception e) {
             LogHelper.Error("GameData", "Couldn't load save data from " + fname + ": "
                               + e.ToString() + e.StackTrace);
+            data = new PlayerData();
             return false;
         }
 
@@ -111,18 +125,11 @@ public static class GameData {
         LogHelper.Ok("GameData", "Saved data to " + SAVE_FILE);
     }
 
-    static void InitPlayerData() {
-        data = new PlayerData {
-            levels = new List<LevelSaveData>(),
-            cardsUnlocked = new bool[Card.Collection.Length]
-        };
-        int levels = GameManager.Instance.Levels.Count;
-        for (int i = data.levels.Count; i < levels; ++i) {
-            data.levels.Add(new LevelSaveData());
-        }
-    }
-
     static void Validate() {
+        if (data == null)
+            data = new PlayerData();
+        if (data.levels == null)
+            data.levels = new List<LevelSaveData>();
         // Ensure level save data are not less than actual levels
         int diff = data.levels.Count - GameManager.Instance.Levels.Count;
         if (diff > 0) {
@@ -131,12 +138,16 @@ public static class GameData {
                 data.levels.Add(new LevelSaveData());
         }
         // Ensure cards data are not less than actual cards
-        diff = data.cardsUnlocked.Length - Card.Collection.Length;
-        if (diff > 0) {
-            LogHelper.Warn("GameData", "unlocked cards data have less entries than the correct number of levels: repairing");
-            bool[] tmpCardsUnlocked = new bool[Card.Collection.Length];
-            Array.Copy(data.cardsUnlocked, tmpCardsUnlocked, data.cardsUnlocked.Length);
-            data.cardsUnlocked = tmpCardsUnlocked;
+        if (data.cardsUnlocked == null)
+            data.cardsUnlocked = new bool[Card.Collection.Length];
+        else {
+            diff = data.cardsUnlocked.Length - Card.Collection.Length;
+            if (diff > 0) {
+                LogHelper.Warn("GameData", "unlocked cards data have less entries than the correct number of levels: repairing");
+                bool[] tmpCardsUnlocked = new bool[Card.Collection.Length];
+                Array.Copy(data.cardsUnlocked, tmpCardsUnlocked, data.cardsUnlocked.Length);
+                data.cardsUnlocked = tmpCardsUnlocked;
+            }
         }
         // Ensure cur level unlocked is not greater than maximum level index
         data.curLevelUnlocked = (uint)Math.Min(data.curLevelUnlocked, GameManager.Instance.Levels.Count - 1);
