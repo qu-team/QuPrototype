@@ -30,8 +30,9 @@ public class PlayerData {
         }
     }
 
-    public bool IsCardUnlocked(int idx) {
-        return cardsUnlocked != null && cardsUnlocked.Length > idx && cardsUnlocked[idx];
+    public bool IsCardUnlocked(int cardNumber) {
+        int cardIndex = cardNumber - 1;
+        return cardsUnlocked != null && cardsUnlocked.Length > cardIndex && cardsUnlocked[cardIndex];
     }
 
     public uint QuSaved {
