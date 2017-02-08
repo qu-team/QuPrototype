@@ -146,18 +146,21 @@ public class GameManager : MonoBehaviour {
         manager.ShowCardList();
     }
 
-#endregion
+    #endregion
 
-#region Map
+    #region Map
+    bool playingNotTheLastLevel = false;
+
     public void MapFinishedLoading(MapManager mapManager) {
-        int lastlvl = (int)GameData.data.curLevelUnlocked; 
-        mapManager.MoveCameraAtLevel(lastlvl);
+        int lastlvl = (int)GameData.data.curLevelUnlocked;
+        mapManager.MoveCameraAtLevel(playingNotTheLastLevel ? curLevel : lastlvl);
     }
 
 #endregion
 
     public void PlayLevel(int lv) {
         curLevel = lv;
+        playingNotTheLastLevel = lv != GameData.data.curLevelUnlocked;
         // Find out if we should play the cutscene or not
         currAnimation = GetCutscene(lv);
         if (currAnimation >= 0) {
