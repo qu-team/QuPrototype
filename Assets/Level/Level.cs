@@ -251,7 +251,6 @@ public class Level : MonoBehaviour {
             LogHelper.Info(this, "Level is tutorial: not saving data");
             PlayerPrefs.SetInt(Preferences.PLAYED_TUTORIAL, 1);
         }
-        CheckCardsUnlocked();
         LoadNextScene();
     }
 
@@ -282,18 +281,8 @@ public class Level : MonoBehaviour {
         GameData.Save();
     }
 
-    void CheckCardsUnlocked() {
-        var unlocked = GameData.data.cardsUnlocked;
-        for (int i = 0; i < unlocked.Length; ++i) {
-            if (unlocked[i]) continue;
-            if (UnlockConditions.IsUnlockConditionTrue((uint)i)) {
-                // TODO
-                LogHelper.Info(this, "Card " + i + " has unlock condition true");
-            }
-        }
-    }
-
     void LoadNextScene() {
-        GameManager.Instance.LoadScene((!IsTutorial && maxScoreReached) ? QuScene.SHARE : QuScene.MAP);
+        var nextScene = (!IsTutorial && maxScoreReached) ? QuScene.SHARE : QuScene.MAP;
+        GameManager.Instance.ShowUnlockedCardsThenGoTo(nextScene);
     }
 }

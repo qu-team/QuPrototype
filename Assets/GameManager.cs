@@ -13,7 +13,8 @@ public enum QuScene {
     MAP,
     SETTINGS,
     SHARE,
-    TUTORIAL
+    TUTORIAL,
+    UNLOCK
 }
 
 public class GameManager : MonoBehaviour {
@@ -34,7 +35,8 @@ public class GameManager : MonoBehaviour {
         {QuScene.GAME, "Level"},
         {QuScene.SETTINGS, "Settings"},
         {QuScene.SHARE, "ShareScore"},
-        {QuScene.TUTORIAL, "Level"}
+        {QuScene.TUTORIAL, "Level"},
+        {QuScene.UNLOCK, "UnlockScene"}
     };
 
     //Animation screen vars
@@ -182,5 +184,14 @@ public class GameManager : MonoBehaviour {
         var levelPlayerData = lvs[lv];
         var levelData = levels[lv];
         return (levelData.hasCutscene && levelPlayerData.maxScore <= 0) ? levelData.cutscene : -1;
+    }
+
+    public void ShowUnlockedCardsThenGoTo(QuScene nextScene) {
+        if (Unlock.HasUnlockedCardsToShow()) {
+            Unlock.SetUnlockedCardToBeShownAndNextScene(nextScene);
+            LoadScene(QuScene.UNLOCK);
+        } else {
+            LoadScene(nextScene);
+        }
     }
 }
