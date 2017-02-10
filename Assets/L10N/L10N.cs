@@ -260,13 +260,13 @@ public class L10N : MonoBehaviour {
 			{ Label.ANIMATION_1_TEXT, "We need help" },
             { Label.ANIMATION_2_TEXT, "We're lost" },
             { Label.ANIMATION_3_TEXT, "We came here" },
-            { Label.ANIMATION_4_TEXT, "We came here" },
-            { Label.ANIMATION_5_TEXT, "We came here" },
-            { Label.ANIMATION_6_TEXT, "We came here" },
-            { Label.ANIMATION_7_TEXT, "We came here" },
-            { Label.ANIMATION_8_TEXT, "We came here" },
-            { Label.ANIMATION_9_TEXT, "We came here" },
-            { Label.ANIMATION_10_TEXT, "We came here" },
+            { Label.ANIMATION_4_TEXT, "But we can't stay" },
+            { Label.ANIMATION_5_TEXT, "We wanted to help" },
+            { Label.ANIMATION_6_TEXT, "It's time to go home" },
+            { Label.ANIMATION_7_TEXT, "We saw your world" },
+            { Label.ANIMATION_8_TEXT, "We brought the colors" },
+            { Label.ANIMATION_9_TEXT, "Help us back" },
+            { Label.ANIMATION_10_TEXT, "Get us home" },
         }) { }
     }
 
@@ -348,13 +348,13 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_1_TEXT, "Auitaci" },
             { Label.ANIMATION_2_TEXT, "Siamo smarriti" },
             { Label.ANIMATION_3_TEXT, "Arrivammo qui" },
-			{ Label.ANIMATION_4_TEXT, "Auitaci" },
-            { Label.ANIMATION_5_TEXT, "Siamo smarriti" },
-            { Label.ANIMATION_6_TEXT, "Arrivammo qui" },
-            { Label.ANIMATION_7_TEXT, "Siamo smarriti" },
-            { Label.ANIMATION_8_TEXT, "Siamo smarriti" },
-            { Label.ANIMATION_9_TEXT, "Siamo smarriti" },
-            { Label.ANIMATION_10_TEXT, "Siamo smarriti" },
+			{ Label.ANIMATION_4_TEXT, "Ma non possiamo rimanere" },
+            { Label.ANIMATION_5_TEXT, "Volevamo aiutare" },
+            { Label.ANIMATION_6_TEXT, "Ora dobbiamo tornare a casa" },
+            { Label.ANIMATION_7_TEXT, "Abbiamo visto il vostro mondo" },
+            { Label.ANIMATION_8_TEXT, "Abbiamo portato i colori" },
+            { Label.ANIMATION_9_TEXT, "Aiutaci" },
+            { Label.ANIMATION_10_TEXT, "Riportaci a casa" },
 
         }) { }
     }
