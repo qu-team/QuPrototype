@@ -33,7 +33,32 @@ public class Card{
         new Card(10, L10N.Label.CARD_10_TITLE.ToString(),
             L10N.Label.CARD_10_DESCRIPTION.ToString(),
             L10N.Label.CARD_10_TASK.ToString()),
-    };
+        new Card(11, L10N.Label.CARD_11_TITLE.ToString(),
+            L10N.Label.CARD_11_DESCRIPTION.ToString(),
+            L10N.Label.CARD_11_TASK.ToString()),
+        new Card(12, L10N.Label.CARD_12_TITLE.ToString(),
+            L10N.Label.CARD_12_DESCRIPTION.ToString(),
+            L10N.Label.CARD_12_TASK.ToString()),
+        new Card(13, L10N.Label.CARD_13_TITLE.ToString(),
+            L10N.Label.CARD_13_DESCRIPTION.ToString(),
+            L10N.Label.CARD_13_TASK.ToString()),
+        new Card(14, L10N.Label.CARD_14_TITLE.ToString(),
+            L10N.Label.CARD_14_DESCRIPTION.ToString(),
+            L10N.Label.CARD_14_TASK.ToString()),
+        new Card(15, L10N.Label.CARD_15_TITLE.ToString(),
+            L10N.Label.CARD_15_DESCRIPTION.ToString(),
+            L10N.Label.CARD_15_TASK.ToString()),
+        new Card(16, L10N.Label.CARD_16_TITLE.ToString(),
+            L10N.Label.CARD_16_DESCRIPTION.ToString(),
+            L10N.Label.CARD_16_TASK.ToString()),
+        new Card(17, L10N.Label.CARD_17_TITLE.ToString(),
+            L10N.Label.CARD_17_DESCRIPTION.ToString(),
+            L10N.Label.CARD_17_TASK.ToString()),
+        new Card(18, L10N.Label.CARD_18_TITLE.ToString(),
+            L10N.Label.CARD_18_DESCRIPTION.ToString(),
+            L10N.Label.CARD_18_TASK.ToString()),
+
+	};
 
     public readonly string Name;
     public readonly string Description;
