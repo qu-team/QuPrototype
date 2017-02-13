@@ -53,7 +53,8 @@ public class AnimationController : MonoBehaviour {
             return;
         }
         Destroy(currAnimation);
-        GameObject anim = GameObject.Instantiate(animations [number]);
+        Debug.Assert(number < animations.Length);
+        GameObject anim = GameObject.Instantiate(animations[number]);
         anim.transform.SetParent(AnimationRoot);
         anim.transform.position = Vector2.zero;
         RectTransform trans = anim.GetComponent<RectTransform>();

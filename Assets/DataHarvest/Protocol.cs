@@ -61,7 +61,7 @@ public static class Protocol {
         msg.appdata.voiceover = false;
         msg.appdata.lang = Application.systemLanguage.ToString();
         msg.appdata.device = SystemInfo.deviceModel;
-        msg.appdata.appname = "Qu";
+        msg.appdata.appname = "qU";
         msg.appdata.appversion = 1;
         msg.timestamp.utc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
         msg.timestamp.user = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");

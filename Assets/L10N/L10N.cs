@@ -325,7 +325,7 @@ public class L10N : MonoBehaviour {
             { Label.CARD_11_DESCRIPTION, @"Alcune persone hanno difficolt" + AGRAVE + " a distinguere determinati colori, in particolare rosso e verde." },
             { Label.CARD_11_TASK, "Completa il livello desaturato" },
 			{ Label.CARD_12_TITLE, "Animali arcobaleno" },
-            { Label.CARD_12_DESCRIPTION, @"Esiste un crostaceo, comunemente detto \"Canocchia\", che ha 16 recettori per i colori nell'apparato visivo. Gli esseri umani ne hanno solo tre." },
+            { Label.CARD_12_DESCRIPTION, "Esiste un crostaceo, comunemente detto \"Canocchia\", che ha 16 recettori per i colori nell'apparato visivo. Gli esseri umani ne hanno solo tre." },
             { Label.CARD_12_TASK, "Ottieni 3 stelle in 5 livelli" },
 			{ Label.CARD_13_TITLE, "Prismi" },
             { Label.CARD_13_DESCRIPTION, @"La luce bianca pu" + OGRAVE + " essere divisa nelle sue colorate componenti usando un prisma: un oggetto con angoli particolari in grado di cambiare la direzione della luce in base alla lunghezza d'onda." },

@@ -25,5 +25,6 @@ internal class AppConfig {
 #pragma warning disable 0649
     public DataServer dataserver;
     public bool debug;
+    public bool forceLocalhost;
 #pragma warning restore
 }

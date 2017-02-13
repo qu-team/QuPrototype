@@ -1,7 +1,13 @@
 using UnityEngine;
 using System.Text;
 using System.IO;
-using System.IO.Compression;
+#if UNITY_WSA
+    // Here we know "for sure" that this lib will work
+    using System.IO.Compression;
+#else
+    // Else, use drop-in replacement from https://github.com/Hitcents/Unity.IO.Compression
+    using Unity.IO.Compression;
+#endif
 using System;
 
 internal sealed class LocalDataHandler {

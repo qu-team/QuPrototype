@@ -24,7 +24,7 @@ internal sealed class HarvesterWorker {
         try {
             LogHelper.Debug(this, "loading " + Application.dataPath + "/appconfig.json");
             var conf = AppConfig.FromFile(Application.dataPath + "/appconfig.json");
-            if (!conf.debug) {
+            if (!conf.forceLocalhost) {
                 SERVER_ADDRESS = conf.dataserver.address;
                 SERVER_PORT = conf.dataserver.port;
                 REQUEST_PATH = conf.dataserver.path;
