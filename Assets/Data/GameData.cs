@@ -77,7 +77,7 @@ public static class GameData {
     public static PlayerData data {
         get { return _data; }
         set { 
-            Debug.LogError("set _data");
+            //Debug.LogError("set _data");
             _data = value;
         }
     }
