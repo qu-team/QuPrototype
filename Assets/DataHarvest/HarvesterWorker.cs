@@ -51,7 +51,7 @@ internal sealed class HarvesterWorker {
         request.method = "POST";
         UploadHandler uploader = new UploadHandlerRaw(payload);
         request.uploadHandler = uploader;
-	request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Content-Type", "application/json");
 
         yield return request.Send();
 
