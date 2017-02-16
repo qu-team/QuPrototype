@@ -50,8 +50,8 @@ internal sealed class HarvesterWorker {
         var request = new UnityWebRequest(REQUEST_URL);
         request.method = "POST";
         UploadHandler uploader = new UploadHandlerRaw(payload);
-        uploader.contentType = "application/json";
         request.uploadHandler = uploader;
+	request.SetRequestHeader("Content-Type", "application/json");
 
         yield return request.Send();
 
