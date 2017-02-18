@@ -9,6 +9,10 @@ internal class AppConfig {
         return JsonUtility.FromJson<AppConfig>(txt);
     }
 
+    public static AppConfig FromResources(string fname) {
+        return JsonUtility.FromJson<AppConfig>(Resources.Load<TextAsset>(fname).text);
+    }
+
     private AppConfig() {}
 
     override public string ToString() {
