@@ -345,7 +345,7 @@ public class L10N : MonoBehaviour {
 			{ Label.CARD_18_TITLE, "Spin dei qU" },
             { Label.CARD_18_DESCRIPTION, @"Sapresti dire quale dei due qU " + EGRAVE + " a testa in gi" + UGRAVE + "?" },
             { Label.CARD_18_TASK, "Ottieni pi" + UGRAVE + " di 500 punti in un livello" },
-            { Label.ANIMATION_1_TEXT, "Auitaci" },
+            { Label.ANIMATION_1_TEXT, "Aiutaci" },
             { Label.ANIMATION_2_TEXT, "Siamo smarriti" },
             { Label.ANIMATION_3_TEXT, "Arrivammo qui" },
 			{ Label.ANIMATION_4_TEXT, "Ma non possiamo rimanere" },
