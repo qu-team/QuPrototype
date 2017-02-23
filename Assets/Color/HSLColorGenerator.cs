@@ -135,7 +135,7 @@ public class HSLColorGenerator : IColorGenerator {
         }
         if (foundInRange) {
             // Offset colors of (step * (colorsInRange - 1))
-            float offset = arcAmplitude / (n - 1) * (colorsInRange - 1);
+            float offset = Mathf.Max(MIN_COLOR_SEP, arcAmplitude / (n - 1)) * (colorsInRange - 1);
             LogHelper.Debug(this, "adjusting with offset " + offset);
             for (int i = 0; i < n; ++i) {
                 newcolors[i].h += (shiftRight ? 1 : -1) * offset;
