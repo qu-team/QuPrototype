@@ -68,11 +68,11 @@ public class Level : MonoBehaviour {
         var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         // Create the ColorGenerator
-        colors = new HSLColorGenerator();
-        if (level.saturation > 0)
-            (colors as HSLColorGenerator).saturation = level.saturation;
-        if (level.brightness > 0)
-            (colors as HSLColorGenerator).lightness = level.brightness;
+        colors = new CustomHSLColorGenerator();
+        //if (level.saturation > 0)
+            //(colors as HSLColorGenerator).saturation = level.saturation;
+        //if (level.brightness > 0)
+            //(colors as HSLColorGenerator).lightness = level.brightness;
         //if (level.saturation > 0 || level.brightness > 0) {
             //if (level.saturation > 0)
                 //(colors as HSLColorGenerator).saturation = level.saturation;
