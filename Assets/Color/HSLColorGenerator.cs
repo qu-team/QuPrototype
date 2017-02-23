@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HSLColorGenerator : IColorGenerator {
 
+    const float MIN_COLOR_SEP = 7;
+
     [Range(0, 1)]
     public float saturation = 1f;
     [Range(0, 1)]
@@ -35,19 +37,26 @@ public class HSLColorGenerator : IColorGenerator {
          * - the arc has an amplitude depending on the difficulty coefficient.
          */
         float startAngle = Random.Range(0f, 360f);
-        float angleStep = arcAmplitude / (n - 1);
+        float angleStep = Mathf.Max(MIN_COLOR_SEP, arcAmplitude / (n - 1));
         LogHelper.Debug(this, "arc ampl = " + arcAmplitude + ", startAngle = " + startAngle + ", step = " + angleStep);
-        Color[] colors = new Color[n];
+        HSLColor[] hslColors = new HSLColor[n];
         for (int i = 0; i < n; ++i) {
             float h = startAngle + angleStep * i;
             if (h > 360)
                 h -= 360;
-            colors[i] = HSLToRGB(new HSLColor {
+            hslColors[i] = new HSLColor {
                 h = h,
                 s = saturation,
                 l = lightness
-            });
+            };
         }
+
+        hslColors = Adjust(hslColors);
+
+        Color[] colors = new Color[n];
+        for (int i = 0; i < n; ++i)
+            colors[i] = HSLToRGB(hslColors[i]);
+
         return colors;
     }
 
@@ -88,5 +97,63 @@ public class HSLColorGenerator : IColorGenerator {
         LogHelper.Debug(this, "HSL = " + color + ", RGB = " + (new Color(col1.r + m, col1.g + m, col1.b + m)));
 
         return new Color(col1.r + m, col1.g + m, col1.b + m);
+    }
+
+    readonly ColorRange[] indistinguishableColors = new ColorRange[] {
+        new ColorRange(100, 130), // greens
+        new ColorRange(350, 360), // reds
+        new ColorRange(235, 250), // blues
+    };
+
+    // Try to avoid having 2 or more colors which are perceptually indistinguishable.
+    // Algorithm goes as follows:
+    // 1. find if a range of "indistinguishableColors" contains at least 2 colors
+    // 2. if so, count exactly how many colors it contains
+    // 3. break the cycle at that range, then offset all colors such that only 1 color
+    //    remains in the range
+    HSLColor[] Adjust(HSLColor[] colors) {
+        int n = colors.Length;
+        for (int i = 0; i < n; ++i)
+            LogHelper.Debug(this, "colors[" + i + "] = " + colors[i]);
+        HSLColor[] newcolors = new HSLColor[n];
+        System.Array.Copy(colors, newcolors, n);
+        bool foundInRange = false;
+        int colorsInRange = 0;
+        bool shiftRight = true;
+        foreach (var range in indistinguishableColors) {
+            colorsInRange = 0;
+            for (int i = 0; i < n; ++i) {
+                if (range.min <= colors[i].h && colors[i].h <= range.max) {
+                    if (++colorsInRange > 1)
+                        foundInRange = true;
+                    if (i == n - 1)
+                        shiftRight = false;
+                }
+            }
+            if (foundInRange)
+                break;
+        }
+        if (foundInRange) {
+            // Offset colors of (step * (colorsInRange - 1))
+            float offset = arcAmplitude / (n - 1) * (colorsInRange - 1);
+            LogHelper.Debug(this, "adjusting with offset " + offset);
+            for (int i = 0; i < n; ++i) {
+                newcolors[i].h += (shiftRight ? 1 : -1) * offset;
+                if (newcolors[i].h > 360)
+                    newcolors[i].h -= 360;
+                LogHelper.Debug(this, "newcolors[" + i + "] = " + newcolors[i]);
+            }
+        }
+        return newcolors;
+    }
+}
+
+struct ColorRange {
+    public readonly float min;
+    public readonly float max;
+    public ColorRange(float min, float max) {
+        this.min = min;
+        this.max = max;
+        Debug.Assert(min <= max, "ColorRange: min must be <= max!");
     }
 }
