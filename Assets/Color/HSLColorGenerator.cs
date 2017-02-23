@@ -119,12 +119,15 @@ public class HSLColorGenerator : IColorGenerator {
         System.Array.Copy(colors, newcolors, n);
         bool foundInRange = false;
         int colorsInRange = 0;
+        bool shiftRight = true;
         foreach (var range in indistinguishableColors) {
             colorsInRange = 0;
             for (int i = 0; i < n; ++i) {
                 if (range.min <= colors[i].h && colors[i].h <= range.max) {
                     if (++colorsInRange > 1)
                         foundInRange = true;
+                    if (i == n - 1)
+                        shiftRight = false;
                 }
             }
             if (foundInRange)
@@ -135,7 +138,7 @@ public class HSLColorGenerator : IColorGenerator {
             float offset = arcAmplitude / (n - 1) * (colorsInRange - 1);
             LogHelper.Debug(this, "adjusting with offset " + offset);
             for (int i = 0; i < n; ++i) {
-                newcolors[i].h += offset;
+                newcolors[i].h += (shiftRight ? 1 : -1) * offset;
                 if (newcolors[i].h > 360)
                     newcolors[i].h -= 360;
                 LogHelper.Debug(this, "newcolors[" + i + "] = " + newcolors[i]);
