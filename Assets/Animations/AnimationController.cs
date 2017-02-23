@@ -20,8 +20,8 @@ public class AnimationController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         gameManager = GameManager.Instance;
-        gameManager.AnimationFinishedLoading(this);
         dispatcher.OnTapEnd += OnTapEnd;
+        gameManager.AnimationFinishedLoading(this);
     }
 
     void AnimationEnd(){
@@ -48,12 +48,11 @@ public class AnimationController : MonoBehaviour {
         disabling = true;
     }
     public void PlayAnimation(int number){
-        if (number >= animations.Length) {
+        if (number < 0 || number >= animations.Length) {
             AnimationEnd();
             return;
         }
         Destroy(currAnimation);
-        Debug.Assert(number < animations.Length);
         GameObject anim = GameObject.Instantiate(animations[number]);
         anim.transform.SetParent(AnimationRoot);
         anim.transform.position = Vector2.zero;
@@ -79,16 +78,16 @@ public class AnimationController : MonoBehaviour {
             PlayAnimation(currAnimationIndex + 1);
         } else {
             //gameManager.Back();
-			ShowAnimationControls();
+            ShowAnimationControls();
         }
     }
     public void Back(){
         gameManager.Back();
     }
-	private void ShowAnimationControls(){
-		animationControls.SetActive(true);
+    private void ShowAnimationControls(){
+        animationControls.SetActive(true);
         PauseCurrentAnimation();
-	}
+    }
     private void OnTapEnd(Tap tap){
         if(disabling) {
             disabling = false;
@@ -96,7 +95,7 @@ public class AnimationController : MonoBehaviour {
         }
         if (IngameCut) return;
         if (!animationControls.activeSelf) {
-		ShowAnimationControls();	
+            ShowAnimationControls();
         }
     }
 }

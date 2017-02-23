@@ -113,7 +113,10 @@ public class GameManager : MonoBehaviour {
 
     public void AnimationFinishedLoading(AnimationController controller) {
         controller.IngameCut = currentState == QuScene.CUT_GAME;
-        controller.PlayAnimation(currAnimation);
+        if (currentState == QuScene.CUT_GAME)
+            controller.PlayAnimation(currAnimation);
+        else
+            controller.PlayAnimation(0);
     }
 
     public void AnimationFinished(AnimationController currAnimController) {
@@ -128,6 +131,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void LoadScene(QuScene scene){
+        currentState = scene;
         switch(scene){
             case QuScene.GAME:
             case QuScene.TUTORIAL:
@@ -137,7 +141,6 @@ public class GameManager : MonoBehaviour {
                 SceneManager.LoadScene(sceneNames[scene]);
                 break;
         }
-        currentState = scene;
     }
 
 #region CardCollection
