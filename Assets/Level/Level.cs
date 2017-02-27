@@ -102,6 +102,7 @@ public class Level : MonoBehaviour {
         shutter.bladesNumber = 3;
         shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
         duration = 10;
+        GameObject.Find("Score").GetComponent<Text>().text = "TUTORIAL";
     }
 
     void DisableTutorialGraphics() {
