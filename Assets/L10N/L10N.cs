@@ -262,10 +262,10 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_3_TEXT, "We came here" },
             { Label.ANIMATION_4_TEXT, "But we can't stay" },
             { Label.ANIMATION_5_TEXT, "We wanted to help" },
-            { Label.ANIMATION_6_TEXT, "It's time to go home" },
-            { Label.ANIMATION_7_TEXT, "We saw your world" },
-            { Label.ANIMATION_8_TEXT, "We brought the colors" },
-            { Label.ANIMATION_9_TEXT, "Help us back" },
+            { Label.ANIMATION_6_TEXT, "We saw your world" },
+            { Label.ANIMATION_7_TEXT, "We brought the colors" },
+            { Label.ANIMATION_8_TEXT, "It's time to go gome" },
+            { Label.ANIMATION_9_TEXT, "Get us home" },
             { Label.ANIMATION_10_TEXT, "Get us home" },
         }) { }
     }
