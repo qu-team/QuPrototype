@@ -30,8 +30,10 @@ internal sealed class HarvesterWorker {
                 REQUEST_PATH = conf.dataserver.path;
             }
         } catch (Exception ex) {
-            LogHelper.Warn(this, "AppConfig wasn't loaded correctly from " + 
-                    Application.dataPath + "/appconfig.json:\n" + ex);
+            //LogHelper.Warn(this, "AppConfig wasn't loaded correctly from " + 
+                    //Application.dataPath + "/appconfig.json:\n" + ex);
+            GameObject.Find("Buttons").SetActive(false);
+            GameObject.Find("Loading").GetComponent<UnityEngine.UI.Text>().text = "appconfig not found.";
         }
         REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
         LogHelper.Info(this, "request url: " + REQUEST_URL);
