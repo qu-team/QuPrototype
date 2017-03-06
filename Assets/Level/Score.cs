@@ -20,7 +20,7 @@ public struct Score {
             var difficultyScore = difficultyMultiplier * currentDifficulty;
             var delay = Time.fixedTime - snapshot;
             var score = (basePoints + difficultyScore) / (1f + delay);
-            return (int)score;
+            return (int)Mathf.Max(5, score);
         }
     }
 

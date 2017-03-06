@@ -142,24 +142,26 @@ public class Level : MonoBehaviour {
     }
 
     void Succeeded() {
-        score += scoreAdder.Value;
-        scoreAdder.Succeeded();
-        battery.Set(scoreAdder);
-        scoreboard.text = score.ToString();
         feedback.Ok();
         qu.BeHappy();
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
-        harvester.SaveSingleSessionData(this, succeeded: true);
-        levelData.quSaved++;
-        levelData.maxCombo = (uint)Mathf.Max(levelData.maxCombo, scoreAdder.Combo);
-        int lv = GameManager.Instance.CurrentLevel;
-        // Check if we reached the max score
-        if (score > levelData.maxScore) {
-            levelData.maxScore = score;
-            Debug.Assert(GameData.data.levels != null 
-                    && GameData.data.levels.Count > GameManager.Instance.CurrentLevel);
-            if (score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
-                maxScoreReached = true;
+        scoreAdder.Succeeded();
+        if (!IsTutorial) {
+            score += scoreAdder.Value;
+            battery.Set(scoreAdder);
+            scoreboard.text = score.ToString();
+            harvester.SaveSingleSessionData(this, succeeded: true);
+            levelData.quSaved++;
+            levelData.maxCombo = (uint)Mathf.Max(levelData.maxCombo, scoreAdder.Combo);
+            int lv = GameManager.Instance.CurrentLevel;
+            // Check if we reached the max score
+            if (score > levelData.maxScore) {
+                levelData.maxScore = score;
+                Debug.Assert(GameData.data.levels != null 
+                        && GameData.data.levels.Count > GameManager.Instance.CurrentLevel);
+                if (score > GameData.data.levels[GameManager.Instance.CurrentLevel].maxScore)
+                    maxScoreReached = true;
+            }
         }
     }
 

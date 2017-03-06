@@ -29,6 +29,9 @@ public class Settings : MonoBehaviour {
     void Start() {
         selectedLanguage = L10N.CurrentLanguage;
         SetQuFlag();
+        Gestures.GestureSystem.dispatcher.OnSwipeStart += (Gestures.Swipe _) => {
+            ChangeLanguage();
+        };
     }
 
     void SetQuFlag() {
@@ -72,6 +75,10 @@ public class Settings : MonoBehaviour {
 
     public void Back() {
         GameManager.Instance.Back();
+    }
+
+    public void Save() {
+
     }
 
     static readonly Dictionary<SystemLanguage, string> FLAGS = new Dictionary<SystemLanguage, string>() {

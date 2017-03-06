@@ -23,7 +23,7 @@ public class Tutorial : MonoBehaviour {
     }
 
     void DisableNotNeededGui() {
-        GameObject.Find("Score").SetActive(false);
+        //GameObject.Find("Score").SetActive(false);
         GameObject.Find("Quit").SetActive(false);
     }
 
@@ -48,11 +48,11 @@ public class Tutorial : MonoBehaviour {
     }
 
     IEnumerator ShowColorEquality() {
-        SetArrowAtCorrectColor();
-        arrow.GetComponent<SpriteRenderer>().color = HalfColor(level.qu.Color);
-        arrow.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        arrow.SetActive(false);
+        //SetArrowAtCorrectColor();
+        //arrow.GetComponent<SpriteRenderer>().color = HalfColor(level.qu.Color);
+        //arrow.SetActive(true);
+        //yield return new WaitForSeconds(1f);
+        //arrow.SetActive(false);
         SetHandAtCorrectColor();
         hand.GetComponent<SpriteRenderer>().color = HalfColor(level.qu.Color);
         hand.SetActive(true);
