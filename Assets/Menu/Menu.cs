@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour {
         if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
         // Send locally cached data to the server
         Harvester.Instance.SendLocalData(this);
+		Screen.fullScreen = false;
     }
 
     void ColorizeMenuElements(Color color) {
@@ -39,6 +40,7 @@ public class Menu : MonoBehaviour {
         buttons.SetActive(false);
         loading.text = L10N.Translate(L10N.Label.LOADING);
         PlayButtonSound();
+		Screen.fullScreen = true;
         // If tutorial was not played yet, play it
         if (PlayerPrefs.GetInt(Preferences.PLAYED_TUTORIAL, 0) == 0) {
             GameManager.Instance.LoadScene(QuScene.TUTORIAL);

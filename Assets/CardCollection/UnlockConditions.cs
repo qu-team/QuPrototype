@@ -155,7 +155,7 @@ internal static class UnlockConditions {
         return false;
     }
 
-    static int NStars(int i) {
+    public static int NStars(int i) {
             var lv = GameData.data.levels[i];
             var sp = GameManager.Instance.Levels[i].stars;
             return lv.maxScore >= sp.third ? 3 :
