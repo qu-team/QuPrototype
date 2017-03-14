@@ -63,7 +63,7 @@ public class Shutter : MonoBehaviour {
         SelectWedgeSprite(renderer);
         renderer.color = backgroundColor;
         child.transform.localPosition = new Vector3(-triangle.Height, -triangle.HalfWidth, -1f);
-        child.transform.localScale = new Vector3(internalCircleRadius, internalCircleRadius, 1f);
+        child.transform.localScale = new Vector3(internalCircleRadius * 0.94f, internalCircleRadius * 0.94f, 1f);
     }
 
     void SelectWedgeSprite(SpriteRenderer renderer) {

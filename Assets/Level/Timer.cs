@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
 
     public RectTransform timerBar;
+    public Text timerText;
 
     float totalTime;
     float remainingTime;
@@ -32,6 +34,7 @@ public class Timer : MonoBehaviour {
         remainingTime -= Time.deltaTime;
         if (remainingTime < 0f) { remainingTime = 0f; }
         UpdateTimerBoard();
+        UpdateTimerText();
     }
 
     void UpdateTimerBoard() {
@@ -41,5 +44,9 @@ public class Timer : MonoBehaviour {
         } else {
             timerBar.anchorMax = new Vector2(remainingTime / totalTime, timerBar.anchorMax.y);
         }
+    }
+
+    void UpdateTimerText() {
+        timerText.text = string.Format("{0}", (int)remainingTime);
     }
 }

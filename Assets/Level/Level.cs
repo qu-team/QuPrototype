@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 public class Level : MonoBehaviour {
 
+    internal event System.Action OnStart;
+    internal event System.Action OnReinitialize;
+    internal event System.Action OnOutOfTime;
+    // Param: qu's resistance
+    internal event System.Action<float> OnFinalClosing;
+
     const float SIZE = 6f;
 
     public Shutter shutter;
@@ -55,7 +61,7 @@ public class Level : MonoBehaviour {
         var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         closingSpeed = closingSpeed * level.bladesSpeed;
-        shutter.bladesNumber = level.blades;
+        shutter.bladesNumber = 4;//level.blades;
         shutter.BackgroundColor = level.bgColor;
         shutter.internalCircleRadius = level.innerRadius;
         resistance = level.quResistance;
@@ -96,6 +102,8 @@ public class Level : MonoBehaviour {
         timer.Set(duration);
         playing = true;
         partialStartTime = Time.time;
+        if (OnStart != null)
+            OnStart();
     }
 
     void SetTutorialSettings() {
@@ -127,6 +135,8 @@ public class Level : MonoBehaviour {
         } else if (shutter.opening <= 0f) {
             shutter.opening = 0f;
             finalClosing = true;
+            if (OnFinalClosing != null)
+                OnFinalClosing(resistance);
             StartCoroutine(FinalClosingAnimation());
         } else if (timer.enabled) {
             shutter.opening -= closingSpeed * Time.deltaTime;
@@ -139,6 +149,8 @@ public class Level : MonoBehaviour {
         SetDifficulty();
         SetupQuAndBladesColors();
         partialStartTime = Time.time;
+        if (OnReinitialize != null)
+            OnReinitialize();
     }
 
     void Succeeded() {
@@ -243,6 +255,8 @@ public class Level : MonoBehaviour {
 
     IEnumerator OutOfTimeAnimation() {
         var time = 2f;
+        if (OnOutOfTime != null)
+            OnOutOfTime();
         EnableStars();
         while (time > 0) {
             Camera.main.orthographicSize *= 1.1f;

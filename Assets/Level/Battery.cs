@@ -6,6 +6,7 @@ public class Battery : MonoBehaviour {
     RectTransform fill;
     Image fillImage;
     Text percentage;
+    int combo = 0;
 
     void Awake() {
         fill = transform.GetChild(0).GetComponent<RectTransform>();
@@ -16,11 +17,17 @@ public class Battery : MonoBehaviour {
         percentage.text = string.Format("x0");
     }
 
+    //void Update() {
+        //float a = combo / 200f;
+        //float bomp = 1f - a * Mathf.Abs(Mathf.Sin(5 * Time.time));
+        //transform.localScale = new Vector3(bomp, bomp, 1f);
+    //}
+
     public void Set(Score score) {
         var length = score.Difficulty / (3f + score.Difficulty);
         fill.localScale = new Vector3(length, 1f, 1f);
         fillImage.color = ColorFrom(length);
-        percentage.text = string.Format("x{0}", score.Combo);
+        percentage.text = string.Format("x{0}", combo = score.Combo);
     }
 
     Color ColorFrom(float length) {
