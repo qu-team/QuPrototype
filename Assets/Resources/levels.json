@@ -10,11 +10,11 @@
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 1.0,
+			"bladesSpeed": 10.0,
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 30,
-			"quResistance": 1,
+			"quResistance": 4,
 			"quToNextLevel": 10,
 			"stars": {
 				"first": 50,

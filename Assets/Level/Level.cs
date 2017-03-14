@@ -49,7 +49,7 @@ public class Level : MonoBehaviour {
     LevelSaveData levelData;
 
     void Awake() {
-        shutter.relativeSize = SIZE;
+		shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
         harvester = Harvester.Instance;
@@ -61,7 +61,7 @@ public class Level : MonoBehaviour {
         var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         closingSpeed = closingSpeed * level.bladesSpeed;
-        shutter.bladesNumber = 4;//level.blades;
+        shutter.bladesNumber = level.blades;
         shutter.BackgroundColor = level.bgColor;
         shutter.internalCircleRadius = level.innerRadius;
         resistance = level.quResistance;
@@ -110,7 +110,6 @@ public class Level : MonoBehaviour {
         shutter.bladesNumber = 3;
         shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
         duration = 10;
-        scoreboard.text = "TUTORIAL";
     }
 
     void DisableTutorialGraphics() {

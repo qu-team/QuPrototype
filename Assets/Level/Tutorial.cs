@@ -8,13 +8,14 @@ public class Tutorial : MonoBehaviour {
     GameObject hand;
     GameObject arrow;
 
+
     void Awake() {
         hand = GameObject.Find("Hand");
         arrow = GameObject.Find("Arrow");
         hand.SetActive(false);
         arrow.SetActive(false);
-
         level = GameObject.FindObjectOfType<Level>();
+		GameObject.Find("TutorialText").GetComponent<UnityEngine.UI.Text>().text = "TUTORIAL";
         level.IsTutorial = true;
         listening = true;
 
@@ -23,7 +24,7 @@ public class Tutorial : MonoBehaviour {
     }
 
     void DisableNotNeededGui() {
-        //GameObject.Find("Score").SetActive(false);
+        GameObject.Find("ScorePanel").SetActive(false);
         GameObject.Find("Quit").SetActive(false);
     }
 
