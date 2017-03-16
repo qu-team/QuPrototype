@@ -40,13 +40,17 @@ public class Menu : MonoBehaviour {
         buttons.SetActive(false);
         loading.text = L10N.Translate(L10N.Label.LOADING);
         PlayButtonSound();
-		Screen.fullScreen = true;
+        Screen.fullScreen = true;
+#if !UNITY_EDITOR
         // If tutorial was not played yet, play it
         if (PlayerPrefs.GetInt(Preferences.PLAYED_TUTORIAL, 0) == 0) {
             GameManager.Instance.LoadScene(QuScene.TUTORIAL);
         } else {
             GameManager.Instance.LoadScene(QuScene.MAP);
         }
+#else
+            GameManager.Instance.LoadScene(QuScene.MAP);
+#endif
     }
 
     public void OpenSettings() {

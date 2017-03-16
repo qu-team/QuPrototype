@@ -10,7 +10,7 @@
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 10.0,
+			"bladesSpeed": 1.5,
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 30,

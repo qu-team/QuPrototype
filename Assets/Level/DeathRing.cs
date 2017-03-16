@@ -36,7 +36,7 @@ public class DeathRing : MonoBehaviour {
         var c = image.color;
         image.color = new Color(c.r, c.g, c.b, 1f);
         while (image.fillAmount > 0) {
-            image.fillAmount -= Time.deltaTime * duration;
+            image.fillAmount -= Time.deltaTime / duration;
             yield return null;
         }
     }
