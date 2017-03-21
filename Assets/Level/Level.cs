@@ -222,10 +222,17 @@ public class Level : MonoBehaviour {
     }
 
     IEnumerator FinalClosingAnimation() {
-        if (finalClosing) {
+        float finalClosingTime=0;
+		if (finalClosing) {
             qu.StretchEyes();
-            yield return new WaitForSeconds(resistance);
+            yield return null;
         }
+		while(finalClosingTime<resistance){
+			if(!Paused){
+				finalClosingTime+= Time.deltaTime;
+			}
+			yield return null;
+		}
         if (finalClosing) {
             qu.Die();
             Failed();

@@ -63,32 +63,48 @@ public class Tutorial : MonoBehaviour {
 		}
 		yield return null;
 		}
-		StartCoroutine( teachTime());
-		
+		StartCoroutine( teachTime());	
 	}
 
+	bool showedTime;
 	IEnumerator teachTime(){
 		colorTimes =0;
-		if (!level.Paused && listening && level.shutter.opening <= 0.0001f) {
+		showedTime = false;
+		while(colorTimes<3){
+		if (!showedTime && !level.Paused && listening && level.shutter.opening <= 0.0001f) {
             level.Pause();
             StartCoroutine(showTime());
+			yield return null;
+		}
+			yield return null;
 		}
 	}
 
 	IEnumerator showTime(){
-		Renderer rend = GameObject.Find("DeathRing",true).GetComponent<Renderer>();
-		float time =0;
+		UnityEngine.UI.Image rend = GameObject.FindObjectOfType<DeathRing>()
+			.GetComponent<UnityEngine.UI.Image>();
+		float time =0f;
 		int pulses=0;
 		while(pulses<3){
-			while(time < 0.3f){
-				rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, time/0.3f)
+			LogHelper.Debug("Time", "pulsing "+ pulses+"time");
+			while(time < 0.4f){
+				time += Time.deltaTime;
+				rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, time/0.4f);
+				yield return null;
 			}
-			while(time < 0.3f){
-
+			time =0;
+			while(time < 0.4f){
+				time += Time.deltaTime;
+				rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 1f-time/0.4f);
+				yield return null;
 			}
+			time =0;
 			pulses++;
 		}
 		rend.color = Color.white;
+		colorTimes++;
+		level.Resume();
+		showedTime = true;
 	}
 
     IEnumerator ShowColorEquality() {
