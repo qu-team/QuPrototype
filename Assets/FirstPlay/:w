@@ -43,8 +43,6 @@ public class Tutorial : MonoBehaviour {
         if (listening) { return; }
 		if( Vector4.Distance( color, level.CurrentQuColor() ) > 0.001f){
 			return;
-		}else{
-			colorTimes++;
 		}
         level.Resume();
         level.MatchQuColor(color);
@@ -63,34 +61,8 @@ public class Tutorial : MonoBehaviour {
 		}
 		yield return null;
 		}
-		StartCoroutine( teachTime());
 		
 	}
-
-	IEnumerator teachTime(){
-		colorTimes =0;
-		if (!level.Paused && listening && level.shutter.opening <= 0.0001f) {
-            level.Pause();
-            StartCoroutine(showTime());
-		}
-	}
-
-	IEnumerator showTime(){
-		Renderer rend = GameObject.Find("DeathRing",true).GetComponent<Renderer>();
-		float time =0;
-		int pulses=0;
-		while(pulses<3){
-			while(time < 0.3f){
-				rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, time/0.3f)
-			}
-			while(time < 0.3f){
-
-			}
-			pulses++;
-		}
-		rend.color = Color.white;
-	}
-
     IEnumerator ShowColorEquality() {
         //SetArrowAtCorrectColor();
         //arrow.GetComponent<SpriteRenderer>().color = HalfColor(level.qu.Color);

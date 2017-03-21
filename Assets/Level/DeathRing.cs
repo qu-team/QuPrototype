@@ -7,11 +7,11 @@ public class DeathRing : MonoBehaviour {
 
     Image image;
     IEnumerator closeCoroutine;
-
+	Level level;
     // Use this for initialization
     void Start() {
         image = GetComponent<Image>();
-        var level = GameObject.FindObjectOfType<Level>();
+        level = GameObject.FindObjectOfType<Level>();
         level.OnFinalClosing += StartClosing;
         level.OnStart += Reset;
         level.OnReinitialize += Reset;
@@ -36,7 +36,9 @@ public class DeathRing : MonoBehaviour {
         var c = image.color;
         image.color = new Color(c.r, c.g, c.b, 1f);
         while (image.fillAmount > 0) {
-            image.fillAmount -= Time.deltaTime * duration;
+			if(!level.Paused){	
+            	image.fillAmount -= Time.deltaTime * duration;
+			}
             yield return null;
         }
     }

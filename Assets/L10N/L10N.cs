@@ -178,6 +178,9 @@ public class L10N : MonoBehaviour {
         ANIMATION_8_TEXT,
         ANIMATION_9_TEXT,
         ANIMATION_10_TEXT,
+		INTRO1,
+		INTRO2,
+		INTRO3,
     }
 
     private class English : Language {
@@ -267,6 +270,9 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_8_TEXT, "It's time to go gome" },
             { Label.ANIMATION_9_TEXT, "Get us home" },
             { Label.ANIMATION_10_TEXT, "Get us home" },
+			{ Label.INTRO1, "Please" },
+			{ Label.INTRO2, "Is anyone there?"},
+			{ Label.INTRO3, "We can't make it alone"},
         }) { }
     }
 
@@ -355,6 +361,9 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_8_TEXT, "Abbiamo portato i colori" },
             { Label.ANIMATION_9_TEXT, "Aiutaci" },
             { Label.ANIMATION_10_TEXT, "Riportaci a casa" },
+			{ Label.INTRO1, "Per favore" },
+			{ Label.INTRO2, "C'"+ EGRAVE+" nessuno?"},
+			{ Label.INTRO3, "Non ce la possiamo fare da soli"},
 
         }) { }
     }

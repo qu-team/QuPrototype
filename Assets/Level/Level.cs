@@ -109,13 +109,18 @@ public class Level : MonoBehaviour {
     void SetTutorialSettings() {
         shutter.bladesNumber = 3;
         shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
-        duration = 10;
+        duration = 30;
+		resistance = 3;
     }
 
     void DisableTutorialGraphics() {
         GameObject.Find("Hand").SetActive(false);
         GameObject.Find("Arrow").SetActive(false);
     }
+
+	public Color CurrentQuColor(){
+		return qu.Color;
+	}
 
     internal void MatchQuColor(Color color) {
         if (qu.Dead) { return; }
