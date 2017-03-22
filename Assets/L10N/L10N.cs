@@ -363,7 +363,7 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_10_TEXT, "Riportaci a casa" },
 			{ Label.INTRO1, "Per favore" },
 			{ Label.INTRO2, "C'"+ EGRAVE+" nessuno?"},
-			{ Label.INTRO3, "Non ce la possiamo fare da soli"},
+			{ Label.INTRO3, "Non ce la possiamo fare\n da soli"},
 
         }) { }
     }
