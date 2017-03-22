@@ -72,7 +72,7 @@ public class Tutorial : MonoBehaviour {
 	IEnumerator teachTime(){
 		colorTimes =0;
 		showedTime = false;
-		while(colorTimes<2){
+		while(colorTimes<1){
 			if(level.shutter.opening > 0.1f){
 				showedTime = false;
 			}
