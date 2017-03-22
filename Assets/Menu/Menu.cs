@@ -15,9 +15,7 @@ public class Menu : MonoBehaviour {
         ColorizeMenuElements(new Color(Random.value, Random.value, Random.value));
         var score = PlayerPrefs.GetInt(Preferences.SCORE, 0);
         if (score > 0) { maxScore.text = string.Format("RECORD: {0}", score); }
-        // Send locally cached data to the server
-        Harvester.Instance.SendLocalData(this);
-		Screen.fullScreen = false;
+        Screen.fullScreen = false;
     }
 
     void ColorizeMenuElements(Color color) {

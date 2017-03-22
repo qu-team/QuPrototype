@@ -15,7 +15,7 @@ public class AnimationController : MonoBehaviour {
         set;
     }
     private bool disabling;
-	private bool playingLast;
+    private bool playingLast;
 
     public GameObject[] animations;
     // Use this for initialization
@@ -45,14 +45,14 @@ public class AnimationController : MonoBehaviour {
         }
     }
     private void HideControls(){
-		playingLast = false;
+        playingLast = false;
         animationControls.SetActive(false);
         disabling = true;
     }
     public void PlayAnimation(int number){
         if (number < 0 || number >= animations.Length) {
             playingLast = false;
-			AnimationEnd();
+            AnimationEnd();
             return;
         }
         Destroy(currAnimation);
@@ -72,17 +72,17 @@ public class AnimationController : MonoBehaviour {
     }
 
     public void PrevAnimation(){
-			if(playingLast){
-				PlayAnimation( currAnimationIndex);
-				HideControls();
-				return;
-			}
+            if(playingLast){
+                PlayAnimation( currAnimationIndex);
+                HideControls();
+                return;
+            }
             HideControls();
             PlayAnimation(Mathf.Max(currAnimationIndex-1,0));
     }
     public void NextAnimation(){
         HideControls();
-        if(currAnimationIndex+1 <animations.Length && currAnimationIndex+1 < (int)GameData.data.curLevelUnlocked){
+        if(currAnimationIndex+1 <animations.Length && currAnimationIndex+1 < (int)GameData.data.CurAnimationUnlocked) {
             PlayAnimation(currAnimationIndex + 1);
         } else {
             playingLast = true;
@@ -92,12 +92,12 @@ public class AnimationController : MonoBehaviour {
     public void Back(){
         gameManager.Back();
     }
-	private void ShowAnimationControls(){
+    private void ShowAnimationControls(){
         animationControls.SetActive(true);
-		LogHelper.Debug("Animations", "Current index is "+currAnimationIndex);
-		GameObject.Find("Next").GetComponent<Button>().interactable = !(currAnimationIndex+1 >= animations.Length 
-				|| currAnimationIndex+1 >= (int) GameData.data.curLevelUnlocked);
-		//GameObject.Find("Prev").GetComponent<Button>().interactable = !(currAnimationIndex < 1);
+        LogHelper.Debug("Animations", "Current index is "+currAnimationIndex);
+        GameObject.Find("Next").GetComponent<Button>().interactable = !(currAnimationIndex+1 >= animations.Length 
+                || currAnimationIndex+1 >= (int) GameData.data.curLevelUnlocked);
+        //GameObject.Find("Prev").GetComponent<Button>().interactable = !(currAnimationIndex < 1);
         PauseCurrentAnimation();
     }
     private void OnTapEnd(Tap tap){

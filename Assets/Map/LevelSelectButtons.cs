@@ -18,7 +18,7 @@ public class LevelSelectButtons : MonoBehaviour{
 		}
 		if( (int)GameData.data.curLevelUnlocked < level ) {
 			renderer.sprite = locked;
-			Debug.Log( "Setting level "+level+" to "+GameData.data.curLevelUnlocked);
+			//Debug.Log( "Setting level "+level+" to "+GameData.data.curLevelUnlocked);
 		}
 		else{
 			if( UnlockConditions.NStars(level) == 3){
