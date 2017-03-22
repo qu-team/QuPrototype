@@ -43,6 +43,12 @@ public class PlayerData {
             return quSaved;
         }
     }
+
+    public int CurAnimationUnlocked {
+        get {
+            return GameManager.Instance.Levels.levels.GetRange(0, (int)curLevelUnlocked).Count((lv) => lv.hasCutscene);
+        }
+    }
 }
 
 /*

@@ -6,12 +6,12 @@ public class MapManager : MonoBehaviour{
     public LevelPopup popup;
     Vector3 orig;
     bool justClosed;
-	public Vector2 lowerBounds;
-	public Vector2 upperBounds;
+    public Vector2 lowerBounds;
+    public Vector2 upperBounds;
 
 
     void Start(){
-	orig = Camera.main.transform.position;
+    orig = Camera.main.transform.position;
         GameManager.Instance.MapFinishedLoading(this);
         dispatcher.OnTapEnd+= TapEnd;
         dispatcher.OnSwipeProgress += SwipeProgress;
@@ -34,25 +34,25 @@ public class MapManager : MonoBehaviour{
         }
         if(popup.gameObject.activeSelf ) return;
         RaycastHit hit = new RaycastHit();
-		Vector3 s2w = Camera.main.ScreenToWorldPoint(
-				new Vector3(tap.Position.x,
-					tap.Position.y,
-					Camera.main.nearClipPlane));
-		if(!Physics.Raycast(Camera.main.transform.position, s2w - Camera.main.transform.position, out hit))
-			return;
+        Vector3 s2w = Camera.main.ScreenToWorldPoint(
+                new Vector3(tap.Position.x,
+                    tap.Position.y,
+                    Camera.main.nearClipPlane));
+        if(!Physics.Raycast(Camera.main.transform.position, s2w - Camera.main.transform.position, out hit))
+            return;
         LevelSelectButtons lv = hit.collider.gameObject.GetComponent<LevelSelectButtons>();
         if (lv != null){
             ClickedLevel(lv);
         }
     }
 
-    void SwipeProgress(Swipe swipe) {    
+    void SwipeProgress(Swipe swipe) {
         if(popup.gameObject.activeSelf ) return;
         Camera camera = Camera.main;
         Vector3 shift = -(camera.ScreenToWorldPoint(
-					new Vector3(swipe.End.x, swipe.End.y, orig.z)) -
-                camera.ScreenToWorldPoint(new Vector3(swipe.Start.x,swipe.Start.y, orig.z)));
-        MoveCamera(shift);        
+                        new Vector3(swipe.End.x, swipe.End.y, orig.z)) -
+                        camera.ScreenToWorldPoint(new Vector3(swipe.Start.x,swipe.Start.y, orig.z)));
+        MoveCamera(shift);
     }
     void SwipeStart(Swipe swipe) {
         if(popup.gameObject.activeSelf) return;
@@ -66,9 +66,9 @@ public class MapManager : MonoBehaviour{
     void MoveCamera(Vector3 shift){
         Camera camera = Camera.main;
         var level = GameObject.Find("Level" + (GameData.data.curLevelUnlocked + 1));
-	var upperY = upperBounds.y;
-	if (level != null)
-		upperY = Mathf.Min(upperY, level.transform.position.y + 2);
+    var upperY = upperBounds.y;
+    if (level != null)
+        upperY = Mathf.Min(upperY, level.transform.position.y + 2);
         camera.transform.position = new Vector3(
                 Mathf.Clamp(orig.x - shift.x, lowerBounds.x, upperBounds.x),
                 Mathf.Clamp(orig.y - shift.y, lowerBounds.y, upperY), orig.z);
