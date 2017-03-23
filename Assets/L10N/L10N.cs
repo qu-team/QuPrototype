@@ -56,7 +56,7 @@ public class L10N : MonoBehaviour {
         ApplyTranslationTo(gameObject);
     }
 
-    void ApplyTranslationTo(GameObject obj) {
+    public void ApplyTranslationTo(GameObject obj) {
         var text = obj.GetComponent<Text>();
         if (text != null) { ApplyTranslationTo(text); }
         foreach (Transform child in obj.transform) { ApplyTranslationTo(child.gameObject); }

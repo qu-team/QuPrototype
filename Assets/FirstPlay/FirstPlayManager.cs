@@ -13,16 +13,17 @@ public class FirstPlayManager : MonoBehaviour {
 		}
 	}
 
-	public void languageCallback(int lang){
-		LogHelper.Debug("Buttons","Called change lang");
+	public void LanguageCallback(int lang){
+		LogHelper.Debug("Buttons","Called change lang " + lang);
 		switch(lang){
-			case 1:
-				L10N.CurrentLanguage = SystemLanguage.Italian;
-				break;
-			case 0:
-				L10N.CurrentLanguage = SystemLanguage.English;
-				break;
+		case 0:
+			L10N.CurrentLanguage = SystemLanguage.English;
+			break;
+		case 1:
+			L10N.CurrentLanguage = SystemLanguage.Italian;
+			break;
 		}
+		gameObject.AddComponent<L10N>();
 		GetComponent<Animator>().SetTrigger( "LanguageChosen" );
 	}
 
