@@ -86,6 +86,12 @@ public class Level : MonoBehaviour {
         }
     }
 
+	void ShowInnerCircle(){
+		//TODO show inner circle
+		LogHelper.Debug("Opening", "Max opening is: "+shutter.MaxOpening);	
+		GameObject.Find("WarningRing").transform.localScale = Vector3.one*3f*shutter.internalCircleRadius/shutter.MaxOpening;
+	}
+
     void Start() {
         if (IsTutorial) {
             CreateColorGenerator();
@@ -94,6 +100,9 @@ public class Level : MonoBehaviour {
             LoadLevelPrefs();
             DisableTutorialGraphics();
         }
+		if(shutter.internalCircleRadius > 0f){
+			ShowInnerCircle();
+		}
         SetupQuAndBladesColors();
         timer.Set(duration);
         playing = true;

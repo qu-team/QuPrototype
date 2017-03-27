@@ -28,6 +28,11 @@ public class Shutter : MonoBehaviour {
         BuildBlades();
     }
 
+	public float MaxOpening{
+		get{
+        return bladesNumber / (2 * Mathf.PI) * Mathf.Asin(3f / (relativeSize < 3f ? 3f : relativeSize));
+		}
+	}
     public void ResetOpening() {
         // Adjust opening for the number of blades.
         // Note: 3f is the size of the internal ring
