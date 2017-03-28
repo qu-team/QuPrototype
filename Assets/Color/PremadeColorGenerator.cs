@@ -9,7 +9,7 @@ public class PremadeColorGenerator : IColorGenerator {
 
     const string COLORS_FILE = "colors";
 
-    IList<ColorTuple> colorGroups;
+    IList<IList<ColorTuple>> colorGroups;
     IList<int> groupIdx;
     int usedGroup;
 
@@ -24,14 +24,15 @@ public class PremadeColorGenerator : IColorGenerator {
         Debug.Assert(colorPool != null && colorPool.tuples != null && colorPool.tuples.Count > 0);
         LogHelper.Ok(this, "Loaded " + colorPool.tuples.Count + " color tuples from Resources/" + COLORS_FILE);
         colorPool.tuples.RemoveAll(tuple => tuple.level != GameManager.Instance.CurrentLevel);
-        //colorPool.tuples.Shuffle(new System.Random());
         colorPool.tuples.OrderByDescending(tuple => tuple.de);
+        // Divide colors in a list [[tuples DE1], [tuples DE2], ...]
         ShuffleBySameDE(colorPool);
     }
 
     public Color[] Generate(int n) {
-        var tuple = colorGroups[usedGroup].tuples[groupIdx[usedGroup]];
+        var tuple = colorGroups[usedGroup][groupIdx[usedGroup]];
         groupIdx[usedGroup] = (groupIdx[usedGroup] + 1) % colorGroups[usedGroup].Count;
+        LogHelper.Debug(this, "DE: " + tuple.de);
         return tuple.colors.Select(dc => new Color(dc.r/255f, dc.g/255f, dc.b/255f)).ToArray();
     }
 
