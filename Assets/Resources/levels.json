@@ -59,7 +59,7 @@
 			"aperture": 0.5,
 			"blades": 3,
 			"bladesSpeed": 1.0,
-			"innerRadius": 0.25,
+			"innerRadius": 0.08,
 			"difficultyExp": 1.5,
 			"duration": 60,
 			"quResistance": 1,
