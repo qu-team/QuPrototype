@@ -102,7 +102,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond16() {
-        return GameManager.Instance.TotalTimePlayed >= 3 * 60 * 60;
+        return GameManager.Instance.TotalTimePlayed >= 1 * 60 * 60;
     }
 
     static bool Cond17() {
