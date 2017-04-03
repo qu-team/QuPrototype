@@ -23,7 +23,7 @@ public class PremadeColorGenerator : IColorGenerator {
         var colorPool = JsonUtility.FromJson<ColorTuples>(Resources.Load<TextAsset>(COLORS_FILE).text);
         Debug.Assert(colorPool != null && colorPool.tuples != null && colorPool.tuples.Count > 0);
         LogHelper.Ok(this, "Loaded " + colorPool.tuples.Count + " color tuples from Resources/" + COLORS_FILE);
-        colorPool.tuples.RemoveAll(tuple => tuple.level != GameManager.Instance.CurrentLevel);
+        colorPool.tuples.RemoveAll(tuple => tuple.level - 1 != GameManager.Instance.CurrentLevel);
         colorPool.tuples.OrderByDescending(tuple => tuple.de);
         // Divide colors in a list [[tuples DE1], [tuples DE2], ...]
         ShuffleBySameDE(colorPool);

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class LevelPopup : MonoBehaviour {
     public Text Info;
     public Text Title;
+    public Text lockedText;
 
     public GameObject playButton;
     public GameObject lockedPanel;
@@ -51,6 +52,10 @@ public class LevelPopup : MonoBehaviour {
         var unlocked = level <= GameData.data.curLevelUnlocked;
         playButton.SetActive(unlocked);
         lockedPanel.SetActive(!unlocked);
+        if (!unlocked) {
+            var missingQu = GameManager.Instance.Levels[level-1].quToNextLevel - GameData.data.levels[level-1].quSaved;
+            lockedText.text = lockedText.text.Replace("$$", missingQu.ToString());
+        }
         statsPanel.SetActive(unlocked);
     }
 

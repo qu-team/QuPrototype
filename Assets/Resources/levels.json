@@ -14,7 +14,7 @@
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 30,
-			"quResistance": 4,
+			"quResistance": 3,
 			"quToNextLevel": 10,
 			"stars": {
 				"first": 50,
@@ -34,11 +34,11 @@
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 1.15,
+			"bladesSpeed": 2,
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 60,
-			"quResistance": 1,
+			"quResistance": 2.5,
 			"quToNextLevel": 15,
 			"stars": {
 				"first": 100,
@@ -50,7 +50,7 @@
 		},
 		{
 			"number": 2,
-			"name": "Don't Hug Me I'm Scared",
+			"name": "Level 3",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -58,11 +58,11 @@
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 1.0,
-			"innerRadius": 0.08,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.05,
 			"difficultyExp": 1.5,
 			"duration": 60,
-			"quResistance": 1,
+			"quResistance": 2.5,
 			"quToNextLevel": 20,
 			"stars": {
 				"first": 150,
@@ -74,19 +74,19 @@
 		},
 		{
 			"number": 3,
-			"name": "No Time Four Games",
+			"name": "Don't Hug Me I'm Scared",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
 				"b": 0.153
 			},
 			"aperture": 0.5,
-			"blades": 4,
-			"bladesSpeed": 1.0,
-			"innerRadius": 0.05,
+			"blades": 3,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.08,
 			"difficultyExp": 0.9,
 			"duration": 60,
-			"quResistance": 1.5,
+			"quResistance": 2.5,
 			"quToNextLevel": 25,
 			"stars": {
 				"first": 200,
@@ -98,7 +98,7 @@
 		},
 		{
 			"number": 4,
-			"name": "50 Shades Of Gray",
+			"name": "Level 5",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -106,11 +106,11 @@
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 1.0,
-			"innerRadius": 0.05,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.08,
 			"difficultyExp": 1.0,
 			"duration": 60,
-			"quResistance": 1,
+			"quResistance": 2.5,
 			"quToNextLevel": 30,
 			"stars": {
 				"first": 200,
@@ -123,19 +123,19 @@
 		},
 		{
 			"number": 5,
-			"name": "Feeling Blue",
+			"name": "Level 6",
 			"bgColor": {
-				"r": 0.100,
-				"g": 0.100,
-				"b": 0.500
+				"r": 0.860,
+				"g": 0.860,
+				"b": 0.860
 			},
 			"aperture": 0.5,
 			"blades": 3,
-			"bladesSpeed": 1.0,
-			"innerRadius": 0.05,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.08,
 			"difficultyExp": 1.0,
 			"duration": 60,
-			"quResistance": 1,
+			"quResistance": 2.5,
 			"quToNextLevel": 30,
 			"stars": {
 				"first": 220,
@@ -147,19 +147,19 @@
 		},
 		{
 			"number": 6,
-			"name": "Am I Really That Popular?",
+			"name": "Level 7",
 			"bgColor": {
-				"r": 0.153,
-				"g": 0.153,
-				"b": 0.153
+				"r": 0.860,
+				"g": 0.860,
+				"b": 0.860
 			},
 			"aperture": 0.5,
-			"blades": 5,
-			"bladesSpeed": 0.9,
-			"innerRadius": 0.07,
+			"blades": 3,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.05,
 			"difficultyExp": 0.6,
 			"duration": 60,
-			"quResistance": 1.5,
+			"quResistance": 2.5,
 			"quToNextLevel": 25,
 			"stars": {
 				"first": 150,
@@ -178,12 +178,12 @@
 				"b": 0.153
 			},
 			"aperture": 0.5,
-			"blades": 3,
+			"blades": 4,
 			"bladesSpeed": 1.3,
 			"innerRadius": 0.05,
 			"difficultyExp": 2.0,
 			"duration": 60,
-			"quResistance": 1.0,
+			"quResistance": 2.5,
 			"quToNextLevel": 40,
 			"stars": {
 				"first": 240,
@@ -200,12 +200,12 @@
 				"b": 0.153
 			},
 			"aperture": 0.5,
-			"blades": 3,
-			"bladesSpeed": 1.0,
-			"innerRadius": 0.05,
+			"blades": 4,
+			"bladesSpeed": 2.0,
+			"innerRadius": 0.08,
 			"difficultyExp": 1.0,
 			"duration": 60,
-			"quResistance": 1,
+			"quResistance": 2.5,
 			"quToNextLevel": 40,
 			"stars": {
 				"first": 250,
@@ -224,7 +224,7 @@
 			},
 			"aperture": 0.5,
 			"blades": 4,
-			"bladesSpeed": 1.0,
+			"bladesSpeed": 3.0,
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 60,

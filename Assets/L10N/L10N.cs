@@ -178,9 +178,9 @@ public class L10N : MonoBehaviour {
         ANIMATION_8_TEXT,
         ANIMATION_9_TEXT,
         ANIMATION_10_TEXT,
-		INTRO1,
-		INTRO2,
-		INTRO3,
+        INTRO1,
+        INTRO2,
+        INTRO3,
     }
 
     private class English : Language {
@@ -198,7 +198,7 @@ public class L10N : MonoBehaviour {
             { Label.PREV, "⇦" },
             { Label.NEXT, "⇨" },
             { Label.BEST_SCORE, "Best score" },
-            { Label.LEVEL_LOCKED, "This level is locked!" },
+            { Label.LEVEL_LOCKED, "Save $$ more qU in the previous level to unlock!" },
             { Label.SAVED_QUS, "Saved qUs" },
             { Label.TO_NEXT_LEVEL, "To next level" },
             { Label.FB_NEW_HIGH_SCORE, "New high score on qU!" },
@@ -270,9 +270,9 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_8_TEXT, "It's time to go gome" },
             { Label.ANIMATION_9_TEXT, "Get us home" },
             { Label.ANIMATION_10_TEXT, "Get us home" },
-			{ Label.INTRO1, "Please" },
-			{ Label.INTRO2, "Is anyone there?"},
-			{ Label.INTRO3, "We can't make it alone"},
+            { Label.INTRO1, "Please" },
+            { Label.INTRO2, "Is anyone there?"},
+            { Label.INTRO3, "We can't make it alone"},
         }) { }
     }
 
@@ -289,7 +289,7 @@ public class L10N : MonoBehaviour {
             { Label.CONTINUE, "CONTINUA" },
             { Label.RESUME, "RIPRENDI" },
             { Label.BEST_SCORE, "Miglior punteggio" },
-            { Label.LEVEL_LOCKED, "Questo livello " + EGRAVE + " bloccato!" },
+            { Label.LEVEL_LOCKED, "Salva ancora $$ qU nel livello precedente per sbloccare!" },
             { Label.SAVED_QUS, "qU salvati" },
             { Label.TO_NEXT_LEVEL, "Al prossimo livello" },
             { Label.FB_NEW_HIGH_SCORE, "Nuovo punteggio massimo su qU!" },
@@ -361,9 +361,9 @@ public class L10N : MonoBehaviour {
             { Label.ANIMATION_8_TEXT, "Abbiamo portato i colori" },
             { Label.ANIMATION_9_TEXT, "Aiutaci" },
             { Label.ANIMATION_10_TEXT, "Riportaci a casa" },
-			{ Label.INTRO1, "Per favore" },
-			{ Label.INTRO2, "C'"+ EGRAVE+" nessuno?"},
-			{ Label.INTRO3, "Non ce la possiamo fare\n da soli"},
+            { Label.INTRO1, "Per favore" },
+            { Label.INTRO2, "C'"+ EGRAVE+" nessuno?"},
+            { Label.INTRO3, "Non ce la possiamo fare\n da soli"},
 
         }) { }
     }
