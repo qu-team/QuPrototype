@@ -34,6 +34,7 @@ public class PremadeColorGenerator : IColorGenerator {
         LogHelper.Ok(this, "Loaded " + colorPool.tuples.Count + " color tuples from Resources/" + COLORS_FILE);
         // Keep only tuples for this level and sort them by descending DE
         colorPool.tuples.RemoveAll(tuple => (tuple.level - 1) != GameManager.Instance.CurrentLevel);
+        LogHelper.Info(this, "Kept " + colorPool.tuples.Count + " color tuples for level " + (GameManager.Instance.CurrentLevel + 1));
         colorPool.tuples.OrderByDescending(tuple => tuple.de);
         // Divide colors in a list [[shuffled tuples with DE1], [shuffled tuples with DE2], ...]
         ShuffleBySameDE(colorPool);
