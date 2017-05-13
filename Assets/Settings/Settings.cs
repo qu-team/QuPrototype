@@ -12,6 +12,7 @@ public class Settings : MonoBehaviour {
     Button back;
     Text selectLanguageLabel;
     SystemLanguage selectedLanguage;
+    SystemLanguage prevLanguage;
     Dictionary<SystemLanguage, Sprite> flags;
 
     void Awake() {
@@ -27,9 +28,10 @@ public class Settings : MonoBehaviour {
     }
 
     void Start() {
-        selectedLanguage = L10N.CurrentLanguage;
+        prevLanguage = selectedLanguage = L10N.CurrentLanguage;
         SetQuFlag();
         Gestures.GestureSystem.dispatcher.OnSwipeStart += (Gestures.Swipe _) => {
+            prevLanguage = selectedLanguage;
             ChangeLanguage();
         };
     }
@@ -74,11 +76,12 @@ public class Settings : MonoBehaviour {
     }
 
     public void Back() {
+        L10N.CurrentLanguage = prevLanguage;
         GameManager.Instance.Back();
     }
 
     public void Save() {
-
+        GameManager.Instance.Back();
     }
 
     static readonly Dictionary<SystemLanguage, string> FLAGS = new Dictionary<SystemLanguage, string>() {
