@@ -4,13 +4,17 @@ using System;
 using System.Linq;
 
 // Returns colors from a premade pool
-// FIXME: make difficulty useful
 public class PremadeColorGenerator : IColorGenerator {
 
     const string COLORS_FILE = "colors";
 
+    // The list of color tuple lists. The outer list is indexed by difficulty,
+    // whereas the inner lists are random shuffled and all their elements have
+    // the same DE.
     IList<IList<ColorTuple>> colorGroups;
+    // This list keeps track of the index we're extracting tuples at, group-wise.
     IList<int> groupIdx;
+    // The currently used DE group, related to Difficulty.
     int usedGroup;
 
     public float Difficulty {
@@ -23,16 +27,22 @@ public class PremadeColorGenerator : IColorGenerator {
         var colorPool = JsonUtility.FromJson<ColorTuples>(Resources.Load<TextAsset>(COLORS_FILE).text);
         Debug.Assert(colorPool != null && colorPool.tuples != null && colorPool.tuples.Count > 0);
         LogHelper.Ok(this, "Loaded " + colorPool.tuples.Count + " color tuples from Resources/" + COLORS_FILE);
-        colorPool.tuples.RemoveAll(tuple => tuple.level - 1 != GameManager.Instance.CurrentLevel);
+        // Keep only tuples for this level and sort them by descending DE
+        colorPool.tuples.RemoveAll(tuple => (tuple.level - 1) != GameManager.Instance.CurrentLevel);
         colorPool.tuples.OrderByDescending(tuple => tuple.de);
-        // Divide colors in a list [[tuples DE1], [tuples DE2], ...]
+        // Divide colors in a list [[shuffled tuples with DE1], [shuffled tuples with DE2], ...]
         ShuffleBySameDE(colorPool);
     }
 
     public Color[] Generate(int n) {
+        // Take group of tuples with index `usedGroup`. This is a list of shuffled tuples
+        // with the same DE. Then, extract entry with index `groupIdx[usedGroup]` and update
+        // said index. As we shuffled the tuples with the same DE, this corresponds to extracting
+        // random non-repeated entries based on the current difficulty.
         var tuple = colorGroups[usedGroup][groupIdx[usedGroup]];
         groupIdx[usedGroup] = (groupIdx[usedGroup] + 1) % colorGroups[usedGroup].Count;
         LogHelper.Debug(this, "DE: " + tuple.de);
+        // Finally, convert the tuples from the serialization format to Unity colors.
         return tuple.colors.Select(dc => new Color(dc.r/255f, dc.g/255f, dc.b/255f)).ToArray();
     }
 
