@@ -17,6 +17,7 @@ public class CardCollectionManager : MonoBehaviour {
     private Animator animator;
     private bool animating=false;
     private bool inDetail=false;
+    private bool displayingUnlockCondition = false;
 
     // Use this for initialization
     void Start() {
@@ -43,6 +44,7 @@ public class CardCollectionManager : MonoBehaviour {
 
     public void ShowCard(int card){
         inDetail = true;
+        displayingUnlockCondition = false;
         cardDisplayer.SetActive(true);
         cardList.SetActive(false);
         if(card == currentDisplayedCard || card<0 || card>=Card.Collection.Length || animating) return;
@@ -78,6 +80,19 @@ public class CardCollectionManager : MonoBehaviour {
         }else{
             GameManager.Instance.Back();
         }
+    }
+
+    public void CardNumberCallback() {
+        if (!GameData.data.IsCardUnlocked(currentDisplayedCard + 1))
+            return;
+
+        var displayedCard = cardDisplayer.GetComponent<CardBehaviour>();
+        if (displayingUnlockCondition) {
+            displayedCard.description.text = L10N.Translate(displayedCard.DisplayedCard.Description);
+        } else {
+            displayedCard.description.text = L10N.Translate(displayedCard.DisplayedCard.UnlockCondition);
+        }
+        displayingUnlockCondition = !displayingUnlockCondition;
     }
 
     //FIXME DO NOT USE, ONLY FOR ANIMATION EVENT
