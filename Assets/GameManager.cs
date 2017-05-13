@@ -168,11 +168,15 @@ public class GameManager : MonoBehaviour {
         playingNotTheLastLevel = lv != GameData.data.curLevelUnlocked;
         // Find out if we should play the cutscene or not
         currAnimation = GetCutscene(lv);
+#if UNITY_EDITOR
+        LoadScene(QuScene.GAME);
+#else
         if (currAnimation >= 0) {
             LoadScene(QuScene.CUT_GAME);
         } else {
             LoadScene(QuScene.GAME);
         }
+#endif
     }
 
     public void LevelLoaded() {

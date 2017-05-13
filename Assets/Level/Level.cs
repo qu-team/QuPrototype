@@ -217,6 +217,7 @@ public class Level : MonoBehaviour {
         Color[] randomColors;
         do {
             randomColors = colors.Generate((int)shutter.bladesNumber);
+            Debug.Assert(randomColors.Length == shutter.bladesNumber);
         } while (AnyColorIsSimilarToBackground(randomColors));
         return randomColors;
     }

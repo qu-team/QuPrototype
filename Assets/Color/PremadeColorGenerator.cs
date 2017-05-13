@@ -20,6 +20,11 @@ public class PremadeColorGenerator : IColorGenerator {
     public float Difficulty {
         set {
             usedGroup = colorGroups == null ? 0 : (int)Mathf.Min(value / 4, colorGroups.Count - 1);
+            LogHelper.Debug(this, "colorGroup[" + usedGroup + "] has " + colorGroups[usedGroup].Count + " tuples.");
+            while (usedGroup < colorGroups.Count - 1 && colorGroups[usedGroup].Count == 0) {
+                ++usedGroup;
+                LogHelper.Debug(this, "colorGroup[" + usedGroup + "] has " + colorGroups[usedGroup].Count + " tuples.");
+            }
         }
     }
 
@@ -32,6 +37,7 @@ public class PremadeColorGenerator : IColorGenerator {
         colorPool.tuples.OrderByDescending(tuple => tuple.de);
         // Divide colors in a list [[shuffled tuples with DE1], [shuffled tuples with DE2], ...]
         ShuffleBySameDE(colorPool);
+        Difficulty = 0;
     }
 
     public Color[] Generate(int n) {
@@ -39,10 +45,15 @@ public class PremadeColorGenerator : IColorGenerator {
         // with the same DE. Then, extract entry with index `groupIdx[usedGroup]` and update
         // said index. As we shuffled the tuples with the same DE, this corresponds to extracting
         // random non-repeated entries based on the current difficulty.
+        LogHelper.Debug(this, "colorGroup[" + usedGroup + "] has " + colorGroups[usedGroup].Count + " tuples.");
+        for (int i = 0; i < colorGroups[usedGroup].Count; ++i)
+            LogHelper.Debug(this, colorGroups[usedGroup][i].colors.ToArray().ToString());
+        LogHelper.Debug(this, "groupIdx[" + usedGroup + "] = " + groupIdx[usedGroup]);
         var tuple = colorGroups[usedGroup][groupIdx[usedGroup]];
         groupIdx[usedGroup] = (groupIdx[usedGroup] + 1) % colorGroups[usedGroup].Count;
         LogHelper.Debug(this, "DE: " + tuple.de);
         // Finally, convert the tuples from the serialization format to Unity colors.
+        LogHelper.Debug(this, "Group: " + usedGroup + ", count: " + tuple.colors.Count);
         return tuple.colors.Select(dc => new Color(dc.r/255f, dc.g/255f, dc.b/255f)).ToArray();
     }
 
@@ -63,6 +74,7 @@ public class PremadeColorGenerator : IColorGenerator {
         List<ColorTuple> partial = null;
         do {
             var tup = colorPool.tuples[idx];
+            Debug.Assert(tup.colors.Count > 0);
             float nde = tup.de;
             if (nde != de) {
                 if (partial != null)
