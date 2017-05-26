@@ -144,7 +144,7 @@ public class Tutorial : MonoBehaviour {
 	void SetArrowAtCorrectColor() {
 		foreach (var blade in level.shutter.blades) {
 			if (blade.GetComponentInChildren<MeshRenderer>().material.color == level.qu.Color) {
-				var bpos = blade.transform.FindChild("Shape").position;
+				var bpos = blade.transform.Find("Shape").position;
 				var qpos = level.qu.transform.position;
 				float coef = bpos.y > qpos.y
 					? 0.7f // Upper blade
@@ -169,7 +169,7 @@ public class Tutorial : MonoBehaviour {
 	void SetHandAtCorrectColor() {
 		foreach (var blade in level.shutter.blades) {
 			if (blade.GetComponentInChildren<MeshRenderer>().material.color == level.qu.Color) {
-				var bpos = blade.transform.FindChild("Shape").position;
+				var bpos = blade.transform.Find("Shape").position;
 				var qpos = level.qu.transform.position;
 				float coef = bpos.y > qpos.y
 					? 0.5f // Upper blade

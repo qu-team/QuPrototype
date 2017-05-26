@@ -149,7 +149,7 @@ public class Shutter : MonoBehaviour {
 
         set {
             backgroundColor = value;
-            transform.FindChild("Background").GetComponent<SpriteRenderer>().color = value;
+            transform.Find("Background").GetComponent<SpriteRenderer>().color = value;
         }
     }
 

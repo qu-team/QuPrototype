@@ -303,9 +303,9 @@ public class Level : MonoBehaviour {
     void EnableStars() {
         stars.SetActive(true);
         var starScores = GameManager.Instance.Levels[GameManager.Instance.CurrentLevel].stars;
-        if (starScores.first > score) { stars.transform.FindChild("Star1").gameObject.SetActive(false); }
-        if (starScores.second > score) { stars.transform.FindChild("Star2").gameObject.SetActive(false); }
-        if (starScores.third > score) { stars.transform.FindChild("Star3").gameObject.SetActive(false); }
+        if (starScores.first > score) { stars.transform.Find("Star1").gameObject.SetActive(false); }
+        if (starScores.second > score) { stars.transform.Find("Star2").gameObject.SetActive(false); }
+        if (starScores.third > score) { stars.transform.Find("Star3").gameObject.SetActive(false); }
     }
 
     void SetStarsAlpha(float alpha) {

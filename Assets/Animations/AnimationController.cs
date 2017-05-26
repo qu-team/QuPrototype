@@ -67,7 +67,7 @@ public class AnimationController : MonoBehaviour {
         anim.GetComponent<EventAnimationEnd>().EndAnimation += AnimationEnd;
         currAnimation = anim;
         currAnimationIndex = number;
-        var message = anim.transform.FindChild("Text").GetComponent<Text>();
+        var message = anim.transform.Find("Text").GetComponent<Text>();
         message.text = L10N.Translate(message.text);
     }
 
