@@ -23,7 +23,7 @@ internal sealed class LocalDataHandler {
     // Saves the string `data` to a local file and gzip's it.
     // If filename is not give, generate an unique file name with GenerateFileName().
     public bool SaveCompressed(string data, string filename = "") {
-        string pathname = persistentDataPath + "/" + 
+        string pathname = persistentDataPath + "/" +
             (filename.Length == 0 ? GenerateFileName() : filename) + ".gz";
         using (var compressedStream = File.Create(pathname)) {
             using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress)) {
@@ -65,6 +65,19 @@ internal sealed class LocalDataHandler {
 #endif
             }
         }
+    }
+
+    /** Tries to delete file `fname`[.gz]. Returns whether a file with that name existed or not. */
+    public bool DeleteFile(string fname) {
+        if (!fname.EndsWith(".gz"))
+            fname += ".gz";
+        if (!File.Exists(fname)) {
+            LogHelper.Info(this, "tried to remove inexistent file " + fname);
+            return false;
+        }
+        File.Delete(fname);
+        LogHelper.Ok(this, "deleted file " + fname);
+        return true;
     }
 
     string GenerateFileName() {

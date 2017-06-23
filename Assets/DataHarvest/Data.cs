@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 [System.Serializable]
 public struct DataBundle {
+    public int levelNum;
     public bool answerCorrect;
     public float responseTime;
     public float timeSinceStart;
     public float bladeQuDistance;
     public float bladeQuBorderDistance;
-    public DataColor correctColor;
-    public List<DataColor> wrongColors;
+    public List<DataColor> colors;
+    public int correctColor;
+    public int guessedColor;
     public DataColor backgroundColor;
     public float borderRadius;
     public uint numberOfBlades;
@@ -28,21 +30,19 @@ public struct DataColor {
 
 public static class Data {
 
-    public const uint VERSION = 1;
+    public const uint VERSION = 2;
 
-    public static DataBundle Create(Level level, bool succeeded) {
+    public static DataBundle Create(Level level, Color guessedColor) {
         var data = new DataBundle {
-            answerCorrect = succeeded,
+            levelNum = GameManager.Instance.CurrentLevel,
+            answerCorrect = guessedColor == level.qu.Color,
             responseTime = Time.time - level.PartialStartTime,
             timeSinceStart = level.timer.TimeSinceStart,
             bladeQuDistance = BladesAbsoluteDistanceFromQu(level),
             bladeQuBorderDistance = BladesAbsoluteDistanceFromBorder(level),
-            correctColor = new DataColor {
-                r = level.qu.Color.r,
-                g = level.qu.Color.g,
-                b = level.qu.Color.b,
-            },
-            wrongColors = new List<DataColor>(),
+            colors = new List<DataColor>(),
+            correctColor = -1,
+            guessedColor = -1,
             backgroundColor = new DataColor {
                 r = level.shutter.BackgroundColor.r,
                 g = level.shutter.BackgroundColor.g,
@@ -51,9 +51,21 @@ public static class Data {
             borderRadius = level.shutter.internalCircleRadius,
             numberOfBlades = level.shutter.bladesNumber
         };
-        foreach (var color in level.shutter.BladeColors) {
-            if (color != level.qu.Color)
-                data.wrongColors.Add(new DataColor { r = color.r, g = color.g, b = color.b });
+        for (int i = 0; i < level.shutter.BladeColors.Count; ++i) {
+            var color = level.shutter.BladeColors[i];
+            data.colors.Add(new DataColor {
+                    r = color.r,
+                    g = color.g,
+                    b = color.b
+            });
+            if (color == level.qu.Color) {
+                UnityEngine.Debug.Assert(data.correctColor == -1, "More than 1 correct color???");
+                data.correctColor = i;
+            }
+            if (color == guessedColor) {
+                UnityEngine.Debug.Assert(data.guessedColor == -1, "More than 1 guessed color???");
+                data.guessedColor = i;
+            }
          }
         return data;
     }

@@ -132,6 +132,17 @@ public static class GameData {
         LogHelper.Ok("GameData", "Saved data to " + SAVE_FILE);
     }
 
+    public static void Erase() {
+        string fname = Application.persistentDataPath + "/" + SAVE_FILE + ".gz";
+        try {
+            var dataHdl = new LocalDataHandler(Application.persistentDataPath);
+            dataHdl.DeleteFile(fname);
+        } catch (Exception e) {
+            LogHelper.Error("GameData", "Couldn't delete file " + SAVE_FILE + ": "
+                    + e.ToString() + e.StackTrace);
+        }
+    }
+
     static void Validate() {
         if (data == null)
             data = new PlayerData();

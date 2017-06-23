@@ -53,6 +53,9 @@ public struct Devicedata {
  * }
  */
 public static class Protocol {
+
+    public const string UUID_KEY = "IcUUID";
+
     // Adds the JSON fields required by the Icarus server protocol to `gamedata`.
     public static string WrapUserData(List<DataBundle> gamedata) {
         IcarusMsg msg = new IcarusMsg();
@@ -78,10 +81,10 @@ public static class Protocol {
     }
 
     private static string GetUUID() {
-        string uuid = PlayerPrefs.GetString("IcUUID", "");
+        string uuid = PlayerPrefs.GetString(UUID_KEY, "");
         if (uuid.Length == 0) {
             uuid = Guid.NewGuid().ToString();
-            PlayerPrefs.SetString("IcUUID", uuid);
+            PlayerPrefs.SetString(UUID_KEY, uuid);
         }
         return uuid;
     }
