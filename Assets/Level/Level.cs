@@ -331,7 +331,8 @@ public class Level : MonoBehaviour {
     }
 
     void LoadNextScene() {
-        var nextScene = (!IsTutorial && maxScoreReached) ? QuScene.SHARE : QuScene.MAP;
+		GameManager.Instance.goToShare = maxScoreReached;	
+        var nextScene = (!IsTutorial) ? QuScene.SCORE : QuScene.MAP;
         GameManager.Instance.ShowUnlockedCardsThenGoTo(nextScene);
     }
 }

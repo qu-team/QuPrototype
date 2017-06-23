@@ -13,12 +13,13 @@ public enum QuScene {
     MAP,
     SETTINGS,
     SHARE,
+	SCORE,
     TUTORIAL,
     UNLOCK
 }
 
 public class GameManager : MonoBehaviour {
-
+	public bool goToShare;
     public static GameManager Instance {
         get;
         private set;
@@ -36,7 +37,8 @@ public class GameManager : MonoBehaviour {
         {QuScene.SETTINGS, "Settings"},
         {QuScene.SHARE, "ShareScore"},
         {QuScene.TUTORIAL, "Level"},
-        {QuScene.UNLOCK, "UnlockScene"}
+        {QuScene.UNLOCK, "UnlockScene"},
+		{QuScene.SCORE, "Score"}
     };
 
     //Animation screen vars
