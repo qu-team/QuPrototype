@@ -160,7 +160,7 @@
 			"difficultyExp": 0.6,
 			"duration": 60,
 			"quResistance": 2.5,
-			"quToNextLevel": 25,
+			"quToNextLevel": 20,
 			"stars": {
 				"first": 150,
 				"second": 225,
@@ -184,11 +184,11 @@
 			"difficultyExp": 2.0,
 			"duration": 60,
 			"quResistance": 2.5,
-			"quToNextLevel": 40,
+			"quToNextLevel": 25,
 			"stars": {
 				"first": 240,
 				"second": 360,
-				"third": 500
+				"third": 550
 			}
 		},
 		{
@@ -209,8 +209,8 @@
 			"quToNextLevel": 40,
 			"stars": {
 				"first": 250,
-				"second": 400,
-				"third": 550
+				"second": 350,
+				"third": 450
 			},
 			"brightness": 0.9
 		},

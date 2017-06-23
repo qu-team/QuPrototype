@@ -90,8 +90,10 @@ public class Level : MonoBehaviour {
 		Resume();
 	}
 	void ShowInnerCircle(){
-		//TODO show inner circle
-		LogHelper.Debug("Opening", "Max opening is: "+shutter.MaxOpening);	
+		if(GameManager.Instance.CurrentLevel == 8){
+			GameObject.Find("WarningRing").transform.localScale = Vector3.one * 0.76f;
+			return;
+		}	
 		GameObject.Find("WarningRing").transform.localScale = Vector3.one*3f*shutter.internalCircleRadius/(shutter.MaxOpening*1.3f);
 	}
 
@@ -103,6 +105,7 @@ public class Level : MonoBehaviour {
             LoadLevelPrefs();
             DisableTutorialGraphics();
         }
+		SetupQuAndBladesColors();
 		if(shutter.internalCircleRadius > 0.05f){
 			Pause();
 			ShowInnerCircle();
@@ -111,7 +114,6 @@ public class Level : MonoBehaviour {
 			go.SetActive(false);
 			LogHelper.Debug("Ring", "Ring is "+go+" and is being deactivated");
 		}
-        SetupQuAndBladesColors();
         timer.Set(duration);
         playing = true;
         partialStartTime = Time.time;
