@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour {
 
     public AudioClip changeLanguageSound;
+    public GameObject erasePanel;
+    public Text eraseYes;
 
     Qu qu;
     SpriteRenderer halo;
-    Button back;
     Text selectLanguageLabel;
     SystemLanguage selectedLanguage;
     SystemLanguage prevLanguage;
@@ -19,7 +20,6 @@ public class Settings : MonoBehaviour {
         qu = FindObjectOfType<Qu>();
         halo = GameObject.Find("FlagHalo").GetComponent<SpriteRenderer>();
         halo.gameObject.SetActive(false);
-        back = GameObject.Find("BackButton").GetComponent<Button>();
         selectLanguageLabel = GameObject.Find("SelectLanguage").GetComponent<Text>();
         flags = new Dictionary<SystemLanguage, Sprite>();
         foreach (var language in FLAGS.Keys) {
@@ -49,7 +49,11 @@ public class Settings : MonoBehaviour {
         }
         L10N.CurrentLanguage = selectedLanguage;
         selectLanguageLabel.text = L10N.Translate(L10N.Label.SELECT_LANGUAGE);
-        back.GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
+        GameObject.Find("BackButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
+        GameObject.Find("SaveButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.SAVE);
+        GameObject.Find("EraseButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.ERASE_DATA);
+        erasePanel.transform.Find("EraseConfirmText").GetComponent<Text>().text = L10N.Translate(L10N.Label.ERASE_DATA);
+        eraseYes.text = L10N.Translate(L10N.Label.YES);
         SetQuFlag();
         qu.BeHappy();
         StartCoroutine(FireHalo());
@@ -90,4 +94,27 @@ public class Settings : MonoBehaviour {
     };
 
     static readonly List<SystemLanguage> LANGUAGES = new List<SystemLanguage>(FLAGS.Keys);
+
+    public void EraseOpenDialog() {
+        erasePanel.SetActive(true);
+    }
+
+    public void EraseYes() {
+        GameData.Erase();
+        GameData.Load();
+        var uuid = PlayerPrefs.GetString(Protocol.UUID_KEY, "");
+        PlayerPrefs.DeleteAll();
+	GameManager.Instance.TotalTimePlayed = 0;
+#if !DEBUG
+        PlayerPrefs.SetString(Protocol.UUID_KEY, uuid);
+#endif
+        var eraseBtn = GameObject.Find("EraseButton");
+        eraseBtn.GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.DATA_ERASED);
+        eraseBtn.GetComponent<Button>().interactable = false;
+        erasePanel.SetActive(false);
+    }
+
+    public void EraseNo() {
+        erasePanel.SetActive(false);
+    }
 }

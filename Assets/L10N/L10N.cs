@@ -71,6 +71,7 @@ public class L10N : MonoBehaviour {
                                EACUTE = "\x00e9",
                                AGRAVE = "\x00e0",
                                IGRAVE = "\x00ec",
+                               IGRAVE_CAPITAL = "\x00cc",
                                OGRAVE = "\x00f2",
                                UGRAVE = "\x00f9";
 
@@ -181,6 +182,12 @@ public class L10N : MonoBehaviour {
         INTRO1,
         INTRO2,
         INTRO3,
+        SAVE,
+        ERASE_DATA,
+        ERASE_DATA_CONFIRM,
+        NO,
+        YES,
+        DATA_ERASED
     }
 
     private class English : Language {
@@ -273,6 +280,12 @@ public class L10N : MonoBehaviour {
             { Label.INTRO1, "Please" },
             { Label.INTRO2, "Is anyone there?"},
             { Label.INTRO3, "We can't make it alone"},
+            { Label.SAVE, Label.SAVE.ToString() },
+            { Label.ERASE_DATA, "Erase data" },
+            { Label.ERASE_DATA_CONFIRM, "Erase all game data?" },
+            { Label.NO, Label.NO.ToString() },
+            { Label.YES, Label.YES.ToString() },
+            { Label.DATA_ERASED, "Game data erased" },
         }) { }
     }
 
@@ -364,7 +377,12 @@ public class L10N : MonoBehaviour {
             { Label.INTRO1, "Per favore" },
             { Label.INTRO2, "C'"+ EGRAVE+" nessuno?"},
             { Label.INTRO3, "Non ce la possiamo fare\n da soli"},
-
+            { Label.SAVE, "SALVA" },
+            { Label.ERASE_DATA, "Cancella dati" },
+            { Label.ERASE_DATA_CONFIRM, "Cancellare tutti\ni dati di gioco?" },
+            { Label.NO, Label.NO.ToString() },
+            { Label.YES, "S" + IGRAVE_CAPITAL },
+            { Label.DATA_ERASED, "Dati cancellati" },
         }) { }
     }
 }

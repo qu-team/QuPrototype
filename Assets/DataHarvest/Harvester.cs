@@ -29,8 +29,8 @@ public sealed class Harvester {
     }
 
     // Saves the data from a single tap-to-tap session and stores it into memory.
-    public void SaveSingleSessionData(Level level, bool succeeded) {
-        storedData.Add(Data.Create(level, succeeded));
+    public void SaveSingleSessionData(Level level, Color guessedColor) {
+        storedData.Add(Data.Create(level, guessedColor));
     }
 
     // Try sending data over the network, save locally if unable to send.

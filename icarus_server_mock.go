@@ -27,16 +27,18 @@ type deviceData struct {
 }
 
 type gameData struct {
+	LevelNum              int         `json:"levelNum"`
 	AnswerCorrect         bool        `json:"answerCorrect"`
 	ResponseTime          float64     `json:"responseTime"`
 	TimeSinceStart        float64     `json:"timeSinceStart"`
 	BladeQuDistance       float64     `json:"bladeQuDistance"`
 	BladeQuBorderDistance float64     `json:"bladeQuBorderDistance"`
-	CorrectColor          dataColor   `json:"correctColor"`
-	WrongColors           []dataColor `json:"wrongColors"`
+	Colors                []dataColor `json:"colors"`
+	GuessedColor          int         `json:"guessedColor"`
+	CorrectColor          int         `json:"correctColor"`
 	BackgroundColor       dataColor   `json:"backgroundColor"`
 	BorderRadius          float64     `json:"borderRadius"`
-	NumberOfBlades        uint        `json:"numberOfBlades"`
+	NumberOfBlades        int         `json:"numberOfBlades"`
 }
 
 type icarusData struct {

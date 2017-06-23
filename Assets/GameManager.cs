@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
     float totalTimePlayed;
     public float TotalTimePlayed {
         get { return totalTimePlayed + Time.time; }
+        set { totalTimePlayed = value; }
     }
 
     public LevelsData Levels {

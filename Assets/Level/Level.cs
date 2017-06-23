@@ -49,7 +49,7 @@ public class Level : MonoBehaviour {
     LevelSaveData levelData;
 
     void Awake() {
-		shutter.relativeSize = SIZE;
+        shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
         harvester = Harvester.Instance;
@@ -97,6 +97,7 @@ public class Level : MonoBehaviour {
 		GameObject.Find("WarningRing").transform.localScale = Vector3.one*3f*shutter.internalCircleRadius/(shutter.MaxOpening*1.3f);
 	}
 
+
     void Start() {
         if (IsTutorial) {
             CreateColorGenerator();
@@ -106,14 +107,14 @@ public class Level : MonoBehaviour {
             DisableTutorialGraphics();
         }
 		SetupQuAndBladesColors();
-		if(shutter.internalCircleRadius > 0.05f){
-			Pause();
-			ShowInnerCircle();
-		}else{
-			var go = GameObject.Find("WarningRing");
-			go.SetActive(false);
-			LogHelper.Debug("Ring", "Ring is "+go+" and is being deactivated");
-		}
+        if(shutter.internalCircleRadius > 0.05f){
+            Pause();
+            ShowInnerCircle();
+        }else{
+            var go = GameObject.Find("WarningRing");
+            go.SetActive(false);
+            LogHelper.Debug("Ring", "Ring is "+go+" and is being deactivated");
+        }
         timer.Set(duration);
         playing = true;
         partialStartTime = Time.time;
@@ -125,7 +126,7 @@ public class Level : MonoBehaviour {
         shutter.bladesNumber = 3;
         shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
         duration = 30;
-		resistance = 3;
+        resistance = 3;
     }
 
     void DisableTutorialGraphics() {
@@ -133,14 +134,16 @@ public class Level : MonoBehaviour {
         GameObject.Find("Arrow").SetActive(false);
     }
 
-	public Color CurrentQuColor(){
-		return qu.Color;
-	}
+    public Color CurrentQuColor(){
+        return qu.Color;
+    }
 
     internal void MatchQuColor(Color color) {
         if (qu.Dead) { return; }
         if (!playing) { return; }
         if (color == qu.Color) { Succeeded(); } else { Failed(); }
+        if (!IsTutorial)
+            harvester.SaveSingleSessionData(this, color);
         finalClosing = false;
         Reinitialize();
     }
@@ -181,7 +184,6 @@ public class Level : MonoBehaviour {
             score += scoreAdder.Value;
             battery.Set(scoreAdder);
             scoreboard.text = score.ToString();
-            harvester.SaveSingleSessionData(this, succeeded: true);
             levelData.quSaved++;
             levelData.maxCombo = (uint)Mathf.Max(levelData.maxCombo, scoreAdder.Combo);
             int lv = GameManager.Instance.CurrentLevel;
@@ -203,7 +205,6 @@ public class Level : MonoBehaviour {
         qu.BeScared();
         timer.TimePenality(SecondsOfPenality);
         GetComponent<AudioSource>().PlayOneShot(wrongAnswerSound);
-        harvester.SaveSingleSessionData(this, succeeded: false);
     }
 
     float SecondsOfPenality { get { return 5f - (Time.time - partialStartTime); } }
@@ -243,16 +244,16 @@ public class Level : MonoBehaviour {
 
     IEnumerator FinalClosingAnimation() {
         float finalClosingTime=0;
-		if (finalClosing) {
+        if (finalClosing) {
             qu.StretchEyes();
             yield return null;
         }
-		while(finalClosingTime<resistance){
-			if(!Paused){
-				finalClosingTime+= Time.deltaTime;
-			}
-			yield return null;
-		}
+        while(finalClosingTime<resistance){
+            if(!Paused){
+                finalClosingTime+= Time.deltaTime;
+            }
+            yield return null;
+        }
         if (finalClosing) {
             qu.Die();
             Failed();
