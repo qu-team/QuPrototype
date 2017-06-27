@@ -189,7 +189,10 @@
 				"first": 240,
 				"second": 360,
 				"third": 550
-			}
+			},
+			"hasCutscene": true,
+			"cutscene": 7
+
 		},
 		{
 			"number": 8,
@@ -212,7 +215,10 @@
 				"second": 350,
 				"third": 450
 			},
-			"brightness": 0.9
+			"brightness": 0.9,
+			"hasCutscene": true,
+			"cutscene": 8
+
 		},
 		{
 			"number": 9,
@@ -234,7 +240,10 @@
 				"first": 300,
 				"second": 500,
 				"third": 700
-			}
+			},
+			"hasCutscene": true,
+			"cutscene": 9
+
 		}
 	]
 }
