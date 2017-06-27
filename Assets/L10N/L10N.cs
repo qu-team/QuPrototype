@@ -187,7 +187,12 @@ public class L10N : MonoBehaviour {
         ERASE_DATA_CONFIRM,
         NO,
         YES,
-        DATA_ERASED
+        DATA_ERASED,
+		UNLOCKED_LEVEL,
+		LOCKED_LEVEL1,
+		LOCKED_LEVEL2,
+		SAVED_LABEL,
+		SCORE_LABEL
     }
 
     private class English : Language {
@@ -286,6 +291,11 @@ public class L10N : MonoBehaviour {
             { Label.NO, Label.NO.ToString() },
             { Label.YES, Label.YES.ToString() },
             { Label.DATA_ERASED, "Game data erased" },
+			{ Label.UNLOCKED_LEVEL, "UNLOCKED LEVEL {0}!"},
+			{ Label.LOCKED_LEVEL1, "YOU SAVED {0} QUS!"},
+			{ Label.LOCKED_LEVEL2, "SAVE {0} MORE TO UNLOCK THE NEXT LEVEL"},
+			{ Label.SCORE_LABEL, "SCORE:"},
+			{ Label.SAVED_LABEL, "SAVED:"},
         }) { }
     }
 
@@ -383,6 +393,11 @@ public class L10N : MonoBehaviour {
             { Label.NO, Label.NO.ToString() },
             { Label.YES, "S" + IGRAVE_CAPITAL },
             { Label.DATA_ERASED, "Dati cancellati" },
+			{ Label.UNLOCKED_LEVEL, "LIVELLO {0} SBLOCCATO!"},
+			{ Label.LOCKED_LEVEL1, "HAI SALVATO {0} QU!" },
+			{ Label.LOCKED_LEVEL2, "SALVA ANCORA {0} QU PER SBLOCCARE IL LIVELLO SUCCESSIVO"},
+			{ Label.SCORE_LABEL, "PUNTI:"},
+			{ Label.SAVED_LABEL, "SALVATI:"},
         }) { }
     }
 }

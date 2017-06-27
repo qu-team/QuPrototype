@@ -165,6 +165,8 @@ public class GameManager : MonoBehaviour {
     }
 
 #endregion
+	//I am sorry for this.
+	public bool justUnlockedLevel;
 
     public void PlayLevel(int lv) {
         curLevel = lv;

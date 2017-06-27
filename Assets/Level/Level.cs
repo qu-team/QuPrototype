@@ -18,6 +18,7 @@ public class Level : MonoBehaviour {
     public Qu qu;
     public float closingSpeed;
     public Text scoreboard;
+	public Text savedboard;
     public Feedback feedback;
     public Battery battery;
     public GameObject stars;
@@ -49,6 +50,7 @@ public class Level : MonoBehaviour {
     LevelSaveData levelData;
 
     void Awake() {
+		GameManager.Instance.justUnlockedLevel = false;
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
@@ -326,13 +328,15 @@ public class Level : MonoBehaviour {
         // Check if we unlocked next level
         if (lv == GameData.data.curLevelUnlocked && GameData.data.levels[lv].quSaved >= game.Levels[lv].quToNextLevel) {
             ++GameData.data.curLevelUnlocked;
+			game.justUnlockedLevel = true;
         }
         GameData.Save();
     }
-
+	
     void LoadNextScene() {
 		GameManager.Instance.goToShare = maxScoreReached;	
-        var nextScene = (!IsTutorial) ? QuScene.SCORE : QuScene.MAP;
+        var nextScene = (IsTutorial || GameManager.Instance.CurrentLevel == GameManager.Instance.Levels.Count-1) ?
+			QuScene.MAP :QuScene.SCORE ;
         GameManager.Instance.ShowUnlockedCardsThenGoTo(nextScene);
     }
 }
