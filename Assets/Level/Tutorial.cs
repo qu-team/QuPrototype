@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Tutorial : MonoBehaviour {
@@ -7,7 +8,13 @@ public class Tutorial : MonoBehaviour {
 	Level level;
 	GameObject hand;
 	GameObject arrow;
+	Text tutorialText;
 
+	L10N.Label[] labels = new L10N.Label[] {
+		L10N.Label.TUTORIAL_1,
+		L10N.Label.TUTORIAL_2,
+	};
+	int curLabel = 0;
 
 	void Awake() {
 		hand = GameObject.Find("Hand");
@@ -15,7 +22,8 @@ public class Tutorial : MonoBehaviour {
 		hand.SetActive(false);
 		arrow.SetActive(false);
 		level = GameObject.FindObjectOfType<Level>();
-		GameObject.Find("TutorialText").GetComponent<UnityEngine.UI.Text>().text = "TUTORIAL";
+		tutorialText = GameObject.Find("TutorialText").GetComponent<UnityEngine.UI.Text>();
+		tutorialText.text = L10N.Translate(labels[curLabel]);
 		level.IsTutorial = true;
 		listening = true;
 
@@ -72,6 +80,7 @@ public class Tutorial : MonoBehaviour {
 
 	bool showedTime;
 	IEnumerator teachTime(){
+		tutorialText.text = L10N.Translate(labels[++curLabel]);
 		colorTimes =0;
 		showedTime = false;
 		while(colorTimes<1){
