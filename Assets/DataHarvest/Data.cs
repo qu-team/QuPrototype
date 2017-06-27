@@ -16,6 +16,9 @@ public struct DataBundle {
     public DataColor backgroundColor;
     public float borderRadius;
     public uint numberOfBlades;
+    public int nQuSavedThisRun;
+    public uint nTotalRun;
+    public uint nLevelRun;
 }
 
 [System.Serializable]
@@ -30,11 +33,11 @@ public struct DataColor {
 
 public static class Data {
 
-    public const uint VERSION = 2;
+    public const uint VERSION = 3;
 
     public static DataBundle Create(Level level, Color guessedColor) {
         var data = new DataBundle {
-            levelNum = GameManager.Instance.CurrentLevel,
+            levelNum = GameManager.Instance.CurrentLevel + 1,
             answerCorrect = guessedColor == level.qu.Color,
             responseTime = Time.time - level.PartialStartTime,
             timeSinceStart = level.timer.TimeSinceStart,
@@ -49,7 +52,10 @@ public static class Data {
                 b = level.shutter.BackgroundColor.b
             },
             borderRadius = level.shutter.internalCircleRadius,
-            numberOfBlades = level.shutter.bladesNumber
+            numberOfBlades = level.shutter.bladesNumber,
+            nQuSavedThisRun = level.QuSavedThisRun,
+            nTotalRun = GameData.data.NTotalRuns + 1,
+            nLevelRun = GameData.data.levels[GameManager.Instance.CurrentLevel].nRuns + 1
         };
         for (int i = 0; i < level.shutter.BladeColors.Count; ++i) {
             var color = level.shutter.BladeColors[i];

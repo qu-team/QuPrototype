@@ -27,7 +27,9 @@ public class Level : MonoBehaviour {
     public uint duration;
     public AudioClip rightAnswerSound;
     public AudioClip wrongAnswerSound;
+    // Time when level was reinitialized last
     public float PartialStartTime { get { return partialStartTime; } }
+    public int QuSavedThisRun { get { return nQuSavedThisRun; } }
 
     public bool IsTutorial {
         get;
@@ -42,6 +44,7 @@ public class Level : MonoBehaviour {
     bool finalClosing = false;
     bool playing;
     bool maxScoreReached = false;
+    int nQuSavedThisRun = 0;
     // Time when level was reinitialized last
     float partialStartTime;
     Harvester harvester;
@@ -86,17 +89,17 @@ public class Level : MonoBehaviour {
         }
     }
 
-	public void ShowedWarningRing(){
-		Resume();
-	}
-	void ShowInnerCircle(){
-		if(GameManager.Instance.CurrentLevel == 8){
-			GameObject.Find("WarningRing").transform.localScale = Vector3.one * 0.76f;
-			return;
-		}	
-		GameObject.Find("WarningRing").transform.localScale = Vector3.one*3f*shutter.internalCircleRadius/(shutter.MaxOpening*1.3f);
-	}
+    public void ShowedWarningRing() {
+        Resume();
+    }
 
+    void ShowInnerCircle() {
+        if(GameManager.Instance.CurrentLevel == 8){
+            GameObject.Find("WarningRing").transform.localScale = Vector3.one * 0.76f;
+            return;
+        }    
+        GameObject.Find("WarningRing").transform.localScale = Vector3.one*3f*shutter.internalCircleRadius/(shutter.MaxOpening*1.3f);
+    }
 
     void Start() {
         if (IsTutorial) {
@@ -106,7 +109,7 @@ public class Level : MonoBehaviour {
             LoadLevelPrefs();
             DisableTutorialGraphics();
         }
-		SetupQuAndBladesColors();
+        SetupQuAndBladesColors();
         if(shutter.internalCircleRadius > 0.05f){
             Pause();
             ShowInnerCircle();
@@ -176,6 +179,7 @@ public class Level : MonoBehaviour {
     }
 
     void Succeeded() {
+        ++nQuSavedThisRun;
         feedback.Ok();
         qu.BeHappy();
         GetComponent<AudioSource>().PlayOneShot(rightAnswerSound);
@@ -331,7 +335,7 @@ public class Level : MonoBehaviour {
     }
 
     void LoadNextScene() {
-		GameManager.Instance.goToShare = maxScoreReached;	
+        GameManager.Instance.goToShare = maxScoreReached;    
         var nextScene = (!IsTutorial) ? QuScene.SCORE : QuScene.MAP;
         GameManager.Instance.ShowUnlockedCardsThenGoTo(nextScene);
     }
