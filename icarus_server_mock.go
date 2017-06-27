@@ -39,6 +39,9 @@ type gameData struct {
 	BackgroundColor       dataColor   `json:"backgroundColor"`
 	BorderRadius          float64     `json:"borderRadius"`
 	NumberOfBlades        int         `json:"numberOfBlades"`
+	NQuSavedThisRun       int         `json:"nQuSavedThisRun"`
+	NTotalRun             int         `json:"nTotalRun"`
+	NLevelRun             int         `json:"nLevelRun"`
 }
 
 type icarusData struct {

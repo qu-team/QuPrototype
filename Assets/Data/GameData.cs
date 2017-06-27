@@ -30,6 +30,8 @@ public class PlayerData {
         }
     }
 
+    public uint NTotalRuns { get { return levels.Aggregate((uint)0, (sum, l) => sum + l.nRuns); } }
+
     public bool IsCardUnlocked(int cardNumber) {
         int cardIndex = cardNumber - 1;
         return cardsUnlocked != null && cardsUnlocked.Length > cardIndex && cardsUnlocked[cardIndex];
@@ -61,12 +63,14 @@ public struct LevelSaveData {
     public long maxScore;
     public uint quSaved;
     public uint maxCombo;
+    public uint nRuns;
 
     public LevelSaveData Overwrite(LevelSaveData data) {
         return new LevelSaveData {
             maxScore = Math.Max(data.maxScore, maxScore),
             quSaved = quSaved + data.quSaved,
-            maxCombo = Math.Max(data.maxCombo, maxCombo)
+            maxCombo = Math.Max(data.maxCombo, maxCombo),
+            nRuns = nRuns + 1
         };
     }
 }
