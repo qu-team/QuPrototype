@@ -53,7 +53,7 @@ public class Level : MonoBehaviour {
     LevelSaveData levelData;
 
     void Awake() {
-		GameManager.Instance.justUnlockedLevel = false;
+        GameManager.Instance.justUnlockedLevel = false;
         shutter.relativeSize = SIZE;
         shutter.OnColorSelected = MatchQuColor;
         timer = GetComponent<Timer>();
