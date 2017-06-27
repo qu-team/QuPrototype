@@ -26,6 +26,8 @@ public class Tutorial : MonoBehaviour {
 	void DisableNotNeededGui() {
 		GameObject.Find("ScorePanel").SetActive(false);
 		GameObject.Find("Quit").SetActive(false);
+		GameObject.Find("SavedNumber").SetActive(false);
+		GameObject.Find("SavedLabel").SetActive(false);
 	}
 
 	void InjectTutorialAnimationTrigger() {

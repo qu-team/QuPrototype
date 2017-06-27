@@ -62,7 +62,7 @@ public static class Protocol {
         msg.debug = true;
         msg.appdata.uuid = GetUUID();
         msg.appdata.voiceover = false;
-        msg.appdata.lang = Application.systemLanguage.ToString();
+        msg.appdata.lang = L10N.CurrentLanguage.ToString();
         msg.appdata.device = SystemInfo.deviceModel;
         msg.appdata.appname = "qU";
         msg.appdata.appversion = 1;

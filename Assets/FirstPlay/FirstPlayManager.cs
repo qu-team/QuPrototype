@@ -11,16 +11,20 @@ public class FirstPlayManager : MonoBehaviour {
 		if(PlayerPrefs.GetInt(Preferences.PLAYED_TUTORIAL,0) != 0){
 			UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
 		}
+		LanguageCallback();
 	}
 
-	public void LanguageCallback(int lang){
+	public void LanguageCallback(){
+
+		var lang = Application.systemLanguage;
 		LogHelper.Debug("Buttons","Called change lang " + lang);
 		switch(lang){
-		case 0:
-			L10N.CurrentLanguage = SystemLanguage.English;
+		case SystemLanguage.English:
+		case SystemLanguage.Italian:
+			L10N.CurrentLanguage = lang;
 			break;
-		case 1:
-			L10N.CurrentLanguage = SystemLanguage.Italian;
+		default:
+			L10N.CurrentLanguage = SystemLanguage.English;
 			break;
 		}
 		gameObject.AddComponent<L10N>();
