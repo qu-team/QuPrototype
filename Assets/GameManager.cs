@@ -13,13 +13,13 @@ public enum QuScene {
     MAP,
     SETTINGS,
     SHARE,
-	SCORE,
+    SCORE,
     TUTORIAL,
     UNLOCK
 }
 
 public class GameManager : MonoBehaviour {
-	public bool goToShare;
+    public bool goToShare;
     public static GameManager Instance {
         get;
         private set;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
         {QuScene.SHARE, "ShareScore"},
         {QuScene.TUTORIAL, "Level"},
         {QuScene.UNLOCK, "UnlockScene"},
-		{QuScene.SCORE, "Score"}
+        {QuScene.SCORE, "Score"}
     };
 
     //Animation screen vars
@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+#region Animations
     public void AnimationFinishedLoading(AnimationController controller) {
         controller.IngameCut = currentState == QuScene.CUT_GAME;
         if (currentState == QuScene.CUT_GAME)
@@ -134,6 +135,7 @@ public class GameManager : MonoBehaviour {
             break;
         }
     }
+#endregion
 
     public void LoadScene(QuScene scene){
         currentState = scene;
@@ -154,9 +156,9 @@ public class GameManager : MonoBehaviour {
         manager.ShowCardList();
     }
 
-    #endregion
+#endregion
 
-    #region Map
+#region Map
     bool playingNotTheLastLevel = false;
 
     public void MapFinishedLoading(MapManager mapManager) {
@@ -165,8 +167,7 @@ public class GameManager : MonoBehaviour {
     }
 
 #endregion
-	//I am sorry for this.
-	public bool justUnlockedLevel;
+    public bool justUnlockedLevel;
 
     public void PlayLevel(int lv) {
         curLevel = lv;
