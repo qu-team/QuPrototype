@@ -18,7 +18,7 @@ public class Level : MonoBehaviour {
     public Qu qu;
     public float closingSpeed;
     public Text scoreboard;
-	public Text savedboard;
+    public Text savedboard;
     public Feedback feedback;
     public Battery battery;
     public GameObject stars;
@@ -79,7 +79,7 @@ public class Level : MonoBehaviour {
         var gm = GameManager.Instance;
         var level = gm.Levels[gm.CurrentLevel];
         // Create the ColorGenerator
-        if (level.number == gm.Levels.Count) {
+        if (level.number == gm.Levels.Count - 1) {
             colors = new HSLColorGenerator();
             if (level.saturation > 0)
                 (colors as HSLColorGenerator).saturation = level.saturation;
@@ -190,7 +190,7 @@ public class Level : MonoBehaviour {
             score += scoreAdder.Value;
             battery.Set(scoreAdder);
             scoreboard.text = score.ToString();
-			savedboard.text = nQuSavedThisRun + "";
+            savedboard.text = nQuSavedThisRun + "";
             levelData.quSaved++;
             levelData.maxCombo = (uint)Mathf.Max(levelData.maxCombo, scoreAdder.Combo);
             int lv = GameManager.Instance.CurrentLevel;
@@ -333,15 +333,17 @@ public class Level : MonoBehaviour {
         // Check if we unlocked next level
         if (lv == GameData.data.curLevelUnlocked && GameData.data.levels[lv].quSaved >= game.Levels[lv].quToNextLevel) {
             ++GameData.data.curLevelUnlocked;
-			game.justUnlockedLevel = true;
+            game.justUnlockedLevel = true;
         }
         GameData.Save();
     }
-	
+
     void LoadNextScene() {
-		GameManager.Instance.goToShare = maxScoreReached;	
-        var nextScene = (IsTutorial || GameManager.Instance.CurrentLevel == GameManager.Instance.Levels.Count-1) ?
-			QuScene.MAP :QuScene.SCORE ;
-        GameManager.Instance.ShowUnlockedCardsThenGoTo(nextScene);
+        var gm = GameManager.Instance;
+        gm.goToShare = maxScoreReached && score >= gm.Levels[gm.CurrentLevel].stars.first;
+        var nextScene = (IsTutorial || gm.CurrentLevel == gm.Levels.Count-1)
+            ? QuScene.MAP
+            : QuScene.SCORE;
+        gm.ShowUnlockedCardsThenGoTo(nextScene);
     }
 }
