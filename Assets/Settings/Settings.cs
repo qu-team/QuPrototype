@@ -52,7 +52,7 @@ public class Settings : MonoBehaviour {
         GameObject.Find("BackButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.BACK);
         GameObject.Find("SaveButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.SAVE);
         GameObject.Find("EraseButton").GetComponentInChildren<Text>().text = L10N.Translate(L10N.Label.ERASE_DATA);
-        erasePanel.transform.Find("EraseConfirmText").GetComponent<Text>().text = L10N.Translate(L10N.Label.ERASE_DATA);
+        erasePanel.transform.Find("EraseConfirmText").GetComponent<Text>().text = L10N.Translate(L10N.Label.ERASE_DATA_CONFIRM);
         eraseYes.text = L10N.Translate(L10N.Label.YES);
         SetQuFlag();
         qu.BeHappy();
