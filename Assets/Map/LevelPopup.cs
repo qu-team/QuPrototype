@@ -37,9 +37,11 @@ public class LevelPopup : MonoBehaviour {
         Info.text = L10N.Translate(L10N.Label.BEST_SCORE) + ":\n"
                 + (lvdata.HasValue ? lvdata.Value.maxScore.ToString() : "-")
                 + "\n" + L10N.Translate(L10N.Label.SAVED_QUS) + ":\n" 
-                + (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-")
-                + "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" 
+                + (lvdata.HasValue ? lvdata.Value.quSaved.ToString() : "-");
+		if(level <9){
+        	Info.text  += "\n" + L10N.Translate(L10N.Label.TO_NEXT_LEVEL) + ":\n" 
                 + gm.Levels[level].quToNextLevel.ToString();
+		}
 
         this.level = level;
         gameObject.SetActive(true);
