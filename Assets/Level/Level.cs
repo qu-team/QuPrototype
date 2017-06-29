@@ -341,7 +341,8 @@ public class Level : MonoBehaviour {
     void LoadNextScene() {
         var gm = GameManager.Instance;
         gm.goToShare = maxScoreReached && score >= gm.Levels[gm.CurrentLevel].stars.first;
-        var nextScene = (IsTutorial || gm.CurrentLevel == gm.Levels.Count-1 || gm.CurrentLevel < GameData.data.curLevelUnlocked - 1)
+        var nextScene = (IsTutorial || gm.CurrentLevel == gm.Levels.Count-1 ||
+                (gm.CurrentLevel < GameData.data.curLevelUnlocked && !gm.justUnlockedLevel))
             ? QuScene.MAP
             : QuScene.SCORE;
         gm.ShowUnlockedCardsThenGoTo(nextScene);
