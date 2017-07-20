@@ -63,7 +63,11 @@ internal sealed class HarvesterWorker {
 
         yield return request.Send();
 
+#if UNITY_5
+        if (!request.isError) {
+#else
         if (!request.isNetworkError) {
+#endif
             LogHelper.Ok(this, "data sent successfully");
             if (sourceFile != null)
                 File.Delete(sourceFile);
