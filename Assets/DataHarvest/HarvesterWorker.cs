@@ -35,12 +35,13 @@ internal sealed class HarvesterWorker {
                     Application.dataPath + "/appconfig.json:\n" + ex);
 #else
             var buttons = GameObject.Find("Buttons");
-	    if (buttons != null) buttons.SetActive(false);
+            if (buttons != null)
+                buttons.SetActive(false);
             GameObject.Find("Loading").GetComponent<UnityEngine.UI.Text>().text = "appconfig not found.";
-	    Time.timeScale = 0f;
+            Time.timeScale = 0f;
 #endif
         }
-	LogHelper.Ok(this, "appconfig loaded correctly.");
+        LogHelper.Ok(this, "appconfig loaded correctly.");
         REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
         LogHelper.Info(this, "request url: " + REQUEST_URL);
         localData = new LocalDataHandler(path);
