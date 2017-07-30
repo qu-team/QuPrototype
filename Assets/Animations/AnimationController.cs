@@ -86,6 +86,13 @@ public class AnimationController : MonoBehaviour {
             PlayAnimation(currAnimationIndex + 1);
         } else {
             playingLast = true;
+            var levels = gameManager.Levels;
+            // If last cutscene was played, unlock the card
+            if (levels[levels.Count - 1].hasCutscene && currAnimationIndex == levels[levels.Count - 1].cutscene - 1) {
+                gameManager.WatchedAllCutscenes = true;
+                gameManager.ShowUnlockedCardsThenGoTo(QuScene.MENU);
+                return;
+            }
             ShowAnimationControls();
         }
     }

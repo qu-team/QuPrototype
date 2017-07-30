@@ -94,7 +94,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond14() {
-        return false; // TODO: watch all cutscenes in a row
+        return GameManager.Instance.WatchedAllCutscenes;
     }
 
     static bool Cond15() {

@@ -63,6 +63,11 @@ public class GameManager : MonoBehaviour {
         get { return curLevel; }
     }
 
+    public bool WatchedAllCutscenes {
+        get;
+        set;
+    }
+
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);

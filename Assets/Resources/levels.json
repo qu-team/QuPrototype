@@ -17,9 +17,9 @@
 			"quResistance": 3,
 			"quToNextLevel": 10,
 			"stars": {
-				"first": 50,
-				"second": 100,
-				"third": 150
+				"first": 100,
+				"second": 150,
+				"third": 300
 			},
 			"hasCutscene": true,
 			"cutscene": 0
@@ -41,16 +41,16 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 15,
 			"stars": {
-				"first": 100,
-				"second": 200,
-				"third": 400
+				"first": 150,
+				"second": 300,
+				"third": 450
 			},
 			"hasCutscene": true,
 			"cutscene": 1
 		},
 		{
 			"number": 2,
-			"name": "Level 3",
+			"name": "Looking Bleak",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -98,7 +98,7 @@
 		},
 		{
 			"number": 4,
-			"name": "Level 5",
+			"name": "To Darker Halls",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -123,7 +123,7 @@
 		},
 		{
 			"number": 5,
-			"name": "Level 6",
+			"name": "Blinded",
 			"bgColor": {
 				"r": 0.860,
 				"g": 0.860,
@@ -147,7 +147,7 @@
 		},
 		{
 			"number": 6,
-			"name": "Level 7",
+			"name": "Still Getting Used To It",
 			"bgColor": {
 				"r": 0.860,
 				"g": 0.860,
@@ -171,7 +171,7 @@
 		},
 		{
 			"number": 7,
-			"name": "Long Way To The Top",
+			"name": "No Time Four Games",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -196,7 +196,7 @@
 		},
 		{
 			"number": 8,
-			"name": "Bleached",
+			"name": "Almost There",
 			"bgColor": {
 				"r": 0.153,
 				"g": 0.153,
@@ -209,7 +209,7 @@
 			"difficultyExp": 1.0,
 			"duration": 60,
 			"quResistance": 2.5,
-			"quToNextLevel": 40,
+			"quToNextLevel": 25,
 			"stars": {
 				"first": 250,
 				"second": 350,
@@ -230,7 +230,7 @@
 			},
 			"aperture": 0.5,
 			"blades": 4,
-			"bladesSpeed": 3.0,
+			"bladesSpeed": 4.0,
 			"innerRadius": 0.05,
 			"difficultyExp": 1.0,
 			"duration": 60,
