@@ -8,7 +8,7 @@ public class Tutorial : MonoBehaviour {
 	Level level;
 	GameObject hand;
 	GameObject arrow;
-	Text tutorialText;
+	GameObject tutorialText;
 
 	L10N.Label[] labels = new L10N.Label[] {
 		L10N.Label.TUTORIAL_1,
@@ -22,8 +22,8 @@ public class Tutorial : MonoBehaviour {
 		hand.SetActive(false);
 		arrow.SetActive(false);
 		level = GameObject.FindObjectOfType<Level>();
-		tutorialText = GameObject.Find("TutorialText").GetComponent<UnityEngine.UI.Text>();
-		tutorialText.text = L10N.Translate(labels[curLabel]);
+		tutorialText = GameObject.Find("TutorialPopup");
+		tutorialText.GetComponentInChildren<Text>().text = L10N.Translate(labels[curLabel]);
 		level.IsTutorial = true;
 		listening = true;
 
@@ -62,10 +62,31 @@ public class Tutorial : MonoBehaviour {
 		hand.SetActive(false);
 	}
 
+	public void tutPopupCb(){
+		if(clickedColorPop = true){
+			gotTime();
+		}else{
+			gotColors();
+		}
+	}
 
+	void gotColors(){
+		clickedColorPop = true;
+		level.Resume();
+		tutorialText.SetActive(false);
+	}
+	void gotTime(){
+		tutorialText.SetActive(false);
+		level.Resume();
+		clickedTimePop = true;
+	}
+
+	private bool clickedColorPop = false;
+	private bool clickedTimePop = false;
 
 	private int colorTimes;
 	IEnumerator teachColors(){
+		level.Pause();
 		colorTimes = 0;
 		while (colorTimes < 3){
 			if (!level.Paused && listening && level.shutter.opening <= 0.1f) {
@@ -75,12 +96,17 @@ public class Tutorial : MonoBehaviour {
 			}
 			yield return null;
 		}
-		StartCoroutine( teachTime());	
+		StartCoroutine(teachTime());	
 	}
 
 	bool showedTime;
 	IEnumerator teachTime(){
-		tutorialText.text = L10N.Translate(labels[++curLabel]);
+		level.Pause();
+		tutorialText.SetActive(true);
+		while(!clickedTimePop){
+			yield return null;
+		}
+		tutorialText.GetComponentInChildren<Text>().text = L10N.Translate(labels[++curLabel]);
 		colorTimes =0;
 		showedTime = false;
 		while(colorTimes<1){
@@ -140,6 +166,7 @@ public class Tutorial : MonoBehaviour {
 		//arrow.SetActive(true);
 		//yield return new WaitForSeconds(1f);
 		//arrow.SetActive(false);
+		while(!clickedColorPop) yield return null;
 		SetHandAtCorrectColor();
 		hand.GetComponent<SpriteRenderer>().color = HalfColor(level.qu.Color);
 		hand.SetActive(true);
