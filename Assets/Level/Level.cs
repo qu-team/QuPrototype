@@ -129,6 +129,7 @@ public class Level : MonoBehaviour {
 
     void SetTutorialSettings() {
         shutter.bladesNumber = 3;
+        closingSpeed = closingSpeed * 2.2f;
         shutter.BackgroundColor = new Color(45 / 255f, 45 / 255f, 45 / 255f);
         duration = 30;
         resistance = 3;

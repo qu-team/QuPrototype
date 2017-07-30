@@ -9,6 +9,7 @@ public class Tutorial : MonoBehaviour {
 	GameObject hand;
 	GameObject arrow;
 	GameObject tutorialText;
+	GameObject dim;
 
 	L10N.Label[] labels = new L10N.Label[] {
 		L10N.Label.TUTORIAL_1,
@@ -19,6 +20,7 @@ public class Tutorial : MonoBehaviour {
 	void Awake() {
 		hand = GameObject.Find("Hand");
 		arrow = GameObject.Find("Arrow");
+		dim = GameObject.Find("Dim");
 		hand.SetActive(false);
 		arrow.SetActive(false);
 		level = GameObject.FindObjectOfType<Level>();
@@ -46,6 +48,7 @@ public class Tutorial : MonoBehaviour {
 	void Start(){
 		StartCoroutine(teachColors());
 	}
+
 	void Update() {
 	}
 
@@ -60,10 +63,11 @@ public class Tutorial : MonoBehaviour {
 		level.MatchQuColor(color);
 		listening = true;
 		hand.SetActive(false);
+		dim.SetActive(true);
 	}
 
 	public void tutPopupCb(){
-		if(clickedColorPop = true){
+		if(clickedColorPop){
 			gotTime();
 		}else{
 			gotColors();
@@ -102,11 +106,11 @@ public class Tutorial : MonoBehaviour {
 	bool showedTime;
 	IEnumerator teachTime(){
 		level.Pause();
+		tutorialText.GetComponentInChildren<Text>().text = L10N.Translate(labels[++curLabel]);
 		tutorialText.SetActive(true);
 		while(!clickedTimePop){
 			yield return null;
 		}
-		tutorialText.GetComponentInChildren<Text>().text = L10N.Translate(labels[++curLabel]);
 		colorTimes =0;
 		showedTime = false;
 		while(colorTimes<1){
@@ -115,6 +119,7 @@ public class Tutorial : MonoBehaviour {
 			}
 			if (!showedTime && !level.Paused && listening && level.shutter.opening <= 0.0001f ) {
 				level.Pause();
+				dim.SetActive(false);
 				StartCoroutine(showTime());
 			}
 			yield return null;
@@ -147,15 +152,18 @@ public class Tutorial : MonoBehaviour {
 			pulses++;
 		}
 		listening = false;
+		dim.SetActive(false);
 		rend.color = Color.white;
 		colorTimes++;
 		level.Resume();
 		showedTime = true;
 	}
 
+	// Every day, we stray further from God.
 	IEnumerator pleaseFixIt(){
 		while(true){
 			listening = false;
+			dim.SetActive(false);
 			yield return null;
 		}
 	}
@@ -172,6 +180,7 @@ public class Tutorial : MonoBehaviour {
 		hand.SetActive(true);
 		yield return null;
 		listening = false;
+		dim.SetActive(false);
 	}
 
 	Color HalfColor(Color color) {
