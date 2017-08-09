@@ -136,6 +136,7 @@ public class Level : MonoBehaviour {
     }
 
     void DisableTutorialGraphics() {
+        GameObject.Find("Tutorial").SetActive(false);
         GameObject.Find("Hand").SetActive(false);
         GameObject.Find("Arrow").SetActive(false);
     }

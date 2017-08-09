@@ -17,9 +17,9 @@
 			"quResistance": 3,
 			"quToNextLevel": 10,
 			"stars": {
-				"first": 100,
-				"second": 150,
-				"third": 300
+				"first": 150,
+				"second": 250,
+				"third": 400
 			},
 			"hasCutscene": true,
 			"cutscene": 0
@@ -41,9 +41,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 15,
 			"stars": {
-				"first": 150,
-				"second": 300,
-				"third": 450
+				"first": 250,
+				"second": 400,
+				"third": 700
 			},
 			"hasCutscene": true,
 			"cutscene": 1
@@ -65,9 +65,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 20,
 			"stars": {
-				"first": 150,
-				"second": 300,
-				"third": 450
+				"first": 300,
+				"second": 550,
+				"third": 1000
 			},
 			"hasCutscene": true,
 			"cutscene": 2
@@ -89,9 +89,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 25,
 			"stars": {
-				"first": 200,
-				"second": 400,
-				"third": 600
+				"first": 400,
+				"second": 700,
+				"third": 1200
 			},
 			"hasCutscene": true,
 			"cutscene": 3
@@ -113,9 +113,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 30,
 			"stars": {
-				"first": 200,
-				"second": 300,
-				"third": 400
+				"first": 500,
+				"second": 1000,
+				"third": 1800
 			},
 			"saturation": 0.1,
 			"hasCutscene": true,
@@ -136,11 +136,11 @@
 			"difficultyExp": 1.0,
 			"duration": 60,
 			"quResistance": 2.5,
-			"quToNextLevel": 30,
+			"quToNextLevel": 15,
 			"stars": {
 				"first": 220,
 				"second": 330,
-				"third": 440
+				"third": 550
 			},
 			"hasCutscene": true,
 			"cutscene": 5
@@ -162,9 +162,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 20,
 			"stars": {
-				"first": 150,
-				"second": 225,
-				"third": 350
+				"first": 350,
+				"second": 525,
+				"third": 950
 			},
 			"hasCutscene": true,
 			"cutscene": 6
@@ -179,16 +179,16 @@
 			},
 			"aperture": 0.5,
 			"blades": 4,
-			"bladesSpeed": 1.3,
+			"bladesSpeed": 1.6,
 			"innerRadius": 0.05,
 			"difficultyExp": 2.0,
 			"duration": 60,
 			"quResistance": 2.5,
 			"quToNextLevel": 25,
 			"stars": {
-				"first": 240,
-				"second": 360,
-				"third": 550
+				"first": 500,
+				"second": 1000,
+				"third": 1500
 			},
 			"hasCutscene": true,
 			"cutscene": 7
@@ -211,9 +211,9 @@
 			"quResistance": 2.5,
 			"quToNextLevel": 25,
 			"stars": {
-				"first": 250,
-				"second": 350,
-				"third": 450
+				"first": 650,
+				"second": 1150,
+				"third": 1500
 			},
 			"brightness": 0.9,
 			"hasCutscene": true,
@@ -237,13 +237,12 @@
 			"quResistance": 1.5,
 			"quToNextLevel": 50,
 			"stars": {
-				"first": 300,
-				"second": 500,
-				"third": 700
+				"first": 500,
+				"second": 1100,
+				"third": 2200
 			},
 			"hasCutscene": true,
 			"cutscene": 9
-
 		}
 	]
 }
