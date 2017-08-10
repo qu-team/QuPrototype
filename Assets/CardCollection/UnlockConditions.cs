@@ -46,7 +46,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond3() {
-        return ScoreMoreThan(300) >= 5;
+        return ScoreMoreThan(800) >= 5;
     }
 
     static bool Cond4() {
@@ -90,7 +90,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond13() {
-        return LevelComplete((uint)(EveryLevel - 1));
+        return LevelComplete(EveryLevel - 1);
     }
 
     static bool Cond14() {
@@ -110,12 +110,12 @@ internal static class UnlockConditions {
     }
 
     static bool Cond18() {
-        return ScoreMoreThan(500) >= 1;
+        return ScoreMoreThan(1000) >= 1;
     }
 
-    static bool LevelComplete(uint n) {
+    static bool LevelComplete(int n) {
         var lvs = GameData.data.levels;
-        return lvs.Count > n && lvs[(int)n].quSaved >= GameManager.Instance.Levels[(int)n].quToNextLevel;
+        return lvs.Count > n && lvs[n].quSaved >= GameManager.Instance.Levels[n].quToNextLevel;
     }
 
     static int ScoreMoreThan(int threshold) {

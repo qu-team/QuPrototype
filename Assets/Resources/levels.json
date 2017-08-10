@@ -91,7 +91,7 @@
 			"stars": {
 				"first": 400,
 				"second": 700,
-				"third": 1200
+				"third": 1500
 			},
 			"hasCutscene": true,
 			"cutscene": 3
@@ -184,11 +184,11 @@
 			"difficultyExp": 2.0,
 			"duration": 60,
 			"quResistance": 2.5,
-			"quToNextLevel": 25,
+			"quToNextLevel": 22,
 			"stars": {
 				"first": 500,
 				"second": 1000,
-				"third": 1500
+				"third": 1250
 			},
 			"hasCutscene": true,
 			"cutscene": 7
@@ -235,7 +235,7 @@
 			"difficultyExp": 1.0,
 			"duration": 60,
 			"quResistance": 1.5,
-			"quToNextLevel": 50,
+			"quToNextLevel": 0,
 			"stars": {
 				"first": 500,
 				"second": 1100,
