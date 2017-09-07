@@ -115,14 +115,11 @@ public class GameManager : MonoBehaviour {
         var crashHandler = new CrashHandler(this);
         crashHandler.SendLocalData();
         Application.logMessageReceived += crashHandler.OnApplicationError;
-        for(int i =0;i<100;++i)
-        Debug.LogError("AAAAAAAAAH");
     }
 
     void Update() {
-        if (currentState != QuScene.CARD_COLLECTION && Input.GetKeyUp(KeyCode.Escape)) {
+        if (currentState != QuScene.CARD_COLLECTION && Input.GetKeyUp(KeyCode.Escape))
             Back();
-        }
     }
 
     void OnApplicationQuit() {

@@ -29,3 +29,4 @@ icarus_server_mock
 .DS_Store
 
 *~
+*.keystore
