@@ -3,7 +3,7 @@ using System.IO;
 
 // Mapping of appconfig.json
 [System.Serializable]
-internal class AppConfig {
+public class AppConfig {
     public static AppConfig FromFile(string confFile) {
         string txt = File.ReadAllText(confFile);
         return JsonUtility.FromJson<AppConfig>(txt);
@@ -17,6 +17,12 @@ internal class AppConfig {
 
     override public string ToString() {
         return JsonUtility.ToJson(this);
+    }
+
+    public string GetRequestURL() {
+        return forceLocalhost
+            ? "http://localhost:8000/"
+            : dataserver.address + ":" + dataserver.port + dataserver.path;
     }
 
     [System.Serializable]

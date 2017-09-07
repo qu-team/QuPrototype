@@ -11,7 +11,7 @@ using System.IO;
 using System;
 
 internal sealed class LocalDataHandler {
-    // Don't try to uncompress files larger than this (uncompressed size). 
+    // Don't try to uncompress files larger than this (uncompressed size).
     const int MAX_BUF_SIZE = 1024 * 50; // 50 KB
 
     string persistentDataPath;
@@ -82,7 +82,7 @@ internal sealed class LocalDataHandler {
 
     string GenerateFileName() {
         var now = DateTime.Now;
-        return string.Format("qudata_{0}-{1}-{2}T{3}:{4}:{5}_{6}", 
+        return string.Format("qudata_{0}-{1}-{2}T{3}:{4}:{5}_{6}",
             now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond);
     }
 

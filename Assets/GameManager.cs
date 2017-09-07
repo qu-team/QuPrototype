@@ -68,6 +68,30 @@ public class GameManager : MonoBehaviour {
         set;
     }
 
+    public AppConfig AppConfig {
+        get;
+        private set;
+    }
+
+    void LoadAppConfig() {
+        try {
+            LogHelper.Debug(this, "loading Resources/appconfig.json");
+            AppConfig = AppConfig.FromResources("appconfig");
+        } catch (System.Exception ex) {
+#if UNITY_EDITOR
+            LogHelper.Warn(this, "AppConfig wasn't loaded correctly from " +
+                    Application.dataPath + "/appconfig.json:\n" + ex);
+#else
+            var buttons = GameObject.Find("Buttons");
+            if (buttons != null)
+                buttons.SetActive(false);
+            GameObject.Find("Loading").GetComponent<UnityEngine.UI.Text>().text = "appconfig not found.";
+            Time.timeScale = 0f;
+#endif
+        }
+        LogHelper.Ok(this, "appconfig loaded correctly.");
+    }
+
     void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
@@ -79,6 +103,7 @@ public class GameManager : MonoBehaviour {
         currentState = QuScene.MENU;
         levels = new LevelsData("levels.json");
         totalTimePlayed = PlayerPrefs.GetFloat(Preferences.TIME_PLAYED, 0);
+        LoadAppConfig();
     }
 
     void Start() {
@@ -87,6 +112,11 @@ public class GameManager : MonoBehaviour {
             LogHelper.Warn(this, "Game data was not loaded from save file.");
         // Send locally cached data to the server
         Harvester.Instance.SendLocalData(this);
+        var crashHandler = new CrashHandler(this);
+        crashHandler.SendLocalData();
+        Application.logMessageReceived += crashHandler.OnApplicationError;
+        for(int i =0;i<100;++i)
+        Debug.LogError("AAAAAAAAAH");
     }
 
     void Update() {
@@ -111,7 +141,7 @@ public class GameManager : MonoBehaviour {
             break;
         case QuScene.GAME:
         case QuScene.CUT_GAME:
-            LoadScene(QuScene.MAP); 
+            LoadScene(QuScene.MAP);
             break;
         case QuScene.MENU:
             Application.Quit();

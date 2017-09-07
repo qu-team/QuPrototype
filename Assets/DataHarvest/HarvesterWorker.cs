@@ -11,38 +11,14 @@ using System.Collections.Generic;
 
 internal sealed class HarvesterWorker {
 
-    readonly string SERVER_ADDRESS = "http://127.0.0.1";
-    readonly int SERVER_PORT = 8000;
-    readonly string REQUEST_PATH = "/";
-    readonly string REQUEST_URL;
-
     LocalDataHandler localData;
     readonly string path;
+    readonly string REQUEST_URL;
 
     public HarvesterWorker() {
         path = Application.persistentDataPath;
-        try {
-            LogHelper.Debug(this, "loading Resources/appconfig.json");
-            var conf = AppConfig.FromResources("appconfig");
-            if (!conf.forceLocalhost) {
-                SERVER_ADDRESS = conf.dataserver.address;
-                SERVER_PORT = conf.dataserver.port;
-                REQUEST_PATH = conf.dataserver.path;
-            }
-        } catch (Exception ex) {
-#if UNITY_EDITOR
-            LogHelper.Warn(this, "AppConfig wasn't loaded correctly from " + 
-                    Application.dataPath + "/appconfig.json:\n" + ex);
-#else
-            var buttons = GameObject.Find("Buttons");
-            if (buttons != null)
-                buttons.SetActive(false);
-            GameObject.Find("Loading").GetComponent<UnityEngine.UI.Text>().text = "appconfig not found.";
-            Time.timeScale = 0f;
-#endif
-        }
-        LogHelper.Ok(this, "appconfig loaded correctly.");
-        REQUEST_URL = SERVER_ADDRESS + ":" + SERVER_PORT + REQUEST_PATH;
+        var conf = GameManager.Instance.AppConfig;
+        REQUEST_URL = conf.GetRequestURL();
         LogHelper.Info(this, "request url: " + REQUEST_URL);
         localData = new LocalDataHandler(path);
     }
@@ -54,7 +30,15 @@ internal sealed class HarvesterWorker {
     public IEnumerator SendData(List<DataBundle> data, string sourceFile = null) {
         LogHelper.Info(this, "sending data to " + REQUEST_URL + "...");
 
-        string alldata = Protocol.WrapUserData(data);
+        string alldata = Protocol.WrapUserData(new IcQuUserdata {
+            gamedata = data,
+            devicedata = new Devicedata {
+                screenDPI = Screen.dpi,
+                screenHeight = Screen.height,
+                screenWidth = Screen.width
+            }
+        });
+
         byte[] payload = Encoding.UTF8.GetBytes(alldata);
         var request = new UnityWebRequest(REQUEST_URL);
         request.method = "POST";
@@ -97,8 +81,11 @@ internal sealed class HarvesterWorker {
         foreach (string fname in files) {
             LogHelper.Debug(this, "loading file " + fname);
             string datastr = localData.LoadCompressed(fname);
-            if (datastr == null)
+            if (datastr == null) {
+                LogHelper.Info(this, "data in file " + fname + " is empty: deleting.");
+                File.Delete(fname);
                 continue;
+            }
 
             LogHelper.Debug(this, "data string = " + datastr);
             var data = Data.Deserialize(datastr);

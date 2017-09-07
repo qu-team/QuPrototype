@@ -4,10 +4,10 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable]
-public struct IcarusMsg {
+public struct IcarusMsg<T> {
     public IcAppdata appdata;
     public bool debug;
-    public IcQuUserdata userdata;
+    public T userdata;
     public IcTimestamp timestamp;
 }
 
@@ -41,11 +41,18 @@ public struct Devicedata {
     public int screenWidth;
 }
 
+[System.Serializable]
+public struct IcCrashLogData {
+    public string type;
+    public string logString;
+    public string stackTrace;
+}
+
 /* The data structure is:
  * {
  *    "appdata": IcAppdata
  *    "debug": bool
- *     "userdata": {
+ *    "userdata": {
  *        "devicedata": Devicedata
  *        "gamedata": List<DataBundle>
  *    }
@@ -56,29 +63,39 @@ public static class Protocol {
 
     public const string UUID_KEY = "IcUUID";
 
+    private const uint APP_VERSION = 2;
+
     // Adds the JSON fields required by the Icarus server protocol to `gamedata`.
-    public static string WrapUserData(List<DataBundle> gamedata) {
-        IcarusMsg msg = new IcarusMsg();
+    public static string WrapUserData<T>(T userdata, string appname = "qU") {
+        IcarusMsg<T> msg = new IcarusMsg<T>();
+        msg.debug = true;
+        msg.appdata.uuid = GetUUID();
+        msg.appdata.voiceover = false;
+        msg.appdata.lang = L10N.CurrentLanguage.ToString();
+        msg.appdata.device = SystemInfo.deviceModel;
+        msg.appdata.appname = appname;
+        msg.appdata.appversion = APP_VERSION;
+        msg.timestamp.utc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
+        msg.timestamp.user = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
+        msg.userdata = userdata;
+        return UnityEngine.JsonUtility.ToJson(msg);
+    }
+/*
+    public static string WrapUserData(IcCrashLogData crashdata) {
+        IcarusMsg msg = new IcarusMsg<IcCrashLogData>();
         msg.debug = true;
         msg.appdata.uuid = GetUUID();
         msg.appdata.voiceover = false;
         msg.appdata.lang = L10N.CurrentLanguage.ToString();
         msg.appdata.device = SystemInfo.deviceModel;
         msg.appdata.appname = "qU";
-        msg.appdata.appversion = 1;
+        msg.appdata.appversion = APP_VERSION;
         msg.timestamp.utc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
         msg.timestamp.user = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
-        msg.userdata = new IcQuUserdata {
-            gamedata = gamedata,
-            devicedata = new Devicedata {
-                screenDPI = Screen.dpi,
-                screenHeight = Screen.height,
-                screenWidth = Screen.width
-            }
-        };
+        msg.userdata = crashdata;
 
         return UnityEngine.JsonUtility.ToJson(msg);
-    }
+    }*/
 
     private static string GetUUID() {
         string uuid = PlayerPrefs.GetString(UUID_KEY, "");
