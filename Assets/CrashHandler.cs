@@ -5,9 +5,10 @@ using System.Collections;
 using System.IO;
 using System;
 
-public class CrashHandler {
+public sealed class CrashHandler {
 
     readonly string path;
+    // Used to spawn coroutines
     readonly MonoBehaviour mb;
     LocalDataHandler localData;
 
@@ -27,7 +28,7 @@ public class CrashHandler {
         mb.StartCoroutine(SendLocal());
     }
 
-    // Centralized error handler
+    // Global error handler
     public void OnApplicationError(string logString, string stackTrace, LogType type) {
         // Ignore minor errors
         if (type == LogType.Log || type == LogType.Warning) return;

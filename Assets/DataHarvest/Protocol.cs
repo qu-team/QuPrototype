@@ -68,13 +68,13 @@ public static class Protocol {
 
     public const string UUID_KEY = "IcUUID";
 
-    private const uint APP_VERSION = 2;
+    private const uint APP_VERSION = 3;
     private const string APP_NAME = "qU";
 
     // Adds the JSON fields required by the Icarus server protocol to `gamedata`.
     public static string WrapUserData<T>(T userdata) {
         IcarusMsg<T> msg = new IcarusMsg<T>();
-        msg.debug = true;
+        msg.debug = GameManager.Instance.AppConfig.debug;
         msg.appdata.uuid = GetUUID();
         msg.appdata.voiceover = false;
         msg.appdata.lang = L10N.CurrentLanguage.ToString();
@@ -86,22 +86,6 @@ public static class Protocol {
         msg.userdata = userdata;
         return UnityEngine.JsonUtility.ToJson(msg);
     }
-/*
-    public static string WrapUserData(IcCrashLogData crashdata) {
-        IcarusMsg msg = new IcarusMsg<IcCrashLogData>();
-        msg.debug = true;
-        msg.appdata.uuid = GetUUID();
-        msg.appdata.voiceover = false;
-        msg.appdata.lang = L10N.CurrentLanguage.ToString();
-        msg.appdata.device = SystemInfo.deviceModel;
-        msg.appdata.appname = "qU";
-        msg.appdata.appversion = APP_VERSION;
-        msg.timestamp.utc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
-        msg.timestamp.user = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
-        msg.userdata = crashdata;
-
-        return UnityEngine.JsonUtility.ToJson(msg);
-    }*/
 
     private static string GetUUID() {
         string uuid = PlayerPrefs.GetString(UUID_KEY, "");
