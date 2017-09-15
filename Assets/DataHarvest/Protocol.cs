@@ -42,6 +42,11 @@ public struct Devicedata {
 }
 
 [System.Serializable]
+public struct IcCrash {
+    public IcCrashLogData exception;
+}
+
+[System.Serializable]
 public struct IcCrashLogData {
     public string type;
     public string logString;
@@ -64,16 +69,17 @@ public static class Protocol {
     public const string UUID_KEY = "IcUUID";
 
     private const uint APP_VERSION = 2;
+    private const string APP_NAME = "qU";
 
     // Adds the JSON fields required by the Icarus server protocol to `gamedata`.
-    public static string WrapUserData<T>(T userdata, string appname = "qU") {
+    public static string WrapUserData<T>(T userdata) {
         IcarusMsg<T> msg = new IcarusMsg<T>();
         msg.debug = true;
         msg.appdata.uuid = GetUUID();
         msg.appdata.voiceover = false;
         msg.appdata.lang = L10N.CurrentLanguage.ToString();
         msg.appdata.device = SystemInfo.deviceModel;
-        msg.appdata.appname = appname;
+        msg.appdata.appname = APP_NAME;
         msg.appdata.appversion = APP_VERSION;
         msg.timestamp.utc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
         msg.timestamp.user = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");

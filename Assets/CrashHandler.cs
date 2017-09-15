@@ -40,11 +40,13 @@ public class CrashHandler {
         }
 
         var now = DateTime.Now;
-        var data = Protocol.WrapUserData(new IcCrashLogData {
-            type = type.ToString(),
-            logString = logString,
-            stackTrace = stackTrace
-        }, "qU_crash");
+        var data = Protocol.WrapUserData(new IcCrash {
+            exception = new IcCrashLogData {
+                type = type.ToString(),
+                logString = logString,
+                stackTrace = stackTrace
+            }
+        });
         mb.StartCoroutine(SendCrashLog(data));
 
         latestSavedExceptionTime = Time.time;
