@@ -104,7 +104,7 @@ public class Settings : MonoBehaviour {
         GameData.Load();
         var uuid = PlayerPrefs.GetString(Protocol.UUID_KEY, "");
         PlayerPrefs.DeleteAll();
-	GameManager.Instance.TotalTimePlayed = 0;
+        GameManager.Instance.TotalTimePlayed = 0;
 #if !DEBUG
         PlayerPrefs.SetString(Protocol.UUID_KEY, uuid);
 #endif

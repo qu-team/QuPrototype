@@ -18,6 +18,7 @@ public class PlayerData {
     public PlayerData() {
         levels = new List<LevelSaveData>();
         cardsUnlocked = new bool[Card.Collection.Length];
+        curLevelUnlocked = 0;
         int lvnum = GameManager.Instance.Levels.Count;
         for (int i = 0; i < lvnum; ++i) {
             levels.Add(new LevelSaveData());

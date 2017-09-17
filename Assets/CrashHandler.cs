@@ -4,6 +4,10 @@ using System.Text;
 using System.Collections;
 using System.IO;
 using System;
+#if UNITY_WSA
+    using System.Collections.Generic;
+    using System.Linq;
+#endif
 
 public sealed class CrashHandler {
 

@@ -82,7 +82,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond11() {
-        return LevelComplete(4);
+        return LevelComplete(6);
     }
 
     static bool Cond12() {
@@ -90,7 +90,7 @@ internal static class UnlockConditions {
     }
 
     static bool Cond13() {
-        return LevelComplete(EveryLevel - 1);
+        return LevelComplete(9);
     }
 
     static bool Cond14() {

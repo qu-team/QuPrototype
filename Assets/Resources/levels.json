@@ -235,7 +235,7 @@
 			"difficultyExp": 1.0,
 			"duration": 60,
 			"quResistance": 1.5,
-			"quToNextLevel": 0,
+			"quToNextLevel": 1,
 			"stars": {
 				"first": 500,
 				"second": 1100,
