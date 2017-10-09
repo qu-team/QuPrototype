@@ -87,7 +87,7 @@ public class AnimationController : MonoBehaviour {
         } else {
             playingLast = true;
             var levels = gameManager.Levels;
-            // If last cutscene was played, unlock the card
+            // If last cutscene was played, unlock the card (FIXME)
             if (levels[levels.Count - 1].hasCutscene && currAnimationIndex == levels[levels.Count - 1].cutscene - 1) {
                 gameManager.WatchedAllCutscenes = true;
                 gameManager.ShowUnlockedCardsThenGoTo(QuScene.MENU);
@@ -102,7 +102,7 @@ public class AnimationController : MonoBehaviour {
     private void ShowAnimationControls(){
         animationControls.SetActive(true);
         LogHelper.Debug("Animations", "Current index is "+currAnimationIndex);
-        GameObject.Find("Next").GetComponent<Button>().interactable = !(currAnimationIndex+1 >= animations.Length 
+        GameObject.Find("Next").GetComponent<Button>().interactable = !(currAnimationIndex+1 >= animations.Length
                 || currAnimationIndex+1 >= (int) GameData.data.curLevelUnlocked);
         //GameObject.Find("Prev").GetComponent<Button>().interactable = !(currAnimationIndex < 1);
         PauseCurrentAnimation();

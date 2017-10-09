@@ -18,7 +18,7 @@ public class ShareScore : MonoBehaviour {
         string shareUrl = "https://www.facebook.com/sharer/sharer.php";
         shareUrl += "?title=" + Uri.EscapeUriString(L10N.Translate(L10N.Label.FB_NEW_HIGH_SCORE));
         shareUrl += "&description=" + Uri.EscapeUriString(L10N.Translate(L10N.Label.FB_SCORED, score));
-        shareUrl += "&u=" + Uri.EscapeUriString("https://github.com/qu-team/QuPrototype");
+        shareUrl += "&u=" + Uri.EscapeUriString("https://homes.di.unimi.it/mascetti/research/qu/qu.html");
         Application.OpenURL(shareUrl);
     }
 
