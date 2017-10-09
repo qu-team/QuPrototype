@@ -87,8 +87,7 @@ public class AnimationController : MonoBehaviour {
         } else {
             playingLast = true;
             var levels = gameManager.Levels;
-            // If last cutscene was played, unlock the card (FIXME)
-            if (levels[levels.Count - 1].hasCutscene && currAnimationIndex == levels[levels.Count - 1].cutscene - 1) {
+            if (levels[levels.Count - 1].hasCutscene && currAnimationIndex == levels[levels.Count - 1].cutscene) {
                 gameManager.WatchedAllCutscenes = true;
                 gameManager.ShowUnlockedCardsThenGoTo(QuScene.MENU);
                 return;
